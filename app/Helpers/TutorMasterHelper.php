@@ -8,7 +8,7 @@ class TutorMasterHelper
 {
     public static function getListwithPaginate($first_name,$email,$mobile,$status,$subject,$created_date){
 
-        $query = User::where('type',2)->withTrashed();
+        $query = User::where('type',2)->whereNull('deleted_at');
         if($first_name !=''){
             $query->where('first_name','LIKE','%'.$first_name.'%');
         }
@@ -32,7 +32,7 @@ class TutorMasterHelper
                 $q->where('subject_id', $subject);
             });
         }
-        $query = $query->orderBy('id','desc')->paginate(10);
+        $query = $query->orderBy('id','desc')->paginate(15);
         return $query;
     }
     public static function SoftDelete($data, $where)
@@ -40,6 +40,24 @@ class TutorMasterHelper
         $userId = Auth()->user();
         $data['deleted_at'] = date('Y-m-d H:i:s');
         $data['deleted_by'] = $userId['id'];
+        $update = User::where($where)->update($data);
+        return $update;
+    }
+    public static function deactivateUser($data, $where)
+    {
+        $userId = Auth()->user();
+        $data['updated_at'] = date('Y-m-d H:i:s');
+        $data['updated_by'] = $userId['id'];
+        $data['status'] = 'Deactivated';
+        $update = User::where($where)->update($data);
+        return $update;
+    }
+    public static function activateUser($data, $where)
+    {
+        $userId = Auth()->user();
+        $data['updated_at'] = date('Y-m-d H:i:s');
+        $data['updated_by'] = $userId['id'];
+        $data['status'] = 'Accepted';
         $update = User::where($where)->update($data);
         return $update;
     }

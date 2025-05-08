@@ -14,6 +14,7 @@
             <th style="white-space: nowrap">Rate</th>
             <th style="white-space: nowrap">Commission</th>
             <th style="white-space: nowrap">Month</th>
+            <th style="white-space: nowrap">Created time</th>
             <th style="white-space: nowrap">Actions</th>
 
         </tr>
@@ -38,7 +39,7 @@
         <tr>
 
             @php
-                $name = $value->tutor_name;
+                $name = strtoupper($value->tutor_name);
             @endphp
             @if(in_array($name, $nameArray))
             <td></td>
@@ -48,13 +49,13 @@
             <td>{{ $value->tutor_name}}</td>
             @endif
             @php
-                array_push($nameArray, $value->tutor_name);
+                array_push($nameArray, strtoupper($value->tutor_name));
             @endphp
             <td>{{ $value->student_name}}</td>
             <td>{{ ucfirst($value->day_of_tution)}}</td>
             <td>{{ $value->tution_time}}</td>
             <td>{{ $value->rate}}</td>
-            <td>{{ $value->commission}}%</td>
+            <td>{{ $value->commission}}</td>
             <td> @if($value->month == 1)
                 January
                 @elseif($value->month == 2)
@@ -73,6 +74,7 @@
                 N/A
                 @endif
             </td>
+            <td>{{ Utility::convertYMDTimeToDMYTime($value->created_at) }}</td>
             <td>
                 <a href="{{ url('tutor-form') }}/{{$value->id}}/edit"><i class="fa fa-edit"></i></a>
                 <a href="javascript:void(0)" onclick="deleteDetail('{{$value->id }}')" class="delete-category"><i class="fa fa-trash"></i></a>

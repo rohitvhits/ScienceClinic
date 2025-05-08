@@ -2,7 +2,7 @@
 <link href="//cdn.jsdelivr.net/npm/@mdi/font@6.5.95/css/materialdesignicons.min.css
 " rel="stylesheet">
 <link href="{{ asset('assets/plugins/custom/timepicker/bootstrap-timepicker.min.css')}}" rel="stylesheet">
-@section('title', 'Offline Booking')
+@section('title', 'New Booking')
 @section('content')
 <style>
     .modal-open .bootstrap-timepicker-meridian {
@@ -31,7 +31,7 @@
 
                     <div class="card-header py-3">
                         <div class="card-title align-items-start flex-column">
-                            <h3 class="card-label font-weight-bolder text-dark">Offline Booking</h3>
+                            <h3 class="card-label font-weight-bolder text-dark">New Booking</h3>
                         </div>
 
                         <div class="card-toolbar">
@@ -85,14 +85,14 @@
                                 <a class="nav-link" id="payment-tab" data-toggle="pill" href="javascript:void(0)" onclick="window.location.href='tutor-missed-lessons'" role="tab" aria-controls="pills-home" aria-selected="true">Missed Lessons</a>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link active" id="payment-tab" data-toggle="pill" href="javascript:void(0)" role="tab" aria-controls="pills-home" aria-selected="true">Offline Booking</a>
+                                <a class="nav-link active" id="payment-tab" data-toggle="pill" href="javascript:void(0)" role="tab" aria-controls="pills-home" aria-selected="true">New Booking</a>
                             </li>
                             <input type="hidden" value="{{Auth::user()->id}}" id="tutor_id">
                         </ul>
 
                         <div class="tab-pane fade show active" id="payment" role="tabpanel" aria-labelledby="payment-tab">
                             <div class="prime-container">
-                                <h3>Offline Booking</h3>
+                                <h3>New Booking</h3>
                             </div>
                         </div>
                         <div class="table-responsive" id="response_id">
@@ -139,7 +139,12 @@
                         <div class="col-md-12">
 
                             <label for="exampleSelectd">Student Name <span class="text-danger">*</span></label>
-                            <input type="text" autocomplete="off" class="form-control" name="sname" id="sname">
+                            <select class="form-control selectpicker" required name="sname" aria-label="Default select example" data-live-search="true" id="sname">
+                                <option value="">Select Student</option>
+                                @foreach($parentslist as $key => $sval)
+                                    <option value="{{$sval->id.'_'.$sval->student_name}}">{{$sval->student_name}}</option>
+                                @endforeach
+                            </select>
                             <span class="title error_msg error" style="color: red;" id="name_error">{{ $errors->booking->first('sname')}}</span>
 
                         </div>
@@ -642,7 +647,7 @@
         $.confirm({
             title: 'Are you sure?',
             columnClass: "col-md-6",
-            content: "you want to delete this Offline Booking?",
+            content: "you want to delete this Booking?",
             buttons: {
                 formSubmit: {
                     text: 'Submit',
@@ -677,7 +682,7 @@
         $.confirm({
             title: 'Are you sure?',
             columnClass: "col-md-6",
-            content: "you want to attend this Offline Booking?",
+            content: "you want to attend this Booking?",
             buttons: {
                 formSubmit: {
                     text: 'Submit',

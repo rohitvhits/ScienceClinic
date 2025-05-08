@@ -72,7 +72,7 @@
                                 </div>
                                 <div class="flex-column-contact">
                                     <span class="c-text">
-                                        <p class="title-contact">Office</p><a href="tel:01245352101">01245352101</a>
+                                        <p class="title-contact">Office</p><a href="tel:01245352101">01245201083</a>
                                     </span>
                                     <span class="c-text">
                                         <p class="title-contact">Mobile:</p><a href="tel:07572505997">07572505997</a>
@@ -85,15 +85,21 @@
                             <div class="link-social custom-link">
                                 <a href="https://www.facebook.com/scienceclinicuk/"><i class="zmdi zmdi-facebook"></i></a>
                                 <a href="https://twitter.com/science_clinic"><i class="zmdi zmdi-twitter"></i></a>
-                                <a href="https://www.linkedin.com/company/science-clinic-private-tutoring-ltd/about/?viewAsMember=true"><i class="zmdi zmdi-linkedin"></i></i></a>
+                                <a href="https://www.linkedin.com/company/science-clinic-private-tutoring-ltd/about/?viewAsMember=true"><i class="zmdi zmdi-linkedin"></i></a>
                                 <a href="https://www.pinterest.co.uk/scienceclinicprivatetutoringlt/_saved/"><i class="zmdi zmdi-pinterest"></i></a>
-                                <a href="https://www.youtube.com/channel/UCH2RIsc56umKg_Li4HaF_VQ"><i class="zmdi zmdi-youtube"></i></a>
-                                <a href="https://www.instagram.com/scienceclinic1976/"><i class="zmdi zmdi-instagram"></i></i></a>
+                               <a href="https://www.youtube.com/channel/UCzUH_SrhlNDhHv_St3OvC2Q"><i class="zmdi zmdi-youtube"></i></a>
+                               <a href="https://www.instagram.com/scienceclinictutors2024/"><i class="zmdi zmdi-instagram"></i></a>
+                                 <a href="https://www.tiktok.com/@scienceclinictutors?lang=en/"><i><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-tiktok" viewBox="0 0 16 16">
+  <path d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3z"/>
+</svg></i> </a>
+
+   
                             </div>
                         </div>
                         <span class="footer-add mt-lg-4 mt-0"><span>39 Moulsham Street<br>Chelmsford<br>
                                 Essex<br>CM2 0HY</span>
                         </span>
+						<span><i class="fa fa-envelope"></i><a href="mailto:admin@scienceclinic.co.uk">&nbsp;admin@scienceclinic.co.uk</a></span>
                         <div class="mt-5">
                             <p><span style="font-weight: 700;">Please Note :</span> That all lessons are conducted in
                                 the comfort of your home and there should be a responsible adult present at home during
@@ -101,7 +107,7 @@
                         </div>
                     </div>
                     <div class="col-lg-8 col-md-12">
-                        <h4 class="contact-title">send your massage</h4>
+                        <h4 class="contact-title">send your message</h4>
                         <form id="contact-form" action="{{ route('contact.store') }}" method="POST">
                             @csrf
                             <div class="row form-data">

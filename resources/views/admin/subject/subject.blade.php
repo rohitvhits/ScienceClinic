@@ -40,7 +40,7 @@
 
                         <div class="card-title align-items-start flex-column">
 
-                            <h3 class="card-label font-weight-bolder text-dark">Subject List</h3>
+                            <h3 class="card-label font-weight-bolder text-dark">Subject Master</h3>
 
                         </div>
 
@@ -84,7 +84,7 @@
 
                             <!--begin::Button-->
 
-                            <a href="{{route('subject-master.create')}}" class="btn btn-primary mr-2">
+                            <a href="javascript:void(0)" class="btn btn-primary mr-2" id="create-new-level" data-toggle="modal" data-target="#ajax-crud-modal" title="Add Subject">
 
                                 <span class="svg-icon svg-icon-md">
 
@@ -230,6 +230,66 @@
 
 </div>
 
+<div class="modal fade" id="ajax-crud-modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Subject</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <form id="userForm" name="userForm" class="form-horizontal">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label for="name" class="col-md-4 col-form-label">Name<span class="text-danger">*</span></label>
+                        <div class="col-md-12">
+                            <input type="text" name="title" class="form-control" value="" id="title-add" placeholder="Enter Name" maxlength="50">
+                            <span class="title error_msg error" id="titleerror"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btn-save" value="create" title="Submit">Submit</button>
+                    <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal" aria-hidden="true" title="Cancel">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade title-edit" id="editajax-crud-modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Subject</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <form id="formEdit" name="formEdit" class="form-horizontal" Method="GET">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                @method('put')
+                <div class="modal-body">
+                    <input type="hidden" name="id" id="subject_id">
+                    <div class="form-group row">
+                        <label for="name" class="col-md-4 col-form-label">Name<span class="text-danger">*</span></label>
+                        <div class="col-md-12">
+                            <input type="text" name="title" class="form-control" value="" id="title-edit" placeholder="Enter Name" maxlength="100">
+                            <span class="title error_msg error" id="title_error"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btn-update" value="update" title="Update">Update</button>
+                    <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal" aria-hidden="true" title="Cancel">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 @endsection
 
 
@@ -248,6 +308,10 @@
     var _AJAX_LIST = "{{url('subject-master-ajax-list')}}";
 
     var _DELETE_URL = '{{ url("subject-master")}}';
+
+    var _STORE_URL = '{{route("subject-master.store")}}';
+
+    var _SUBJECT_URL = '{{url("subject-master")}}';
 
     var _CSRF_TOKEN = '{{ csrf_token() }}';
 
@@ -286,7 +350,22 @@
             $('#created_date').val(start.format('MM/DD/YYYY') + ' - ' + end.format('MM/DD/YYYY'));
         });
 
-    })
+    });
+    
+    function editDetail(id) {
+        if (id != "") {
+            $.ajax({
+                url: _SUBJECT_URL+"/"+id+"/edit",
+                type: "GET",
+                success: function(res) {
+                    var json = res.data[0];
+                    $('#title-edit').val(json.main_title);
+                    $('#subject_id').val(json.id);
+                    $('#editajax-crud-modal').modal('show');
+                }
+            });
+        }
+    }
 </script>
 
 

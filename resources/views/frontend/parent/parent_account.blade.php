@@ -71,7 +71,19 @@
                                                     <span id="email_error" style="color:red;"></span>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6 mb-3">
+                                            <div class="col-md-2 mb-3">
+                                                <div class="form-control-spacing">
+                                                    <label for="example-text-input" class="form-label">Country </label> <span style="color:red" class="required-error">*</span>
+                                                    <select class="selectpicker " data-id="country" name="country" id="country" aria-label="Default select example" data-live-search="true">
+                                                        <option value="">Select country</option>
+                                                        @foreach ($country_list as $val)
+                                                        <option value="{{ $val->id }}" @if($val->id==Auth::guard()->user()->country_id) selected @endif>+{{ $val->phonecode.' ('.$val->iso.')' }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <span id="country_error" style="color:red;"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
                                                 <div class="form-control-spacing">
                                                     <label for="example-text-input" class="form-label">Phone </label> <span style="color:red" class="required-error">*</span>
                                                     <input class="form-control placeholder2 numberCls" maxlength="12" id="telephone" name="telephone" type="text" placeholder="Telephone" autocomplete="off" value="{{Auth::guard()->user()->mobile_id}}">
@@ -184,6 +196,7 @@
         var firstName = $('#firstname').val();
         var lastName = $('#lastname').val();
         var email = $('#email').val();
+        var country = $('#country').val();
         var telephone = $('#telephone').val();
         var address = $('#address').val();
         var temp = 0;
@@ -261,8 +274,13 @@
 
         }
 
+        $('#country_error').html('');
         $('#telephone_error').html('');
 
+        if (country.trim() == '') {
+            $('#country_error').html('Please select Country.');
+            temp++
+        }
         if (telephone.trim() == '') {
             $('#telephone_error').html('Please enter telephone.');
             temp++
@@ -315,6 +333,12 @@
                         $('#email_error').text(jqXHR.responseJSON.message.email);
                     } else {
                         $('#email_error').text('');
+                    }
+                    if (jqXHR.responseJSON.message.country) {
+                        tempVal++;
+                        $('#country_error').text(jqXHR.responseJSON.message.country);
+                    } else {
+                        $('#country_error').text('');
                     }
                     if (jqXHR.responseJSON.message.telephone) {
                         tempVal++;

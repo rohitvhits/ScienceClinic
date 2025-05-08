@@ -8,7 +8,7 @@
 
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-  <title>Science Clinic Project</title>
+  <title>Science Clinic – Achieve Academic Excellence with Expert Tuition</title>
 
   <meta name="description" content="">
 
@@ -28,8 +28,15 @@
 
 		============================================ -->
 
-  <link href='https://fonts.googleapis.com/css?family=Raleway:400,300,500,600,700,800' rel='stylesheet' type='text/css'>
+<!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"> -->
 
+<link href="https://db.onlinewebfonts.com/c/0825e48b888e2966c14f17034b133d07?family=Gordita-Regular" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+
+ <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
 
   <!-- Color Swithcer CSS
@@ -78,9 +85,8 @@
 
 		============================================ -->
 
-  <link rel="stylesheet" href="{{asset('front/main.css')}}">
-
-
+  <link rel="stylesheet" href="{{asset('front/main-v2.css')}}">
+  <link rel="stylesheet" href="{{asset('front/custome.css')}}">
 
   <!-- Color CSS
 
@@ -160,9 +166,14 @@
 
   <link rel="alternate stylesheet" type="text/css" href="{{ asset('front/switcher/background5.css')}}" title="background5" media="screen" />
   <link rel="alternate stylesheet" type="text/css" href="{{ asset('assets/css/toastr.css')}}" />
-
   @yield('page-css')
-
+  <style type="text/css">
+    @media (max-width: 991px) {  /* Adjust the max-width as needed */
+      .hide-on-mobile {
+          display: none;
+      }
+  }
+  </style>
 </head>
 
 

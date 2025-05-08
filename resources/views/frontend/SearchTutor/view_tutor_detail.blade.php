@@ -45,16 +45,26 @@
                         <div class="col-lg-9 col-md-12 col-12">
                             <div class="course-details-content">
                                 <div class="single-course-details mb-3">
-                                    <div class="row align-items-center">
+                                    <div class="row align-items-top">
                                         <div class="col-md-5">
                                             <div class="overlay-effect">
                                                 <img alt="" src="{{$data->profile_photo}}" class="tutors-detailimg" style="border: 3px solid #107dc2;">
+                                                <p class="ml-4 mt-3">{{$data->city}}</p>
                                             </div>
                                         </div>
                                         <div class="col-md-7" style="padding-left: 0px;">
                                             <div class="single-item-text">
-
                                                 <h4>{{$data->first_name}} - {{$data->subject_name}}</h4>
+                                                <p style="font-size:18px; color: #107dc2; font-weight:bolder;">
+                                                    @if($gethrs>0) <i class="zmdi zmdi-time"></i> {{$gethrs}}hrs @endif
+                                                    <?php
+                                                    if($star>0 && $totalReview>0)
+                                                    {
+                                                        $starRate=$star/$totalReview;
+                                                        ?><span style="color:green"><i class="zmdi zmdi-star @if($gethrs>0) ml-3 @endif"></i> <?php echo $starRate.' ('.$totalReview.' reviews)'; ?></span><?php
+                                                    }
+                                                    ?>
+                                                </p>
                                                 <div class="course-text-content tutors-content">
                                                     <p>{{$data->title}}</p>
 
@@ -76,7 +86,7 @@
                                                 </div>
                                                 <div class="button-total">
 
-                                                    <a class="button-default inline" href="#down">Enquire About
+                                                    <a class="button-default inline" href="#down" style="border-radius: 20px;">Book
                                                         {{$data->first_name}} - {{$data->subject_name}}</a>
                                                 </div>
 
@@ -89,18 +99,20 @@
                                                 </div>
                                                 <div class="">
                                                     <h5 class=" dbs mr-2">Qualifications on file</h5>
+                                                    @if(!empty($data->video))
+                                                    <video style="max-height: 250px; height:auto; width:100%;" controls controlslist="nodownload"> 
+                                                        <source src="{{$data->video}}" type="video/mp4">
+                                                        Your browser does not support the video tag.
+                                                    </video>
+                                                    @endif
                                                 </div>
                                             </div>
 
-                                        </div>
-                                        <div class="col-md-12 mt-4 mx-3">
-                                            <p class="mr-3">{{$data->city}}</p>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="bio-text ck-bio">
                                     <div class="single-item-content pt-0 pb-2">
-
                                         <div class="title-eductiondetails">
                                             <div class="title-education">
                                                 <h5>BIO</h5>
@@ -151,6 +163,11 @@
                                 <div class="main-custom-calendar">
                                     <div id='calendar'></div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <a href="/tutors-feedback/{{$feedbackId}}" class="button-default inline">Give Feedback</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -160,7 +177,6 @@
                                     <div class="section-title">
                                         <h3 class="mb-4">Tutor Enquiry</h3>
                                     </div>
-
                                 </div>
                                 <div class="contact-form-area tutors-detail-form">
                                     <div class="row justify-content-center">
@@ -168,7 +184,6 @@
                                             <form id="submitinquiry" method="POST">
                                                 @csrf
                                                 <div class="row form-data">
-
                                                     <input type="hidden" name="tutorid" value="{{$data->id}}">
                                                     <div class="col-md-6 col-lg-6">
                                                         <label class="tutor-label">First Name <span class="text-danger" class="required-error">*</span></label>
@@ -186,9 +201,20 @@
                                                         <label class="tutor-label">Email <span class="text-danger" class="required-error">*</span></label>
                                                         <input autocomplete="off" type="text" class="mb-0" id="email" name="email" placeholder="Email">
                                                         <span class="text-danger" id="error_email"></span>
-
                                                     </div>
-                                                    <div class="col-md-6 col-lg-6">
+                                                    <div class="col-md-2 col-lg-2">
+                                                        <div class="subject-custom">
+                                                            <label class="tutor-label">Country <span class="text-danger" class="required-error">*</span></label>
+                                                            <select id="country" class="selectpicker " data-id="country" name="country" id="country" aria-label="Default select example" data-live-search="true">
+                                                                <option value="">Select country</option>
+                                                                @foreach ($country_list as $val)
+                                                                <option value="{{ $val->id }}" @if($val->id==222) selected @endif>+{{ $val->phonecode.' ('.$val->iso.')' }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                            <span class="text-danger" id="error_country">{{ $errors->useredit->first('country') }}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4 col-lg-4">
                                                         <label class="tutor-label">Phone <span class="text-danger" class="required-error">*</span></label>
                                                         <input autocomplete="off" type="text" class="mb-0 numberCls" id="phone" name="phone" placeholder="Phone " maxlength="12">
                                                         <span class="text-danger" id="error_phone"></span>
@@ -359,29 +385,24 @@
 
                                         </div>
                                         <div class="comments">
-                                            
                                             <h4 class="title">Tutor Feedback</h4>
 
                                             @foreach($tutor_comments as $value)
                                             <div class="single-comment" id="reviewcomment">
                                                 <div class="comment-text">
                                                     <div class="author-info">
-                                                        <h4><a href="#">{{$value->userDetails->first_name}} {{$value->userDetails->last_name}}</a></h4>
+                                                        <h4><a href="javascript:void(0)">{{$value->parent_first_name}} {{$value->parent_last_name}}</a></h4>
                                                         <span class="reply">
                                                             <div class="review-score">
-                                                                <div class="stars stars2" style="--rating: {{$value->rating}};" aria-label="Rating of this product is 2.3 out of 5."></div>
+                                                                <div class="stars stars2" style="--rating: {{$value->star}};" aria-label="Rating of this product is 2.3 out of 5."></div>
                                                             </div>
                                                         </span>
                                                     </div>
-                                                    <p>{{$value->descriptions}}</p>
+                                                    <p>{{$value->message}}</p>
                                                     <div class="author-subject">
                                                         <div class="subject-divs">
                                                             <p class="subject-details">Subject : </p>
-                                                            <p class="subject-name">{{$value->subjectDetails->main_title}}</p>
-                                                        </div>
-                                                        <div class="subject-divs">
-                                                            <p class="subject-details">Outcome :</p>
-                                                            <p class="subject-name">{{$value->outcome}}</p>
+                                                            <p class="subject-name">{{$value->subject_name}}</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -557,6 +578,9 @@
 </script>
 
 <script>
+    function pad(numb) {
+        return (numb < 10 ? '0' : '') + numb;
+    }
     document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
         var tutorId = $('#tutorid').val();
@@ -568,15 +592,17 @@
             },
             contentHeight: "auto",
             initialView: 'timeGridWeek',
-            slotDuration: '01:00',
+            slotDuration: '00:30',
             displayEventTime: false,
             allDaySlot: false,
             html: true,
             slotMinTime: "9:00:00",
             slotMaxTime: "22:00:00",
+            /*
             eventContent: {
                 html: '<a><i class="fa fa-check"></i></a>'
             },
+            */
             events: function(fetchInfo, callback) {
 
                 var events = [];
@@ -587,23 +613,110 @@
                         tutotid: tutorId
                     },
                     success: function(result) {
-
                         if (!!result) {
-                            $.map(result, function(r) {
-
-                                events.push({
-                                    start: r.available_datetime,
-                                    title: 'Available',
-                                    "textColor": "#ffffff"
-                                })
-
+                            var sunDate = fetchInfo.start;
+                            var tsdY = pad(sunDate.getFullYear());
+                            var tsdM = pad(sunDate.getMonth()+1);
+                            var tsdD = pad(sunDate.getDate());
+                            var tsd=tsdY+'-'+tsdM+'-'+tsdD;
+                            var bookedlist = [];
+                            $.map(result.bookingList, function(r) {
+                                var plusD=new Date(tsd);
+                                if(r.day_of_tution=='sunday'){ plusD=tsd; }
+                                else if(r.day_of_tution=='monday'){ plusD=plusD.setDate(sunDate.getDate() + 1); }
+                                else if(r.day_of_tution=='tuesday'){ plusD=plusD.setDate(sunDate.getDate() + 2); }
+                                else if(r.day_of_tution=='wednesday'){ plusD=plusD.setDate(sunDate.getDate() + 3); }
+                                else if(r.day_of_tution=='thursday'){ plusD=plusD.setDate(sunDate.getDate() + 4); }
+                                else if(r.day_of_tution=='friday'){ plusD=plusD.setDate(sunDate.getDate() + 5); }
+                                else if(r.day_of_tution=='saturday'){ plusD=plusD.setDate(sunDate.getDate() + 6); }
+                                plusD = new Date(plusD);
+                                var tsdY2 = pad(plusD.getFullYear());
+                                var tsdM2 = pad(plusD.getMonth()+1);
+                                var tsdD2 = pad(plusD.getDate());
+                                var tsd2=tsdY2+'-'+tsdM2+'-'+tsdD2;
+                                var timeslot = r.tution_time.split('-');
+                                var eventTitle = 'Booked';
+                                var cusCheck=r.day_of_tution+'_'+timeslot[0];
+                                if(jQuery.inArray(cusCheck, bookedlist) !== -1)
+                                {
+                                }
+                                else
+                                {
+                                    bookedlist.push(cusCheck);
+                                    events.push({
+                                        id: r.id,
+                                        title: eventTitle,
+                                        start: tsd2 + ' ' + timeslot[0],
+                                        end: tsd2 + ' ' + timeslot[1],
+                                        time: r.tuition_time,
+                                        backgroundColor: '#727272',
+                                        borderColor: '#727272'
+                                    });
+                                }
+                            });
+                            $.map(result.offlineList, function(r) {
+                                var plusD=new Date(tsd);
+                                if(r.tuition_day=='sunday'){ plusD=tsd; }
+                                else if(r.tuition_day=='monday'){ plusD=plusD.setDate(sunDate.getDate() + 1); }
+                                else if(r.tuition_day=='tuesday'){ plusD=plusD.setDate(sunDate.getDate() + 2); }
+                                else if(r.tuition_day=='wednesday'){ plusD=plusD.setDate(sunDate.getDate() + 3); }
+                                else if(r.tuition_day=='thursday'){ plusD=plusD.setDate(sunDate.getDate() + 4); }
+                                else if(r.tuition_day=='friday'){ plusD=plusD.setDate(sunDate.getDate() + 5); }
+                                else if(r.tuition_day=='saturday'){ plusD=plusD.setDate(sunDate.getDate() + 6); }
+                                plusD = new Date(plusD);
+                                var tsdY2 = pad(plusD.getFullYear());
+                                var tsdM2 = pad(plusD.getMonth()+1);
+                                var tsdD2 = pad(plusD.getDate());
+                                var tsd2=tsdY2+'-'+tsdM2+'-'+tsdD2;                                
+                                var oldDate = new Date(r.booking_date+' '+r.teaching_start_time);
+                                var hour = oldDate.getHours();
+                                var newDate = oldDate.setHours(hour + 1);
+                                var newDate = new Date(newDate);
+                                var etH = pad(newDate.getHours());
+                                var etM = pad(newDate.getMinutes());
+                                var etS = pad(newDate.getSeconds());
+                                var et=etH+':'+etM+':'+etS;
+                                
+                                var eventTitle = 'Booked';
+                                var cusCheck=r.tuition_day+'_'+r.teaching_start_time;
+                                if(jQuery.inArray(cusCheck, bookedlist) !== -1)
+                                {
+                                }
+                                else
+                                {
+                                    bookedlist.push(cusCheck);
+                                    events.push({
+                                        id: r.id,
+                                        title: eventTitle,
+                                        start: tsd2 + ' ' + r.teaching_start_time,
+                                        end: tsd2 + ' ' + et,
+                                        time: r.teaching_start_time,
+                                        backgroundColor: '#727272',
+                                        borderColor: '#727272'
+                                    });
+                                }
+                            });
+                            var weekday = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"];
+                            $.map(result.availableList, function(r) {
+                                var timeslot2 = r.available_datetime.split(' ');
+                                var a = new Date(timeslot2[0]);
+                                var chk2 = weekday[a.getDay()]+'_'+timeslot2[1];
+                                if(jQuery.inArray(chk2, bookedlist) !== -1)
+                                {
+                                }
+                                else
+                                {
+                                    events.push({
+                                        start: r.available_datetime,
+                                        title: 'Available',
+                                        "textColor": "#ffffff"
+                                    });
+                                }
                             });
                         }
                         callback(events);
                     }
                 })
-
-
             },
         });
 
@@ -619,6 +732,7 @@
         var firstName = $('#first_name').val();
         var lastName = $('#last_name').val();
         var email = $('#email').val();
+        var country = $('#country').val();
         var phone = $('#phone').val();
         var address = $('#address').val();
         var username = $('#username').val();
@@ -629,6 +743,7 @@
         $('#error_first_name').html('');
         $('#error_last_name').html('');
         $('#error_email').html('');
+        $('#error_country').html('');
         $('#error_phone').html('');
         $('#error_address').html('');
         $('#error_username').html('');
@@ -664,6 +779,11 @@
                 $('#email').focus();
                 temp++;
             }
+        }
+        if (country.trim() == '') {
+            $('#error_country').html('Country is required.');
+            $('#country').focus();
+            temp++;
         }
         if (phone.trim() == '') {
             $('#error_phone').html('Phone is required.');
@@ -774,6 +894,12 @@
                     } else {
                         $('#error_email').text('');
                     }
+                    if (jqXHR.responseJSON.message.country) {
+                        tempVal++;
+                        $('#error_country').text(jqXHR.responseJSON.message.country);
+                    } else {
+                        $('#error_country').text('');
+                    }
                     if (jqXHR.responseJSON.message.phone) {
                         tempVal++;
                         $('#error_phone').text(jqXHR.responseJSON.message.phone);
@@ -811,6 +937,156 @@
             return false;
         }
 
+    }
+
+    function saveReview() {
+        var firstName = $('#your_first_name').val();
+        var lastName = $('#your_last_name').val();
+        var email = $('#your_email').val();
+        var phone = $('#your_phone').val();
+        var subject = $('#subject').val();
+        var star = $('#star').val();
+        var message = $('#message').val();
+        var temp = 0;
+        var regex = new RegExp("[a-zA-Z ]");
+        $('#error_your_first_name').html('');
+        $('#error_your_last_name').html('');
+        $('#error_your_email').html('');
+        $('#error_your_phone').html('');
+        $('#error_subject').html('');
+        $('#error_star').html('');
+        $('#error_message').html('');
+        if (firstName.trim() == '') {
+            $('#error_your_first_name').html('First name is required.');
+            $('#your_first_name').focus();
+            temp++;
+        } else if (!regex.test(firstName)) {
+            $('#error_your_first_name').html('Emoji not allowed.');
+            $('#your_first_name').focus();
+            temp++;
+        }
+        if (lastName.trim() == '') {
+            $('#error_your_last_name').html('Last name is required.');
+            $('#your_last_name').focus();
+            temp++;
+        } else if (!regex.test(lastName)) {
+            $('#error_your_last_name').html('Emoji not allowed.');
+            $('#your_last_name').focus();
+            temp++;
+        }
+        if (email.trim() == '') {
+            $('#error_your_email').html('Email is required.');
+            $('#your_email').focus();
+            temp++;
+        } else {
+            if (!ValidateEmail(email)) {
+                $('#error_your_email').html("Invalid email.");
+                $('#your_email').focus();
+                temp++;
+            }
+        }
+        if (phone.trim() == '') {
+            $('#error_your_phone').html('Phone is required.');
+            $('#your_phone').focus();
+            temp++;
+        } else {
+            if (phone.length <= 10) {
+                $('#error_your_phone').html('Invalid phone');
+                $('#your_phone').focus();
+                temp++;
+            }
+        }
+        if (subject.trim() == '') {
+            $('#error_subject').html('Subject is required.');
+            $('#subject').focus();
+            temp++;
+        }
+        if (star.trim() == '') {
+            $('#error_star').html('Star is required.');
+            $('#star').focus();
+            temp++;
+        }
+        if (message.trim() == '') {
+            $('#error_message').html('Feedback message is required.');
+            $('#message').focus();
+            temp++;
+        } else if (!regex.test(message)) {
+            $('#error_message').html('Emoji not allowed.');
+            $('#message').focus();
+            temp++;
+        }
+        if (temp == 0) {
+            $.ajax({
+                url: "{{route('submit-feedback')}}",
+                type: 'post',
+                data: new FormData($('#submitReview')[0]),
+                processData: false,
+                contentType: false,
+                cache: false,
+                success: function(res) {
+                    if (res.status == 0) {
+                        toastr.error(res.error_msg);
+                    } else {
+                        toastr.success(res.error_msg);
+                        $('#submitReview').trigger("reset");
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    var tempVal = 0;
+                    if (jqXHR.responseJSON.message.your_first_name) {
+                        tempVal++;
+                        $('#error_your_first_name').text(jqXHR.responseJSON.message.your_first_name);
+                        $('#your_first_name').focus();
+                    } else {
+                        $('#error_your_first_name').text('');
+                    }
+                    if (jqXHR.responseJSON.message.your_last_name) {
+                        tempVal++;
+                        $('#error_your_last_name').text(jqXHR.responseJSON.message.your_last_name);
+                    } else {
+                        $('#error_your_last_name').text('');
+                    }
+                    if (jqXHR.responseJSON.message.your_email) {
+                        tempVal++;
+                        $('#error_your_email').text(jqXHR.responseJSON.message.your_email);
+                    } else {
+                        $('#error_your_email').text('');
+                    }
+                    if (jqXHR.responseJSON.message.your_phone) {
+                        tempVal++;
+                        $('#error_your_phone').text(jqXHR.responseJSON.message.your_phone);
+                    } else {
+                        $('#error_your_phone').text('');
+                    }
+                    if (jqXHR.responseJSON.message.subject) {
+                        tempVal++;
+                        $('#error_subject').text(jqXHR.responseJSON.message.subject_id);
+                    } else {
+                        $('#error_subject').text('');
+                    }
+                    if (jqXHR.responseJSON.message.star) {
+                        tempVal++;
+                        $('#error_star').text(jqXHR.responseJSON.message.star);
+                    } else {
+                        $('#error_star').text('');
+                    }
+                    if (jqXHR.responseJSON.message.message) {
+                        tempVal++;
+                        $('#error_message').text(jqXHR.responseJSON.message.message);
+                    } else {
+                        $('#error_message').text('');
+                    }
+                    if (tempVal == 0) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            })
+            return true;
+        } else {
+            return false;
+        }
     }
 </script>
 <script>
@@ -853,6 +1129,15 @@
             }
         }, 500);
     });
+    /*
+    $(document).load(function () {
+        setTimeout(function() {
+            $('.fc-event-title-container').css('display', 'flex !important');
+            $('.fc-event-title-container').css('justify-content', 'center !important');
+            $('.fc-event-title-container').css('align-items', 'center !important');
+        }, 1000);
+    });
+    */
 </script>
 
 <script>

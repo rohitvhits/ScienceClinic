@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Offline Bookings Master')
+@section('title', 'New Bookings Master')
 @section('content')
 <link href="{{ asset('assets/css/pages/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css">
 
@@ -26,7 +26,7 @@
 
                         <div class="card-title align-items-start flex-column">
 
-                            <h3 class="card-label font-weight-bolder text-dark">Offline Bookings List</h3>
+                            <h3 class="card-label font-weight-bolder text-dark">New Bookings List</h3>
 
                         </div>
 
@@ -279,7 +279,15 @@
                         <div class="col-md-12">
 
                             <label for="exampleSelectd">Student Name <span class="text-danger">*</span></label>
-                            <input type="text" autocomplete="off" class="form-control" name="sname" id="student_name">
+                            <select class="form-control selectpicker validate_field" name="sname" id="student_name" data-msg="Student Name" aria-label="select" data-live-search="true">
+                                <option value="">Select Student</option>
+                                @foreach($studentList as $key2 => $sval)
+                                <?php
+                                $snam=trim($sval->student_name);
+                                ?>
+                                <option value="{{$snam}}">{{$snam}}</option>
+                                @endforeach
+                            </select>
                             <span class="title error_msg error" style="color: red;" id="name_error">{{ $errors->booking->first('sname')}}</span>
 
                         </div>
@@ -467,7 +475,15 @@
                         <div class="col-md-12">
 
                             <label for="exampleSelectd">Student Name <span class="text-danger">*</span></label>
-                            <input type="text" autocomplete="off" class="form-control" name="sname_edit" id="sname_edit">
+                            <select class="form-control selectpicker validate_field" name="sname_edit" id="sname_edit" data-msg="Student Name" aria-label="select" data-live-search="true">
+                                <option value="">Select Student</option>
+                                @foreach($studentList as $key2 => $sval)
+                                <?php
+                                $snam=trim($sval->student_name);
+                                ?>
+                                <option value="{{$snam}}">{{$snam}}</option>
+                                @endforeach
+                            </select>
                             <span class="title error_msg error" style="color: red;" id="name_error_edit">{{ $errors->booking_edit->first('sname_edit')}}</span>
 
                         </div>
@@ -880,7 +896,8 @@
                     $("#level_edit").find("option[value=" + val.bookingDetails.level_id + "]").attr('selected', true);
                     $("#day_edit").find("option[value=" + val.bookingDetails.tuition_day + "]").attr('selected', true);
                     $("#tutor_name_edit").find("option[value=" + val.bookingDetails.tutor_id + "]").attr('selected', true);
-                    $("#sname_edit").val(val.bookingDetails.userName);
+                    $("#sname_edit").val(val.bookingDetails.userName).change();
+                    // $("#sname_edit").val(val.bookingDetails.userName);
                     $("#email_edit").val(val.bookingDetails.userEmail);
                     $("#main_id_edit").val(val.bookingDetails.id);
                     $("#idel_time_edit").val(val.bookingDetails.teaching_start_time);
@@ -905,7 +922,7 @@
         $.confirm({
             title: 'Are you sure?',
             columnClass: "col-md-6",
-            content: "you want to delete this Offline Booking?",
+            content: "you want to delete this Booking?",
             buttons: {
                 formSubmit: {
                     text: 'Submit',
@@ -1010,7 +1027,8 @@
                     $("#level_edit").find("option[value=" + val.level_id + "]").attr('selected', true);
                     $("#day_edit").find("option[value=" + val.tuition_day + "]").attr('selected', true);
                     $("#tutor_name_edit").find("option[value=" + val.bookingDetails.tutor_id + "]").attr('selected', true);
-                    $("#sname_edit").val(val.userName);
+                    $("#sname_edit").val(val.userName).change();
+                    // $("#sname_edit").val(val.userName);
                     $("#email_edit").val(val.userEmail);
                     $("#idel_time_edit").val(val.teaching_start_time);
                 }

@@ -40,7 +40,7 @@
 
                     <a href="javascript:void(0)" onclick="editOnlineDetail('{{$val->subject_id}}')" class="edit-details" data-id="{{$val->id}}}"><i class="fa fa-edit" title="Edit"></i></a>
 
-                    <a href="javascript:void(0)" onclick="deleteOnlineDetail('{{$val->subject_id }}')" class="delete-details" data-id="{{$val->subject_id}}}"><i class="fa fa-trash" title="Delete"></i></a>
+                    <a href="javascript:void(0)" onclick="deleteOnlineDetail('{{$val->id }}')" class="delete-details" data-id="{{$val->id}}}"><i class="fa fa-trash" title="Delete"></i></a>
 
                 </td>
 

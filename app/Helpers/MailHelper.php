@@ -17,9 +17,8 @@ class MailHelper
 		$headers .= "MIME-Version: 1.0\r\n";
 		$headers .= "Content-Type: text/html; charset=UTF-8\r\n";
 
-
-		mail($to, $subject, $email_message, $headers);
-		/*$data = array('email' => $semail, 'subject' => $subject, 'msg' => $email_message);
+		// mail($to, $subject, $email_message, $headers);
+		$data = array('email' => $semail, 'subject' => $subject, 'msg' => $email_message);
 		try {
 			Mail::send([], [], function ($message) use ($data) {
 				$message->to($data['email']);
@@ -29,6 +28,6 @@ class MailHelper
 			return  '1';
 		} catch (Exception $e) {
 			return $e;
-		}*/
+		}
 	}
 }

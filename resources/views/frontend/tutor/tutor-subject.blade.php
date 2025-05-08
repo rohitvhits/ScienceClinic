@@ -122,9 +122,13 @@
                                 <option value="">Select Subject</option>
 
                                 @foreach($subject as $val)
-                                @if(!in_array($val->id, $selectedSubject))
-                                <option value="{{$val->id}}">{{$val->main_title}}</option>
-                                @endif
+                                    @if(isset($selectedSubject))
+                                        @if(!in_array($val->id, $selectedSubject))
+                                        <option value="{{$val->id}}">{{$val->main_title}}</option>
+                                        @endif
+                                    @else
+                                    <option value="{{$val->id}}">{{$val->main_title}}</option>
+                                    @endif
                                 @endforeach
 
                             </select>

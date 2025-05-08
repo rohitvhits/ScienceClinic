@@ -22,6 +22,21 @@
         fill: #FFA800 !important;
     }
 
+	.tutor-bank-details .svg-icon.svg-icon-primary svg g [fill] {
+        fill: #236D28 !important;
+    }
+	
+	.blog-list .svg-icon.svg-icon-primary svg g [fill] {
+        fill: #4E6A81 !important;
+    }
+	.subject-master .svg-icon.svg-icon-primary svg g [fill] {
+        fill: #696820 !important;
+    }
+
+  .testimonials .svg-icon.svg-icon-primary svg g [fill] {
+        fill: #ac5800 !important;
+    }
+
     .sub-hed-card {
         height: 120px;
     }
@@ -82,7 +97,7 @@
 
                             <!--end::Svg Icon-->
                         </span>
-                        <p class="text-warning font-weight-bold font-size-h6 mb-0">Total Tutors</p>
+                      <a href="https://www.scienceclinic.co.uk/tutor-master">  <p class="text-warning font-weight-bold font-size-h6 mb-0">Total Tutors</p></a>
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -101,7 +116,7 @@
                                 {{$totalParents}}
                             </div>
                         </span>
-                        <p class="text-primary font-weight-bold font-size-h6 mb-0">Total Learners</p>
+                   <a href="https://www.scienceclinic.co.uk/parent-list">     <p class="text-primary font-weight-bold font-size-h6 mb-0">Total Learners</p></a>
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -117,10 +132,10 @@
                             </svg>
                             <!--end::Svg Icon-->
                             <div class="tutors" style="margin-left: 15px; font-size:25px; color: #f64e60; font-weight:bold; ">
-                                {{$totalofflineBookings}}
+                              {{$totalofflineBookings}}
                             </div>
                         </span>
-                        <p class="text-danger font-weight-bold font-size-h6 mb-0">Total Offline Bookings</p>
+                    <a href="https://www.scienceclinic.co.uk/offline-bookings">    <p class="text-danger font-weight-bold font-size-h6 mb-0">Total Offline Bookings</p></a>
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -130,15 +145,15 @@
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                     <rect x="0" y="0" width="24" height="24" />
-                                    <path d="M3,10.0500091 L3,8 C3,7.44771525 3.44771525,7 4,7 L9,7 L9,9 C9,9.55228475 9.44771525,10 10,10 C10.5522847,10 11,9.55228475 11,9 L11,7 L21,7 C21.5522847,7 22,7.44771525 22,8 L22,10.0500091 C20.8588798,10.2816442 20,11.290521 20,12.5 C20,13.709479 20.8588798,14.7183558 22,14.9499909 L22,17 C22,17.5522847 21.5522847,18 21,18 L11,18 L11,16 C11,15.4477153 10.5522847,15 10,15 C9.44771525,15 9,15.4477153 9,16 L9,18 L4,18 C3.44771525,18 3,17.5522847 3,17 L3,14.9499909 C4.14112016,14.7183558 5,13.709479 5,12.5 C5,11.290521 4.14112016,10.2816442 3,10.0500091 Z M10,11 C9.44771525,11 9,11.4477153 9,12 L9,13 C9,13.5522847 9.44771525,14 10,14 C10.5522847,14 11,13.5522847 11,13 L11,12 C11,11.4477153 10.5522847,11 10,11 Z" fill="#000000" opacity="0.3" transform="translate(12.500000, 12.500000) rotate(-45.000000) translate(-12.500000, -12.500000) " />
-                                </g>
-                            </svg>
+                                    <path d="M6,5 L18,5 C19.1045695,5 20,5.8954305 20,7 L20,19 C20,20.1045695 19.1045695,21 18,21 L6,21 C4.8954305,21 4,20.1045695 4,19 L4,7 C4,5.8954305 4.8954305,5 6,5 Z M9,9 C8.44771525,9 8,9.44771525 8,10 C8,10.5522847 8.44771525,11 9,11 L15,11 C15.5522847,11 16,10.5522847 16,10 C16,9.44771525 15.5522847,9 15,9 L9,9 Z" fill="#000000"></path>   </g>
+                           																						
+ </svg>
                             <!--end::Svg Icon-->
-                            <div class="tutors" style="margin-left: 15px; font-size:25px; color: #1bc5bd; font-weight:bold; ">
-                                {{$totalTickets}}
+  <div class="tutors" style="margin-left: 15px; font-size:25px; color: #1bc5bd; font-weight:bold; "> 
+                              <!--  {{$totalTickets}} --> <a href="https://www.scienceclinic.co.uk/tutor-form">   <p class="text-success font-weight-bold font-size-h6 mb-0">Allocation Form</p></a>
                             </div>
                         </span>
-                        <p class="text-success font-weight-bold font-size-h6 mb-0">Support Tickets</p>
+                    
                     </div>
                 </div>
             </div>
@@ -159,13 +174,14 @@
                             </span>
                             <!--end::Svg Icon-->
                             <a href="https://scienceclinic.ediface.org/" target="_blank">
-                                <div class="tutors" style="margin-left: 15px; font-size:15px; line-height:20px; color: #591ed3;">
-                                    Learning Management System
-                                </div>
+                               <a href="https://scienceclinicltd.sharepoint.com/sites/ScienceClinicTeachingResources">  <div class="tutors" style="margin-left: 15px; font-size:15px; line-height:20px; color: #591ed3;">
+                                   Teaching <br>Resources <br>Library
+                                </div></a>
                             </a>
                         </span>
                     </div>
                 </div>
+
                 <div class="col-md-3">
                     <div class="col px-6 py-8 rounded-xl mb-7 sub-hed-card d-flex align-items-center" style="background-color: #f66b7a87 !important;">
                         <span class="svg-icon svg-icon-3x d-block my-2 d-flex align-items-center direct">
@@ -237,7 +253,110 @@
                         </span>
                     </div>
                 </div>
-            </div>
+<!--New -->
+
+<div class="col-md-3">
+                    <div class="col px-6 py-8 rounded-xl mb-7 sub-hed-card d-flex align-items-center" style="background-color: #d4efc8 !important;">
+                        <span class="svg-icon svg-icon-3x d-block my-2 d-flex align-items-center tutor-bank-details">
+                            <!--begin::Svg Icon | path:/metronic/theme/html/demo1/dist/assets/media/svg/icons/Communication/Urgent-mail.svg-->
+                            <span class="svg-icon svg-icon-primary svg-icon-2x">
+                                <!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo1/dist/../src/media/svg/icons/Shopping/MC.svg-->
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                    <rect x="0" y="0" width="24" height="24"></rect>
+                                    <path d="M2,6 L21,6 C21.5522847,6 22,6.44771525 22,7 L22,17 C22,17.5522847 21.5522847,18 21,18 L2,18 C1.44771525,18 1,17.5522847 1,17 L1,7 C1,6.44771525 1.44771525,6 2,6 Z M11.5,16 C13.709139,16 15.5,14.209139 15.5,12 C15.5,9.790861 13.709139,8 11.5,8 C9.290861,8 7.5,9.790861 7.5,12 C7.5,14.209139 9.290861,16 11.5,16 Z" fill="#000000" opacity="0.3" transform="translate(11.500000, 12.000000) rotate(-345.000000) translate(-11.500000, -12.000000) "></path>
+                                    <path d="M2,6 L21,6 C21.5522847,6 22,6.44771525 22,7 L22,17 C22,17.5522847 21.5522847,18 21,18 L2,18 C1.44771525,18 1,17.5522847 1,17 L1,7 C1,6.44771525 1.44771525,6 2,6 Z M11.5,16 C13.709139,16 15.5,14.209139 15.5,12 C15.5,9.790861 13.709139,8 11.5,8 C9.290861,8 7.5,9.790861 7.5,12 C7.5,14.209139 9.290861,16 11.5,16 Z M11.5,14 C12.6045695,14 13.5,13.1045695 13.5,12 C13.5,10.8954305 12.6045695,10 11.5,10 C10.3954305,10 9.5,10.8954305 9.5,12 C9.5,13.1045695 10.3954305,14 11.5,14 Z" fill="#000000"></path>
+                                </g>
+                            </svg>
+                                <!--end::Svg Icon-->
+                            </span>
+                            <!--end::Svg Icon-->
+                            <a href="https://www.scienceclinic.co.uk/tutor-bank-details">
+                                <div class="tutors" style="margin-left: 15px; font-size:15px; line-height:20px; color: #236D28; ">
+                                    Tutor <br>Bank<br> Details
+                                </div>
+                            </a>
+                        </span>
+                    </div>
+                </div>
+<!--2new-->
+	<div class="col-md-3">
+                    <div class="col px-6 py-8 rounded-xl mb-7 sub-hed-card d-flex align-items-center" style="background-color:#EAF295 !important;">
+                        <span class="svg-icon svg-icon-3x d-block my-2 d-flex align-items-center subject-master">
+                            <!--begin::Svg Icon | path:/metronic/theme/html/demo1/dist/assets/media/svg/icons/Communication/Urgent-mail.svg-->
+                            <span class="svg-icon svg-icon-primary svg-icon-2x">
+                                <!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo1/dist/../src/media/svg/icons/Shopping/MC.svg-->
+                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                    <rect x="0" y="0" width="24" height="24"></rect>
+                                    <path d="M13.6855025,18.7082217 C15.9113859,17.8189707 18.682885,17.2495635 22,17 C22,16.9325178 22,13.1012863 22,5.50630526 L21.9999762,5.50630526 C21.9999762,5.23017604 21.7761292,5.00632908 21.5,5.00632908 C21.4957817,5.00632908 21.4915635,5.00638247 21.4873465,5.00648922 C18.658231,5.07811173 15.8291155,5.74261533 13,7 C13,7.04449645 13,10.79246 13,18.2438906 L12.9999854,18.2438906 C12.9999854,18.520041 13.2238496,18.7439052 13.5,18.7439052 C13.5635398,18.7439052 13.6264972,18.7317946 13.6855025,18.7082217 Z" fill="#000000"></path>
+                                    <path d="M10.3144829,18.7082217 C8.08859955,17.8189707 5.31710038,17.2495635 1.99998542,17 C1.99998542,16.9325178 1.99998542,13.1012863 1.99998542,5.50630526 L2.00000925,5.50630526 C2.00000925,5.23017604 2.22385621,5.00632908 2.49998542,5.00632908 C2.50420375,5.00632908 2.5084219,5.00638247 2.51263888,5.00648922 C5.34175439,5.07811173 8.17086991,5.74261533 10.9999854,7 C10.9999854,7.04449645 10.9999854,10.79246 10.9999854,18.2438906 L11,18.2438906 C11,18.520041 10.7761358,18.7439052 10.4999854,18.7439052 C10.4364457,18.7439052 10.3734882,18.7317946 10.3144829,18.7082217 Z" fill="#000000" opacity="0.3"></path>
+                                </g>
+                            </svg>
+                                <!--end::Svg Icon-->
+                            </span>
+                            <!--end::Svg Icon-->
+                         <a href="https://www.scienceclinic.co.uk/subject-master">
+                               <div class="tutors" style="margin-left: 15px; font-size:15px; line-height:20px; color: #696820; ">
+                                   Subject Master 
+                                </div>
+     </a>
+                            
+                        </span>
+                    </div>
+                </div>		
+              
+              <!--3new-->
+	<div class="col-md-3">
+                    <div class="col px-6 py-8 rounded-xl mb-7 sub-hed-card d-flex align-items-center" style="background-color: #a5bdd2 !important;">
+                        <span class="svg-icon svg-icon-3x d-block my-2 d-flex align-items-center blog-list">
+                            <!--begin::Svg Icon | path:/metronic/theme/html/demo1/dist/assets/media/svg/icons/Communication/Urgent-mail.svg-->
+                            <span class="svg-icon svg-icon-primary svg-icon-2x">
+                                <!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo1/dist/../src/media/svg/icons/Shopping/MC.svg-->
+                               <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                    <rect x="0" y="0" width="24" height="24"></rect>
+                                    <path d="M12.2674799,18.2323597 L12.0084872,5.45852451 C12.0004303,5.06114792 12.1504154,4.6768183 12.4255037,4.38993949 L15.0030167,1.70195304 L17.5910752,4.40093695 C17.8599071,4.6812911 18.0095067,5.05499603 18.0083938,5.44341307 L17.9718262,18.2062508 C17.9694575,19.0329966 17.2985816,19.701953 16.4718324,19.701953 L13.7671717,19.701953 C12.9505952,19.701953 12.2840328,19.0487684 12.2674799,18.2323597 Z" fill="#000000" fill-rule="nonzero" transform="translate(14.701953, 10.701953) rotate(-135.000000) translate(-14.701953, -10.701953) "></path>
+                                    <path d="M12.9,2 C13.4522847,2 13.9,2.44771525 13.9,3 C13.9,3.55228475 13.4522847,4 12.9,4 L6,4 C4.8954305,4 4,4.8954305 4,6 L4,18 C4,19.1045695 4.8954305,20 6,20 L18,20 C19.1045695,20 20,19.1045695 20,18 L20,13 C20,12.4477153 20.4477153,12 21,12 C21.5522847,12 22,12.4477153 22,13 L22,18 C22,20.209139 20.209139,22 18,22 L6,22 C3.790861,22 2,20.209139 2,18 L2,6 C2,3.790861 3.790861,2 6,2 L12.9,2 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"></path>
+                                </g>
+                            </svg>
+                                <!--end::Svg Icon-->
+                            </span>
+                            <!--end::Svg Icon-->
+                            <a href="https://www.scienceclinic.co.uk/blog-master">
+                                <div class="tutors" style="margin-left: 15px; font-size:15px; line-height:20px; color: #4E6A81; ">
+                                    ⁠Blog List
+                                </div>
+                            </a>
+                        </span>
+                    </div>
+                </div>		
+  <!--4new-->
+	<div class="col-md-3">
+                    <div class="col px-6 py-8 rounded-xl mb-7 sub-hed-card d-flex align-items-center" style="background-color: #f4d7b9 !important;">
+                        <span class="svg-icon svg-icon-3x d-block my-2 d-flex align-items-center testimonials">
+                            <!--begin::Svg Icon | path:/metronic/theme/html/demo1/dist/assets/media/svg/icons/Communication/Urgent-mail.svg-->
+                            <span class="svg-icon svg-icon-primary svg-icon-2x">
+                                <!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo1/dist/../src/media/svg/icons/Shopping/MC.svg-->
+                               <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                    <rect x="0" y="0" width="24" height="24"></rect>
+                                    <path opacity="0.3" fill-rule="evenodd" clip-rule="evenodd" d="M14.4862 18L12.7975 21.0566C12.5304 21.54 11.922 21.7153 11.4386 21.4483C11.2977 21.3704 11.1777 21.2597 11.0887 21.1255L9.01653 18H5C3.34315 18 2 16.6569 2 15V6C2 4.34315 3.34315 3 5 3H19C20.6569 3 22 4.34315 22 6V15C22 16.6569 20.6569 18 19 18H14.4862Z" fill="black"></path>
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M6 7H15C15.5523 7 16 7.44772 16 8C16 8.55228 15.5523 9 15 9H6C5.44772 9 5 8.55228 5 8C5 7.44772 5.44772 7 6 7ZM6 11H11C11.5523 11 12 11.4477 12 12C12 12.5523 11.5523 13 11 13H6C5.44772 13 5 12.5523 5 12C5 11.4477 5.44772 11 6 11Z" fill="black"></path>
+                                </g>
+                            </svg>
+                                <!--end::Svg Icon-->
+                            </span>
+                            <!--end::Svg Icon-->
+                            <a href="https://www.scienceclinic.co.uk/pay-claim-form-list">
+                                <div class="tutors" style="margin-left: 15px; font-size:15px; line-height:20px; color: #ac5800; ">
+                                    Pay Claim Form
+                                </div>
+                            </a>
+                        </span>
+                    </div>
+                </div>		
+</div>
         </div>
         <!--end::Container-->
     </div>

@@ -80,7 +80,7 @@ class TutorLevelHelper
 
     public static function getListwithPaginate($title,$created_date){
 
-        $query = TutorLevel::orderBy('id','desc');
+        $query = TutorLevel::whereNull('deleted_at')->orderBy('id','desc');
 
         if($title !=''){
 

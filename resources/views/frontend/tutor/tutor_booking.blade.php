@@ -51,7 +51,7 @@
                                 <a class="nav-link" id="payment-tab" data-toggle="pill" href="javascript:void(0)" onclick="window.location.href='tutor-missed-lessons'" role="tab" aria-controls="pills-home" aria-selected="true">Missed Lessons</a>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link" id="payment-tab" data-toggle="pill" href="javascript:void(0)" role="tab" onclick="window.location.href='tutor-offline-booking'" aria-controls="pills-home" aria-selected="true">Offline Booking</a>
+                                <a class="nav-link" id="payment-tab" data-toggle="pill" href="javascript:void(0)" role="tab" onclick="window.location.href='tutor-offline-booking'" aria-controls="pills-home" aria-selected="true">New Booking</a>
                             </li>
                             <input type="hidden" value="{{Auth::user()->id}}" id="tutor_id">
                         </ul>
@@ -106,13 +106,15 @@
             }
         });
     });
-
+    function pad(numb) {
+        return (numb < 10 ? '0' : '') + numb;
+    }
 
     document.addEventListener('DOMContentLoaded', function() {
         var calendar;
-        var events = [];
         var calendarEl = document.getElementById('calendar');
         var tutorId = $('#tutor_id').val();
+        var events = [];
 
         calendar = new FullCalendar.Calendar(calendarEl, {
 
@@ -122,44 +124,72 @@
                 right: ''
             },
             contentHeight: "auto",
-            selectable: false,
-            editable: false,
+            selectable: true,
+            editable: true,
             initialView: 'timeGridWeek',
-            slotDuration: '01:00',
-            displayEventTime: false,
+            slotDuration: '00:30',
+            displayEventTime: true,
             allDaySlot: false,
             html: true,
             slotMinTime: "9:00:00",
 	        slotMaxTime: "22:00:00",
             events: function(fetchInfo, callback) {
-
                 var events = [];
                 $.ajax({
                     url: "{{route('get-tutor-bookings')}}",
                     type: 'get',
                     success: function(result) {
-
+                        var sunDate = fetchInfo.start;
+                        var tsdY = pad(sunDate.getFullYear());
+                        var tsdM = pad(sunDate.getMonth()+1);
+                        var tsdD = pad(sunDate.getDate());
+                        var tsd=tsdY+'-'+tsdM+'-'+tsdD;
                         if (!!result) {
-                            $.map(result, function(r) {
+                            var bookedlist = [];
+                            $.map(result.online, function(r) {
+                                var plusD=new Date(tsd);
+                                if(r.day_of_tution=='sunday'){ plusD=tsd; }
+                                else if(r.day_of_tution=='monday'){ plusD=plusD.setDate(sunDate.getDate() + 1); }
+                                else if(r.day_of_tution=='tuesday'){ plusD=plusD.setDate(sunDate.getDate() + 2); }
+                                else if(r.day_of_tution=='wednesday'){ plusD=plusD.setDate(sunDate.getDate() + 3); }
+                                else if(r.day_of_tution=='thursday'){ plusD=plusD.setDate(sunDate.getDate() + 4); }
+                                else if(r.day_of_tution=='friday'){ plusD=plusD.setDate(sunDate.getDate() + 5); }
+                                else if(r.day_of_tution=='saturday'){ plusD=plusD.setDate(sunDate.getDate() + 6); }
+                                plusD = new Date(plusD);
+                                var tsdY2 = pad(plusD.getFullYear());
+                                var tsdM2 = pad(plusD.getMonth()+1);
+                                var tsdD2 = pad(plusD.getDate());
+                                var tsd2=tsdY2+'-'+tsdM2+'-'+tsdD2;
                                 var d = new Date();
                                 var month = d.getMonth() + 1;
                                 var day = d.getDate();
                                 var output = d.getFullYear() + '-' +
                                     (('' + month).length < 2 ? '0' : '') + month + '-' +
                                     (('' + day).length < 2 ? '0' : '') + day;
-                                var timeslot = r.tuition_time.split('-');
-                                if (r.inquiry_type == "1") {
-                                    if(r.user_details){
-                                        var eventTitle = r.user_details.first_name + "\r" + r.subject_details.main_title;
-                                        events.push({
-                                            id: r.id,
-                                            title: eventTitle,
-                                            start: r.booking_date + ' ' + r.teaching_start_time,
-                                            end: r.booking_date + ' ' + r.teaching_end_time,
-                                            time: r.tuition_time,
-                                            inquiry_type: r.inquiry_type
-                                        })
-                                    }
+                                var timeslot = r.tution_time.split('-');
+                                //if (r.inquiry_type == "1") {
+                                   // if(r.user_details){
+                                        var eventTitle = r.student_name+'\n'+r.tution_time;
+                                        var eventTitle = r.student_name;
+                                        var cusCheck=r.day_of_tution+'_'+timeslot[0];
+                                        if(jQuery.inArray(cusCheck, bookedlist) !== -1)
+                                        {
+                                        }
+                                        else
+                                        {
+                                            bookedlist.push(cusCheck);
+                                            events.push({
+                                                id: r.id,
+                                                title: eventTitle,
+                                                start: tsd2 + ' ' + timeslot[0],
+                                                end: tsd2 + ' ' + timeslot[1],
+                                                time: r.tuition_time,
+                                                bookingType: 'online',
+                                                backgroundColor: '#727272',
+                                                borderColor: '#727272'
+                                            });
+                                        }
+                                 /*   }
                                 } else {
                                     var eventTitle = r.user_name + "\r" + r.subject_details.main_title;
                                     events.push({
@@ -172,6 +202,56 @@
                                         borderColor: '#727272',
                                         inquiry_type: r.inquiry_type
                                     })
+                                }*/
+                            });
+                            $.map(result.offline, function(r) {
+                                var plusD=new Date(tsd);
+                                if(r.tuition_day=='sunday'){ plusD=tsd; }
+                                else if(r.tuition_day=='monday'){ plusD=plusD.setDate(sunDate.getDate() + 1); }
+                                else if(r.tuition_day=='tuesday'){ plusD=plusD.setDate(sunDate.getDate() + 2); }
+                                else if(r.tuition_day=='wednesday'){ plusD=plusD.setDate(sunDate.getDate() + 3); }
+                                else if(r.tuition_day=='thursday'){ plusD=plusD.setDate(sunDate.getDate() + 4); }
+                                else if(r.tuition_day=='friday'){ plusD=plusD.setDate(sunDate.getDate() + 5); }
+                                else if(r.tuition_day=='saturday'){ plusD=plusD.setDate(sunDate.getDate() + 6); }
+                                plusD = new Date(plusD);
+                                var tsdY2 = pad(plusD.getFullYear());
+                                var tsdM2 = pad(plusD.getMonth()+1);
+                                var tsdD2 = pad(plusD.getDate());
+                                var tsd2=tsdY2+'-'+tsdM2+'-'+tsdD2;
+                                var d = new Date();
+                                var month = d.getMonth() + 1;
+                                var day = d.getDate();
+                                var output = d.getFullYear() + '-' +
+                                    (('' + month).length < 2 ? '0' : '') + month + '-' +
+                                    (('' + day).length < 2 ? '0' : '') + day;
+                                var eventTitle = r.userName;
+
+                                var oldDate = new Date(r.booking_date+' '+r.teaching_start_time);
+                                var hour = oldDate.getHours();
+                                var newDate = oldDate.setHours(hour + 1);
+                                var newDate = new Date(newDate);
+                                var etH = pad(newDate.getHours());
+                                var etM = pad(newDate.getMinutes());
+                                var etS = pad(newDate.getSeconds());
+                                var et=etH+':'+etM+':'+etS;
+
+                                var cusCheck=r.tuition_day+'_'+r.teaching_start_time;
+                                if(jQuery.inArray(cusCheck, bookedlist) !== -1)
+                                {
+                                }
+                                else
+                                {
+                                    bookedlist.push(cusCheck);
+                                    events.push({
+                                        id: r.id,
+                                        title: eventTitle,
+                                        start: tsd2 + ' ' + r.teaching_start_time,
+                                        end: tsd2 + ' ' + et,
+                                        time: r.teaching_start_time,
+                                        bookingType: 'offline',
+                                        backgroundColor: '#727272',
+                                        borderColor: '#727272'
+                                    });
                                 }
                             });
                         }
@@ -180,10 +260,12 @@
                 })
             },
             eventClick: function(info) {
-                var setTime = info.event.extendedProps.time;
                 var userId = info.event.id;
+                var setTime = info.event.extendedProps.time;
+                var btyp = info.event.extendedProps.bookingType;
+                checkBookSlot(userId, btyp);
                 if(info.event.extendedProps.inquiry_type == 1){
-                    window.location.href = '{{url("/show-bookslot-data/")}}' + '/' + userId + '/' + setTime;
+                    // window.location.href = '{{url("/show-bookslot-data/")}}' + '/' + userId + '/' + setTime;
                 }
             },
         });
@@ -191,7 +273,34 @@
 
     });
 
-
+    function checkBookSlot(id, typ) {
+        $.confirm({
+            title: 'Are You Sure ?',
+            content: 'Are you want to delete this slot?',
+            buttons: {
+                confirm: function() {
+                    $.ajax({
+                        url: "{{route('delete-booking-slot')}}",
+                        type: 'POST',
+                        data: {
+                            id: id,
+                            typ: typ
+                        },
+                        success: function(result) {
+                            if(result.status == 1){
+                                toastr.success(result.success_message);
+                                location.reload();
+                            }
+                            else{
+                                toastr.error(result.error_message);
+                            }
+                        }
+                    });
+                },
+                cancel: function() {},
+            }
+        });
+    }
     toastr.options.closeButton = true;
     toastr.options.tapToDismiss = false;
     toastr.options = {

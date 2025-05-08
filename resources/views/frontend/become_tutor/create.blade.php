@@ -199,7 +199,20 @@
 
                                         </div>
 
-                                        <div class="col-md-6">
+
+                                        <div class="col-md-2">
+                                            <div class="subject-custom">
+                                                <select id="country" class="selectpicker " data-id="country" name="country" id="country" aria-label="Default select example" data-live-search="true">
+                                                    <option value="">Select country</option>
+                                                    @foreach ($country_list as $val)
+                                                    <option value="{{ $val->id }}" @if($val->id==222) selected @endif>+{{ $val->phonecode.' ('.$val->iso.')' }}</option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="text-danger" id="error_country">{{ $errors->useredit->first('country') }}</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
 
                                             <input type="text" class="mb-0 numberCls" maxlength="12" autocomplete="off" name="mobile" id="mobile" placeholder="Telephone *">
 
@@ -983,6 +996,7 @@
 
         var email = $("#email").val();
 
+        var country = $("#country").val();
         var mobile = $("#mobile").val();
 
         var address1 = $("#address1").val();
@@ -1024,6 +1038,7 @@
 
         $("#error_email").html('');
 
+        $("#error_country").html('');
         $("#error_mobile").html('');
 
         $("#error_address1").html('');
@@ -1134,6 +1149,13 @@
         }
 
 
+        if (country.trim() == '') {
+
+            $('#error_country').html('Please select country');
+
+            temp++;
+
+        }
 
         if (mobile.trim() == '') {
 
@@ -1431,6 +1453,12 @@
                         $('#error_email').text(jqXHR.responseJSON.message.email);
                     } else {
                         $('#error_email').text('');
+                    }
+                    if (jqXHR.responseJSON.message.country) {
+                        tempVal++;
+                        $('#error_country').text(jqXHR.responseJSON.message.country);
+                    } else {
+                        $('#error_country').text('');
                     }
                     if (jqXHR.responseJSON.message.mobile) {
                         tempVal++;

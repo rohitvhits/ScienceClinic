@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Tutor Master')
+@section('title', 'Tutor Register')
 @section('content')
 
 <link rel="stylesheet" href="{{ asset('assets/css/jquery-confirmation/css/jquery-confirm.min.css') }}">
@@ -36,7 +36,7 @@
 
                         <div class="card-title align-items-start flex-column">
 
-                            <h3 class="card-label font-weight-bolder text-dark">Tutor Master List</h3>
+                            <h3 class="card-label font-weight-bolder text-dark">Tutor Register List</h3>
 
                         </div>
 
@@ -71,6 +71,9 @@
                                     </span>Search</button>
 
                                 <!--begin::Dropdown Menu-->
+                                <a href="{{route('tutor-add')}}" class="btn btn-primary mr-2">
+                                    <span class="svg-icon svg-icon-md"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="9" cy="15" r="6"></circle><path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3"></path></g></svg></span>New Tutor
+                                </a>
 
                             </div>
 
@@ -357,78 +360,67 @@
 
 <script type="text/javascript">
     function functionDelete(Id) {
-
-        event.preventDefault(); // prevent form submit
-
+        event.preventDefault();
         $.confirm({
-
-            title: 'Deactivate!',
-
-            content: 'you want to deactivate this tutor?',
-
+            title: 'Delete!',
+            content: 'you want to delete this tutor?',
             buttons: {
-
                 formSubmit: {
-
-                    text: 'Deactivate',
-
+                    text: 'Delete',
                     btnClass: 'btn-danger',
-
                     action: function() {
-
                         $.ajax({
-
                             method: "POST",
-
-                            url: "{{ url('tutor-master') }}/" + Id,
-
+                            url: "{{ url('tutor-delete') }}/" + Id,
                             data: {
-
                                 '_token': '{{ csrf_token() }}',
-
                                 '_method': "DELETE",
-
                                 'id': Id
-
                             }
-
-
-
                         }).done(function(r) {
-
-
-
                             toastr.success(r.message);
-
                             ajaxList1(1);
-
                         }).fail(function() {
-
-
-
                             toastr.error('Sorry, something went wrong. Please try again.');
-
                         });
-
-
-
                     }
-
                 },
-
                 cancel: function() {
-
-                    //close
-
                 },
-
             }
-
         });
-
     }
-
-    
+    function functionDeactivate(Id) {
+        event.preventDefault(); // prevent form submit
+        $.confirm({
+            title: 'Deactivate!',
+            content: 'you want to deactivate this tutor?',
+            buttons: {
+                formSubmit: {
+                    text: 'Deactivate',
+                    btnClass: 'btn-danger',
+                    action: function() {
+                        $.ajax({
+                            method: "POST",
+                            url: "{{ url('tutor-deactivate') }}/" + Id,
+                            data: {
+                                '_token': '{{ csrf_token() }}',
+                                '_method': "POST",
+                                'id': Id
+                            }
+                        }).done(function(r) {
+                            toastr.success(r.message);
+                            ajaxList1(1);
+                        }).fail(function() {
+                            toastr.error('Sorry, something went wrong. Please try again.');
+                        });
+                    }
+                },
+                cancel: function() {
+                },
+            }
+        });
+    }
 
     function functionActivate(Id) {
         event.preventDefault(); // prevent form submit

@@ -87,7 +87,7 @@
 
                                     <strong>Mobile No:</strong>
 
-                                    <span class="ml-1">{{ $tutor->mobile_id }}</span>
+                                    <span class="ml-1">@if(!empty($tutor->country_code)) +{{$tutor->country_code}} - @endif {{ $tutor->mobile_id }}</span>
 
                                 </div>
                                 <div class="d-flex mb-4">
@@ -215,7 +215,7 @@
 
                                 <li class="nav-item">
 
-                                    <a class="nav-link" href="#other" data-toggle="tab" onclick="getStudentDetails(1)" aria-controls="Other">
+                                    <a class="nav-link" href="#student_list" data-toggle="tab" onclick="getStudentDetails(1)" aria-controls="Other">
 
                                         <span class="nav-text">Student</span>
 
@@ -240,7 +240,7 @@
 
                         <div class="tab-pane" id="subject">
                             <div class="table-responsive">
-                                <span id="responsive_Id"></span>
+                                <span id="responsive_Id2"></span>
                             </div>
 
                         </div>
@@ -423,9 +423,9 @@
 
             success: function(res) {
 
-                $('#responsive_Id').html("");
+                $('#responsive_Id2').html("");
 
-                $('#responsive_Id').html(res);
+                $('#responsive_Id2').html(res);
 
             }
 
@@ -514,9 +514,9 @@
             },
 
             success: function(res) {
-                $('#responsived1_id').html("");
+                $('#responsived2_id').html("");
 
-                $('#responsived1_id').html(res);
+                $('#responsived2_id').html(res);
 
             }
 

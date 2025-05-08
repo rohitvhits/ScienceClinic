@@ -6,6 +6,7 @@ use App\Helpers\UserHelper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Country;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -14,7 +15,8 @@ class ParentAccountController extends Controller
 {
     public function index()
     {
-        return view('frontend.parent.parent_account');
+        $country_list = Country::orderBy('iso','ASC')->get();
+        return view('frontend.parent.parent_account', compact('country_list'));
     }
     public function checkEmail(Request $request)
     {
@@ -39,7 +41,7 @@ class ParentAccountController extends Controller
             'lastname' => 'required|max:30',
 
             'email' => 'required|max:30',
-
+            'country' => 'required',
             'telephone' => 'required',
             'address' => 'required',
 
@@ -48,10 +50,18 @@ class ParentAccountController extends Controller
 
             return response()->json(['message' => $validator->errors(), 'status' => 0], 400);
         } else {
+            $getCC=Country::where('id',$request->country)->first();
+            $cc='';
+            if($getCC && isset($getCC->phonecode))
+            {
+                $cc=$getCC->phonecode;
+            }
             $data = array(
                 'first_name' => $request->firstname,
                 'last_name' => $request->lastname,
                 'email' => $request->email,
+                'country_id' => $request->country,
+                'country_code' => $cc,
                 'mobile_id' => $request->telephone,
                 'address1' => $request->address,
             );

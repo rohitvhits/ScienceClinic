@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\User;
+use App\Models\PayClaimForm;
+use App\Models\PayClaimFormDetails;
 use App\Helpers\MailHelper;
 use App\Helpers\ParentDetailHelper;
 use App\Helpers\ParentPaymentHelper;
@@ -29,12 +32,24 @@ class TutorPaymentController extends Controller
     {
         $data['page'] = $request->page;
         $name = $request->name;
-
         $created_date = $request->created_date;
-        $tutorName = $request->tutorName;
-        $tutionDay = $request->tutionDay;
-        $data['query'] = ParentPaymentHelper::getPaidListwithPaginate($name, $created_date, $tutorName, $tutionDay);
-
+        // $data['query'] = ParentPaymentHelper::getPaidListwithPaginate($name, $created_date, $tutorName, $tutionDay);
+        $query = PayClaimForm::whereNull('deleted_at')->where([['pay_status','=','Paid']]);
+        if($name !=''){
+            $tids = User::where('type',2)->whereNull('deleted_at');
+            $tids->whereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", [$name]);
+            $tids->orWhere('first_name', 'LIKE', '%' . $name . '%');
+            $tids->orWhere('last_name', 'LIKE', '%' . $name . '%');
+            $tids=$tids->get(['id'])->toArray();
+            $tids = json_decode(json_encode($tids), true);
+            $tids = array_column($tids, 'id');
+            $query->whereIn('teacher_id', $tids);
+        }
+        if($created_date !=''){
+            $explode = explode('-',$created_date);
+            $query->whereDate('created_at','>=',date('Y-m-d',strtotime($explode[0])))->whereDate('created_at','<=',date('Y-m-d',strtotime($explode[1])));
+        }
+        $data['query'] = $query->paginate(10);
         return view('admin.tutor.tutor_payment_list_ajax', $data);
     }
 
@@ -55,10 +70,24 @@ class TutorPaymentController extends Controller
     {
         $data['page'] = $request->page;
         $name = $request->name;
-
         $created_date = $request->created_date;
-
-        $data['query'] = ParentPaymentHelper::getUnPaidListwithPaginate($name, $created_date);
+        // $data['query'] = ParentPaymentHelper::getUnPaidListwithPaginate($name, $created_date);
+        $query = PayClaimForm::whereNull('deleted_at')->where([['pay_status','=','Pending']]);
+        if($name !=''){
+            $tids = User::where('type',2)->whereNull('deleted_at');
+            $tids->whereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", [$name]);
+            $tids->orWhere('first_name', 'LIKE', '%' . $name . '%');
+            $tids->orWhere('last_name', 'LIKE', '%' . $name . '%');
+            $tids=$tids->get(['id'])->toArray();
+            $tids = json_decode(json_encode($tids), true);
+            $tids = array_column($tids, 'id');
+            $query->whereIn('teacher_id', $tids);
+        }
+        if($created_date !=''){
+            $explode = explode('-',$created_date);
+            $query->whereDate('created_at','>=',date('Y-m-d',strtotime($explode[0])))->whereDate('created_at','<=',date('Y-m-d',strtotime($explode[1])));
+        }
+        $data['query'] = $query->paginate(10);
 
         return view('admin.tutor.tutor_unpaid_payment_list_ajax', $data);
     }

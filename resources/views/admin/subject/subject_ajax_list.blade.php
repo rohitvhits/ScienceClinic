@@ -42,9 +42,9 @@
 
             </td>
 
-            <td>
+            <td id="title{{$live_in->id}}">
 
-                {{ $live_in->main_title}}
+                {{$live_in->main_title}}
 
             </td>
 
@@ -62,9 +62,8 @@
 
             <td>
 
-                <a href="{{ url('subject-master') }}/{{$live_in->id}}/edit"><i class="fa fa-edit" title="Edit"></i></a>
-                <!--
-                    <a href="javascript:void(0)" class="delete-category" data-id="{{ $live_in->id}}"><i class="fa fa-trash"></i></a> -->
+                <a href="javascript:void(0)" onclick="editDetail({{$live_in->id}})"><i class="fa fa-edit" title="Edit"></i></a>
+                <a href="javascript:void(0)" class="delete-category" data-id="{{ $live_in->id}}"><i class="fa fa-trash"></i></a> 
 
             </td>
 

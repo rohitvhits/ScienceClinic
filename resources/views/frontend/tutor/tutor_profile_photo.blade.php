@@ -108,6 +108,60 @@
 
         </div>
 
+        <div class="d-flex flex-row mt-5">
+
+            <!--begin::Content-->
+
+            <div class="flex-row-fluid" id="personam_id">
+
+                <div class="card card-custom card-stretch">
+
+                    <!--begin::Header-->
+
+                    <div class="card-header py-3">
+
+                        <div class="card-title align-items-start flex-column">
+
+                            <h3 class="card-label font-weight-bolder text-dark">My Video</h3>
+
+                        </div>
+                        <form id="profileVideoform" enctype="multipart/form-data">
+                            @csrf
+                            <div class="position-relative">
+                                <input type="file" class="input-upload-cus" name="profileVideo" id="profileVideo" class="form-control" accept="video/mp4, video/webm, video/mkv, video/mov" onchange="setVideo()">
+                                <div class="upload-photo-main">
+                                    <i class="fa fa-plus plus-sign-upload"></i> <span>Upload Video</span>
+                                </div>
+                            </div>
+                            <span class="text-danger" id="error_video"></span>
+                            <input type="hidden" name="crop_video" id="crop-video">
+                        </form>
+                    </div>
+
+                    <div class="card-body">
+                        <h6 class="text-center">Please upload Video</h6>
+                        <div id="loadingDiv2" style="display: none"></div>
+                        <div class="text-center user-image">
+                            <video width="640" height="300" controls>
+                                <source src="{{$uvd->video}}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        @if(!empty($uvd->video))
+                            <button type="button" class="btn bg-danger text-white" onclick="setVideo()">
+                                <i class="fa fa-trash text-white"></i> Remove Video
+                            </button>
+                        @endif
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!--end::Content-->
+
+        </div>
+
         <!--end::Subject List-->
 
     </div>
@@ -247,7 +301,31 @@
         } else {
             return false;
         }
+    }
 
+    function setVideo() {
+        $.ajax({
+            url: "{{route('update-tutor-video')}}",
+            type: "POST",
+            enctype: 'multipart/form-data',
+            data: new FormData($('#profileVideoform')[0]),
+            processData: false,
+            contentType: false,
+            cache: false,
+            beforeSend: function() {
+                $("#loadingDiv2").show();
+            },
+            complete: hideLoader,
+            success: function(result) {
+                if (result) {
+                    toastr.success(result.success_msg);
+                    $('#srcVideo').attr('src', result.data);
+                    $("#profileVideo").val('');
+                } else {
+                    toastr.error(result.error_msg);
+                }
+            }
+        });
     }
 </script>
 

@@ -12,8 +12,8 @@
             <div class="owl-carousel owl-theme text_carousel">
                 <div class="item">
                     <div class="hero-video">
-                    <img src="{{asset('front/img/home/SCIENCE-CLINIC-HOME-PAGE-3-min.jpg')}}">
-                
+                        <img src="{{asset('front/img/home/SCIENCE-CLINIC-HOME-PAGE-3-min.jpg')}}">
+
                         <div class="hero-custom-center">
                             <div class="text-content-wrapper custom-video-text full-width">
                                 <div class="text-content text-center hero-carousel-title">
@@ -31,7 +31,7 @@
                 </div>
                 <div class="item">
                     <div class="hero-video">
-                            <img src="{{asset('front/img/home/SCIENCE-CLINIC-HOME-PAGE-1-min.jpg')}}">
+                        <img src="{{asset('front/img/home/SCIENCE-CLINIC-HOME-PAGE-1-min.jpg')}}">
                         <div class="hero-custom-center">
                             <div class="text-content-wrapper custom-video-text full-width">
                                 <div class="text-content text-center hero-carousel-title">
@@ -49,7 +49,7 @@
                 </div>
                 <div class="item">
                     <div class="hero-video">
-                            <img src="{{asset('front/img/home/SCIENCE-CLINIC-HOME-PAGE-2-min.jpg')}}">
+                        <img src="{{asset('front/img/home/SCIENCE-CLINIC-HOME-PAGE-2-min.jpg')}}">
                         <div class="hero-custom-center">
                             <div class="text-content-wrapper custom-video-text full-width">
                                 <div class="text-content text-center hero-carousel-title">
@@ -67,7 +67,7 @@
                 </div>
                 <div class="item">
                     <div class="hero-video">
-                            <img src="{{asset('front/img/home/SCIENCE-CLINIC-HOME-PAGE-4.jpg')}}">
+                        <img src="{{asset('front/img/home/SCIENCE-CLINIC-HOME-PAGE-4.jpg')}}">
                         <div class="hero-custom-center">
                             <div class="text-content-wrapper custom-video-text full-width">
                                 <div class="text-content text-center hero-carousel-title">
@@ -85,72 +85,7 @@
                 </div>
             </div>
         </div>
-        <!--Background Area Start-->
-        <!-- <div class="background-area pt-0 video-area no-animation res-owl-slider">
-            <div class="video-banner text-center ">
-            </div>
 
-            <div class="banner-content banner-content2 home-maincontent static-text player">
-                <div class="owl-carousel owl-theme text_carousel">
-                    <div class="item">
-                        <img src="{{asset('front/img/home/SCIENCE-CLINIC-HOME-PAGE-3-min.jpg')}}">
-                        <div class="text-content-wrapper custom-video-text full-width mac-content-wrapper">
-                            <div class="text-content text-center">
-                                <h1 class="title1 text-center mb-20">
-                                    <span class="tlt block" data-in-effect="rollIn" data-out-effect="fadeOutRight"> Fully qualified UK teachers to unlock your child’s</span>
-                                    <span class="tlt block" data-in-effect="fadeInLeftBig" data-out-effect="fadeOutRight"> potential!</span>
-                                </h1>
-                                <div class="banner-readmore wow bounceInUp" data-wow-duration="2500ms" data-wow-delay=".1s">
-                                    <a class="button-default" href="{{route('find-tutor')}}">Find a Tutor</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <img src="{{asset('front/img/home/SCIENCE-CLINIC-HOME-PAGE-1-min.jpg')}}">
-                        <div class="text-content-wrapper custom-video-text full-width mac-content-wrapper">
-                            <div class="text-content text-center">
-                                <h1 class="title1 text-center mb-20">
-                                    <span class="tlt block" data-in-effect="rollIn" data-out-effect="fadeOutRight"> Fully qualified UK teachers to unlock your child’s</span>
-                                    <span class="tlt block" data-in-effect="fadeInLeftBig" data-out-effect="fadeOutRight"> potential!</span>
-                                </h1>
-                                <div class="banner-readmore wow bounceInUp" data-wow-duration="2500ms" data-wow-delay=".1s">
-                                    <a class="button-default" href="{{route('find-tutor')}}">Find a Tutor</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <img src="{{asset('front/img/home/SCIENCE-CLINIC-HOME-PAGE-2-min.jpg')}}">
-                        <div class="text-content-wrapper custom-video-text full-width mac-content-wrapper">
-                            <div class="text-content text-center">
-                                <h1 class="title1 text-center mb-20 pb-0">
-                                    <span class="tlt block" data-in-effect="rollIn" data-out-effect="fadeOutRight"> Fully qualified UK teachers to unlock your child’s</span>
-                                    <span class="tlt block" data-in-effect="fadeInLeftBig" data-out-effect="fadeOutRight"> potential!</span>
-                                </h1>
-                                <div class="banner-readmore wow bounceInUp" data-wow-duration="2500ms" data-wow-delay=".1s">
-                                    <a class="button-default" href="{{route('find-tutor')}}">Find a Tutor</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <img src="{{asset('front/img/home/SCIENCE-CLINIC-HOME-PAGE-4.jpg')}}">
-                        <div class="text-content-wrapper custom-video-text full-width mac-content-wrapper">
-                            <div class="text-content text-center">
-                                <h1 class="title1 text-center mb-20">
-                                    <span class="tlt block" data-in-effect="rollIn" data-out-effect="fadeOutRight"> Fully qualified UK teachers to unlock your child’s</span>
-                                    <span class="tlt block" data-in-effect="fadeInLeftBig" data-out-effect="fadeOutRight"> potential!</span>
-                                </h1>
-                                <div class="banner-readmore wow bounceInUp" data-wow-duration="2500ms" data-wow-delay=".1s">
-                                    <a class="button-default" href="{{route('find-tutor')}}">Find a Tutor</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
     </div>
     <!--End of Background Area-->
     <!--About Area Start-->
@@ -221,7 +156,7 @@
     </div>
     <!--End of About Area-->
 
-    <!--End of Course Area--> 
+    <!--End of Course Area-->
     <div class="testimonial-area p-0 res-testimonial-area tutor-slide-btn">
         <div class="container">
             <div class="product-details-content product-top-uk product-details-content-2 res-pt-0">
@@ -236,7 +171,11 @@
                     <div class="col-md-11">
                         <div class="tutor-slide">
                             <div class="owl-carousel owl-theme hero_carousel">
+                                @php $i = 0; @endphp
                                 @foreach($allTutors as $value)
+                                @if($i == 10)
+                                @php break; @endphp
+                                @endif
                                 <div class="item">
                                     <a href="{{route('tutors-details',sha1($value->id))}}">
                                         <div class="single-product-item">
@@ -875,40 +814,40 @@
 <!-- Color Switcher end -->
 
 
-<!-- jquery
-		============================================ -->
-<script src="{{asset('front/js/vendor/jquery-1.12.4.min.js')}}"></script>
+<!-- jquery ============================================ -->
+<!-- <script src="{{asset('front/js/vendor/jquery-1.12.4.min.js')}}"></script> -->
 
 <!-- popper JS
 		============================================ -->
-<script src="{{asset('front/js/popper.min.js')}}"></script>
+<!-- <script src="{{asset('front/js/popper.min.js')}}"></script> -->
 
 <!-- bootstrap JS
 		============================================ -->
-<script src="{{asset('front/js/bootstrap.min.js')}}"></script>
+<!-- <script src="{{asset('front/js/bootstrap.min.js')}}"></script> -->
 
 <!-- AJax Mail JS
 		============================================ -->
-<script src="{{asset('front/js/ajax-mail.js')}}"></script>
+<!-- <script src="{{asset('front/js/ajax-mail.js')}}"></script> -->
 
 <!-- plugins JS
 		============================================ -->
-<script src="{{asset('front/js/plugins.js')}}"></script>
+<!-- <script src="{{asset('front/js/plugins.js')}}"></script> -->
 
 <!-- StyleSwitch JS
 		============================================ -->
-<script src="{{asset('front/js/styleswitch.js')}}"></script>
+<!-- <script src="{{asset('front/js/styleswitch.js')}}"></script> -->
 
 <!-- owl carousel Js
 		============================================ -->
-<script src="{{asset('front/js/owl.carousel.js')}}"></script>
+<!-- <script src="{{asset('front/js/owl.carousel.js')}}"></script> -->
 
 <!-- main JS
 		============================================ -->
-<script src="{{asset('front/js/main.js')}}"></script>
+<!-- <script src="{{asset('front/js/main.js')}}"></script> -->
 
-<script src="{{asset('assets/js/widgets.js')}}"></script>
-
+<!-- <script src="{{asset('assets/js/widgets.js')}}"></script> -->
+@endsection
+@section('page-js')
 <script>
     $('.hero_carousel').owlCarousel({
         loop: true,

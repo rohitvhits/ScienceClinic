@@ -15,7 +15,7 @@ class TutorListController extends Controller
 {
     public function index(Request $request)
     {   
-        $data['title'] = 'Tutor List';
+       	$data['title'] = 'Tutor List';
         $data['allSubjectsData'] = SubjectHelper::getAllSubjectList();
         $data['allLevelData'] = TutorLevelHelper::getAllTutorList();
         return view('frontend.tutor_list.tutor-list', $data);

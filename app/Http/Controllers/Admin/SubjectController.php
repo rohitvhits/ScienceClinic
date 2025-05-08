@@ -83,26 +83,31 @@ class SubjectController extends Controller
             'subject_image' => 'required'*/
         ]);
         if ($validator->fails()) {
+            return response()->json(['error_msg' => $validator->errors()->all(), 'status' => 'inactive', 'data' => array()], 200);
+            /*
             return redirect("/subject-master/create")
                 ->withErrors($validator, 'useredit')
-                ->withInput();
+                ->withInput();*/
         } else {
+            $data_array = array(
+                'main_title' => $request->input('title')
+            );
+            /*,
             $simagesEnglish = '';
             if ($request->file('subject_image') != '') {
                 $simagesEnglish = $this->uploadImageWithCompress($request->file('subject_image'), 'uploads/subject');
             }
-            $data_array = array(
-                'main_title' => $request->input('title'),
-                'sub_title_one' => $request->input('sub_title'),
-                'sub_title_two' => $request->input('sub_title_two'),
-                'title' => $request->input('title_section_one'),
-                'description' => $request->input('subject_description'),
-            );
+            'sub_title_one' => $request->input('sub_title'),
+            'sub_title_two' => $request->input('sub_title_two'),
+            'title' => $request->input('title_section_one'),
+            'description' => $request->input('subject_description'),
             if ($simagesEnglish != '') {
                 $data_array['image'] = $simagesEnglish;
             }
+            */
             $update = SubjectHelper::save($data_array);
             if ($update) {
+                /*
                 $section_one_title_more = $request->input('section_one_title_more');
                 if (!empty($section_one_title_more[0])) {
                     foreach ($section_one_title_more as $key => $val) {
@@ -130,11 +135,14 @@ class SubjectController extends Controller
                         SubjectOtherSectionMasterHelper::save($titleBanned);
                     }
                 }
-                Session::flash('success', trans('messages.addedSuccessfully'));
-                return redirect('/subject-master');
+                */
+                return response()->json(['error_msg' =>trans('messages.addedSuccessfully'), 'status' => 'active', 'data' => array()], 200);
+                /*Session::flash('success', trans('messages.addedSuccessfully'));
+                return redirect('/subject-master');*/
             } else {
-                Session::flash('error', trans('messages.error'));
-                return redirect('/subject-master/create');
+                return response()->json(['error_msg' =>trans('messages.error'), 'status' => 'inactive', 'data' => array()], 200);
+                /*Session::flash('error', trans('messages.error'));
+                return redirect('/subject-master/create');*/
             }
         }
     }
@@ -162,10 +170,13 @@ class SubjectController extends Controller
         if (empty($auth)) {
             return redirect('/login');
         }
-        $data['basic_details'] = SubjectHelper::getDetailsByid($id);
+        $query = SubjectHelper::getDetailsByid($id);
+        return response()->json(['error_msg' =>trans('messages.updatedSuccessfully'), 'data' => array($query)], 200);
+        /*
         $data['bannerSection'] = SubjectBannerHelper::getDetailsBySubjectId($id);
         $data['SectionTwo'] = SubjectOtherSectionMasterHelper::getDetailsBySubjectId($id);
         return view('admin.subject.edit_subject', $data);
+        */
     }
 
     /**
@@ -189,10 +200,12 @@ class SubjectController extends Controller
             'description_section_two' => 'required',*/
         ]);
         if ($validator->fails()) {
-            return redirect("/subject-master/" . $request->input('id') . '/edit')
+            return response()->json(['error_msg' => $validator->errors()->all(), 'status' => 'inactive', 'data' => array()], 400);
+            /*return redirect("/subject-master/" . $request->input('id') . '/edit')
                 ->withErrors($validator, 'useredit')
-                ->withInput();
+                ->withInput();*/
         } else {
+            /*
             $simagesEnglish = '';
             if ($request->file('subject_image') != '') {
                 $simagesEnglish = $this->uploadImageWithCompress($request->file('subject_image'), 'uploads/subject');
@@ -207,8 +220,10 @@ class SubjectController extends Controller
             if ($simagesEnglish != '') {
                 $data_array['image'] = $simagesEnglish;
             }
+            */
+            $data_array = array('main_title' => $request->input('title'));
             $update = SubjectHelper::update($data_array, array('id' => $request->input('id')));
-
+            /*
             $section_one_title_more = $request->input('section_one_title_more');
             if (!empty($section_one_title_more[0])) {
                 SubjectBannerHelper::SoftDelete(array('subject_id' => $request->input('id')));
@@ -241,6 +256,9 @@ class SubjectController extends Controller
             }
             Session::flash('success', trans('messages.updatedSuccessfully'));
             return redirect('/subject-master');
+            */
+            $query = SubjectHelper::getDetailsByid($request->input('id'));
+            return response()->json(['error_msg' =>trans('messages.updatedSuccessfully'), 'status' => 'active', 'data' => array($query)], 200);
         }
     }
 

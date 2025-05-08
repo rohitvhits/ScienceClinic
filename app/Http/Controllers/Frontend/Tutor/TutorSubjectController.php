@@ -11,15 +11,180 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\TutorForm;
+use App\Models\StudentMaster;
+use App\Models\TutorStudent;
+use App\Models\TutorLevelDetail;
+use App\Models\Country;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
+use Carbon\Carbon;
 
 class TutorSubjectController extends Controller
 
 {
     public $successStatus = 200;
+    public function addStudent()
+    {
+        $auth = Auth::guard('web')->user();
+        $userId = $auth['id'];
+
+        $data['teacher_subject_list'] = $query = TutorLevelDetail::selectRaw('sc_tutor_level_details.*,sb.id as subjectId,level.id as levelId,sb.main_title,GROUP_CONCAT(level.title) as level_name,level.title')
+        ->leftjoin('sc_subject_master as sb', function ($join) {
+            $join->on('sb.id', '=', 'sc_tutor_level_details.subject_id');
+        })->leftjoin('sc_tutor_level as level', function ($join) {
+            $join->on('level.id', '=', 'sc_tutor_level_details.level_id');
+        })
+        ->where('sc_tutor_level_details.tutor_id',$userId)
+        ->whereNull('sb.deleted_at')
+        ->groupBy('sc_tutor_level_details.subject_id')
+        ->orderBy('sc_tutor_level_details.id','DESC')->get();
+        $data['country_list'] = Country::orderBy('iso','ASC')->get();
+        return view('frontend.tutor.tutor-add-student', $data);
+    }
+    public function saveStudent(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'student_name' => 'required',
+            'subject_name' => 'required',
+            'level' => 'required',
+            'year_group' => 'required',
+            'parent_name' => 'required',
+            'country' => 'required',
+            'parent_mobile' => 'required',
+            'parent_email' => 'required',
+            'parent_address' => 'required'
+        ]);
+        if ($validator->fails()) {
+            // return response()->json(['error_msg' => $validator->errors()->all(),'data' => array()], 0);
+            return response()->json(['error_msg' => $validator->errors()->all(), 'status' => 0]);
+        } else {
+            $auth = Auth::guard('web')->user();
+            $userid = $auth['id'];
+            $userName = $auth['first_name'];
+            if(!empty($auth['last_name']))
+            {
+                $userName .= ' '.$auth['last_name'];
+                $userName=trim($userName);
+            }
+            $hours = 1;
+            $startTime = Carbon::parse($request->tuition_time)->format('H:i:s');
+            $time = Carbon::parse($request->tuition_time);
+            $endTime = $time->addHours($hours)->format('H:i:s');
+            $finalEndTime = $endTime;
+            $time = $startTime.'-'.$finalEndTime;
+            $getCC=Country::where('id',$request->country)->first();
+            $cc='';
+            if($getCC && isset($getCC->phonecode))
+            {
+                $cc=$getCC->phonecode;
+            }
+            $studentFormArray = array(
+                'student_name' => $request->student_name,
+                'parent_name' => $request->parent_name,
+                'country_id' => $request->country,
+                'country_code' => $cc,
+                'parent_mobile' => $request->parent_mobile,
+                'parent_email' => $request->parent_email,
+                'parent_address' => $request->parent_address,
+                'subject_id' => $request->subject_name,
+                'level' => $request->level,
+                'year_group' => $request->year_group
+            );
+            $tutorFormArray = array();
+            if(isset($request->eid) && !empty($request->eid))
+            {
+                $studentFormArray['updated_at'] = date('Y-m-d H:i:s');
+                $studentFormArray['updated_by'] = $userid;
+                $getSid = TutorStudent::where([['id','=',$request->eid]])->first();
+                $sId=$getSid->student_id;
+                $saveData = StudentMaster::where([['id','=',$sId]])->update($studentFormArray);   
+            }
+            else
+            {
+                $studentFormArray['created_by'] = $userid;
+                $insert = new StudentMaster($studentFormArray);
+                $saveData = $insert->save();
+                $student_id = $insert->id;
+                $tutorFormArray['tutor_id'] = $userid;
+                $tutorFormArray['student_id'] = $student_id;
+                $tutorFormArray['created_by'] = $userid;                
+                $addTs = new TutorStudent($tutorFormArray);
+                $saveTs = $addTs->save();
+            }
+            if ($saveData) {
+                return response()->json(['error_msg' => trans('messages.addedSuccessfully'), 'status' => 1]);
+            } else {
+                return response()->json(['error_msg' => trans('messages.error'), 'status' => 0]);
+            }
+        }
+    }    
+    public function studentList()
+    {
+        $auth = Auth::guard('web')->user();
+        $id = $auth['id'];
+        return view('frontend.tutor.tutor-student');
+    }
+    public function studentAjaxList(Request $request)
+    {
+        $auth = Auth::guard('web')->user();
+        $id = $auth['id'];
+        $userName = $auth['first_name'];
+        if(!empty($auth['last_name']))
+        {
+            $userName .= ' '.$auth['last_name'];
+            $userName=trim($userName);
+        }
+        $data['page'] = $request->page;
+        $data['query'] = TutorStudent::leftjoin('sc_student_master', 'sc_student_master.id','=','sc_tutor_student.student_id')->leftjoin('sc_subject_master', 'sc_subject_master.id','=','sc_student_master.subject_id')->where([['sc_tutor_student.tutor_id','=',$id]])->orderBy('sc_tutor_student.id', 'desc')->select(['sc_tutor_student.*','sc_student_master.student_name','sc_student_master.parent_name','sc_student_master.country_id','sc_student_master.country_code','sc_student_master.parent_mobile','sc_student_master.parent_email','sc_student_master.parent_address','sc_student_master.level','sc_student_master.year_group','sc_subject_master.main_title'])->paginate(10);
+        return view('frontend.tutor.tutor-student-ajax', $data);
+    }
+    public function editStudent($eid)
+    {
+        $auth = Auth::guard('web')->user();
+        $id = $auth['id'];
+        $userName = $auth['first_name'];
+        if(!empty($auth['last_name']))
+        {
+            $userName .= ' '.$auth['last_name'];
+            $userName=trim($userName);
+        }
+        $data['teacher_subject_list'] = $query = TutorLevelDetail::selectRaw('sc_tutor_level_details.*,sb.id as subjectId,level.id as levelId,sb.main_title,GROUP_CONCAT(level.title) as level_name,level.title')
+        ->leftjoin('sc_subject_master as sb', function ($join) {
+            $join->on('sb.id', '=', 'sc_tutor_level_details.subject_id');
+        })->leftjoin('sc_tutor_level as level', function ($join) {
+            $join->on('level.id', '=', 'sc_tutor_level_details.level_id');
+        })
+        ->where('sc_tutor_level_details.tutor_id',$id)
+        ->whereNull('sb.deleted_at')
+        ->groupBy('sc_tutor_level_details.subject_id')
+        ->orderBy('sc_tutor_level_details.id','DESC')->get();
+
+        $tf=TutorStudent::where([['tutor_id','=',$id],['id','=',$eid]])->first();
+        $data['formData'] = $tf;
+        $data['studentData'] = StudentMaster::where([['id','=',$tf->student_id]])->first();
+        $data['country_list'] = Country::orderBy('iso','ASC')->get();
+        return view('frontend.tutor.tutor-edit-student', $data);
+    }
+    public function deleteStudent($id)
+    {
+        $auth = Auth::guard('web')->user();
+        $data['deleted_at'] = date('Y-m-d H:i:s');
+        $data['deleted_by'] = $auth['id'];
+        $update = TutorStudent::where([['id','=',$id]])->update($data);
+        if ($update) {
+            return response()->json([
+                'message' => trans('messages.deletedSuccessfully')
+            ]);
+            }
+            else {
+            return response()->json([
+                'message' =>  trans('messages.error')
+            ]);
+        }
+    }
     public function index()
     {
         $auth = Auth::guard('web')->user();
@@ -185,7 +350,7 @@ class TutorSubjectController extends Controller
     public function delete(Request $request)
     {
         $id = $request->id;
-        $update = TutorLevelDetailHelper::SoftDelete(array(), array('subject_id' => $id));
+        $update = TutorLevelDetailHelper::SoftDelete(array(), array('id' => $id));
         if ($update) {
             Session::flash('success', trans('messages.deletedSuccessfully'));
         } else {

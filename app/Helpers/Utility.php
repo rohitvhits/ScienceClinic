@@ -9,6 +9,7 @@ namespace App\Helpers;
 use App\Models\QuestionPreferences;
 
 use App\Models\Testimonial;
+use App\Models\User;
 use Log;
 
 
@@ -278,6 +279,12 @@ class Utility
     public static function getAllTestimonialList(){
             $query = Testimonial::whereNull('deleted_at')->get();
             return $query;
+    }
+
+    public static function getTutorName($tid)
+    {
+        $query = User::whereNull('deleted_at')->where([['id', '=', $tid]])->first();
+        return $query->first_name.' '.$query->last_name;
     }
 }
 

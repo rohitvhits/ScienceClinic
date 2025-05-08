@@ -42,7 +42,7 @@
 
             <td>{{ $val->email }}</td>
 
-            <td>{{ $val->mobile_id }}</td>
+            <td>@if(!empty($val->country_code)) +{{$val->country_code}} - @endif {{ $val->mobile_id }}</td>
 
             <td>
 
@@ -53,6 +53,10 @@
                 @elseif($val->status =='Accepted')
 
                 <span class="badge badge-success">Accepted</span>
+
+                @elseif($val->status =='Deactivated')
+
+                <span class="badge badge-success">Deactivated</span>
 
                 @else
 
@@ -76,12 +80,12 @@
 
 
                 <a href="{{ url('tutor-master') }}/{{ $val->id }}" class="show-details"><i class="fa fa-eye" title="View"></i></a>
-                @if($val->deleted_at)
-                <a href="javascript:void(0)" onclick="functionActivate('{{ $val->id }}')" class="activae-details" data-id="{{ $val->id }}}"><i class="fa fa-user-alt" title="Activate"></i></a>
+                @if($val->status =='Accepted')
+                <a href="javascript:void(0)" onclick="functionDeactivate('{{ $val->id }}')" class="delete-details" data-id="{{ $val->id }}}"><i class="fa fa-user-slash" title="Deactivate"></i></a>
                 @else
-                <a href="javascript:void(0)" onclick="functionDelete('{{ $val->id }}')" class="delete-details" data-id="{{ $val->id }}}"><i class="fa fa-user-slash" title="Deactivate"></i></a>
+                <a href="javascript:void(0)" onclick="functionActivate('{{ $val->id }}')" class="activae-details" data-id="{{ $val->id }}}"><i class="fa fa-user-alt" title="Activate"></i></a>
                 @endif
-
+                <a href="javascript:void(0)" onclick="functionDelete('{{ $val->id }}')" class="delete-details" data-id="{{ $val->id }}}"><i class="fa fa-trash" title="Delete"></i></a>
             </td>
 
         </tr>

@@ -16,6 +16,7 @@ use App\Models\TutorBankAccountDetails;
 use App\Models\TutorDetail;
 use App\Models\TutorUniversityDetail;
 use App\Models\User;
+use App\Models\Country;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -33,6 +34,7 @@ class TutorAccountController extends Controller
         $data['getQualificatiosData'] = TutorUniversityDetailHelper::getListwithPaginate($userId);
         $data['getUniversityDetails'] = TutorUniversityDetailHelper::getTutorUniversityDetailsById($userId);
         $data['tutorDetails'] = TutorDetailHelper::getTutorDBSDetailsById($userId);
+        $data['country_list'] = Country::orderBy('iso','ASC')->get();
         return view('frontend.tutor.tutor-account', $data);
     }
     public function updateProfile(Request $request)
@@ -42,6 +44,7 @@ class TutorAccountController extends Controller
 
             'email' => 'required | email',
 
+            'country' => 'required',
             'mobile' => 'required | numeric',
 
             'address1' => 'required | max:255',
@@ -68,6 +71,13 @@ class TutorAccountController extends Controller
         if ($validator->fails()) {
             return response()->json(['message' => $validator->errors(), 'status' => 0], 400);
         } else {
+
+            $getCC=Country::where('id',$request->country)->first();
+            $cc='';
+            if($getCC && isset($getCC->phonecode))
+            {
+                $cc=$getCC->phonecode;
+            }
             $auth = Auth()->user();
             $data_array = array(
 
@@ -75,6 +85,8 @@ class TutorAccountController extends Controller
 
                 'email' => $request->email,
 
+                'country_id' => $request->country,
+                'country_code' => $cc,
                 'mobile_id' => $request->mobile,
 
                 'address1' => $request->address1,

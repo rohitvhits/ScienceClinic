@@ -91,7 +91,6 @@ class TutorDetailHelper
 
         $query = TutorDetail::with('userDetails')->where('tutor_id',$id)->paginate(10);
         return $query;
-
     }
     public static function getStudentListwithPaginate($id){
 

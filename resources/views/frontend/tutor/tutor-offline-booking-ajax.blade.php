@@ -57,7 +57,7 @@
             <td>N/A</td>
             @endif
             <td>
-                <a href="javascript:void(0)" onclick="editDetail('{{$val->id}}')" class="edit-details" data-id="{{$val->main_id}}" id="edit_{{$val->id}}"><i class="fa fa-edit" title="Edit"></i></a>
+                <!--a href="javascript:void(0)" onclick="editDetail('{{$val->id}}')" class="edit-details" data-id="{{$val->main_id}}" id="edit_{{$val->id}}"><i class="fa fa-edit" title="Edit"></i></a-->
                 <a href="javascript:void(0)" onclick="deleteDetail('{{$val->id}}')" class="edit-details" data-id="{{$val->id}}"><i class="fa fa-trash" title="Delete"></i></a>
                 @if($val->booking_date == date('Y-m-d') && $val->attend_class == 0)
                 <a href="javascript:void(0)" onclick="attendOfflineClass('{{$val->id}}')" class="edit-details" data-id="{{$val->id}}"><i class="fa fa-check" title="Attend"></i></a>

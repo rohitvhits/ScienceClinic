@@ -10,7 +10,9 @@ use Illuminate\Support\ServiceProvider;
 
 use App\Helpers\SubjectHelper;
 use App\Models\OnlineTutoring;
+use App\Models\PayClaimFormDetails;
 use Illuminate\Support\Facades\URL;
+use DB;
 
 class AppServiceProvider extends ServiceProvider
 
@@ -57,7 +59,23 @@ class AppServiceProvider extends ServiceProvider
             }
 
             $data['response_menu'] = $query;
-            $data['online_tutorigData'] = OnlineTutoring::whereNUll('deleted_at')->get(); 
+            $data['online_tutorigData'] = OnlineTutoring::whereNUll('deleted_at')->get();
+            $data['allSubjects'] = SubjectHelper::getAllSubjectList();
+            foreach ($data['allSubjects'] as $val) {
+                $val->url = URL::to('/') . '/find-tutor/' . rtrim(strtr(base64_encode($val->id), '+/', '-_'), '=');
+            }
+
+            $getSids=PayClaimFormDetails::select('subject_id', DB::raw('COUNT(id) as total'))
+            ->groupBy('subject_id')
+            ->orderByDesc('total')
+            ->get()->take(20);
+            $allsubject_list=json_decode(json_encode($data['allSubjects']), true);
+            $getSids=json_decode(json_encode($getSids), true);
+            $getSids = array_column($getSids, 'subject_id');
+            $filteredData = array_filter($allsubject_list, function ($item) use ($getSids) {
+                return in_array($item['id'], $getSids);
+            });
+            $data['popularSubs'] = array_values($filteredData);
             $view->with($data);
 
         });

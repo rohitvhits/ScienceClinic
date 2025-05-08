@@ -105,12 +105,12 @@ class UserHelper
     }
     public static function getTutorListLimitFive($userId)
     {
-        $query = User::where('status', 'Accepted')->where('type', 2)->whereNull('deleted_at')->whereIn('id', $userId)->orderBy('id', 'desc')->paginate(4);
+        $query = User::where('status', 'Accepted')->where('type', 2)->where('center_tutor', 'no')->whereNull('deleted_at')->whereIn('id', $userId)->orderBy('id', 'desc')->paginate(4);
         return $query;
     }
     public static function getTutorList($userId)
     {
-        $query = User::where('status', 'Accepted')->where('type', 2)->whereNull('deleted_at')->whereIn('id', $userId)->orderBy('id', 'desc')->count();
+        $query = User::where('status', 'Accepted')->where('type', 2)->where('center_tutor', 'no')->whereNull('deleted_at')->whereIn('id', $userId)->orderBy('id', 'desc')->count();
         return $query;
     }
     public static function getTutorDetails($id)
@@ -135,6 +135,15 @@ class UserHelper
         $data['updated_at'] = date('Y-m-d H:i:s');
         $data['updated_by'] = $user['id'];
         $data['profile_photo'] = $image;
+        $query = User::where('id', $user['id'])->update($data);
+        return $query;
+    }
+    public static function updateVideo($image)
+    {
+        $user = Auth::guard('web')->user();
+        $data['updated_at'] = date('Y-m-d H:i:s');
+        $data['updated_by'] = $user['id'];
+        $data['video'] = $image;
         $query = User::where('id', $user['id'])->update($data);
         return $query;
     }
@@ -244,12 +253,12 @@ class UserHelper
     }
     public static function getTutors()
     {
-        $query  = User::whereNull('deleted_at')->where('type', 2)->where('status', "Accepted")->paginate(6);
+        $query  = User::whereNull('deleted_at')->where('type', 2)->where('center_tutor', 'no')->where('status', "Accepted")->paginate(6);
         return $query;
     }
     public static function getAllTutors()
     {
-        $query  = User::whereNull('deleted_at')->where('type', 2)->where('status', "Accepted")->get();
+        $query  = User::whereNull('deleted_at')->where('type', 2)->where('center_tutor', 'no')->where('status', "Accepted")->get();
         return $query;
     }
     public static function getApprovedParentsList()
@@ -280,6 +289,7 @@ class UserHelper
             }
         })
         ->where('type',2)
+        ->where('center_tutor', 'no')
         ->where('status','Accepted')
         ->whereNull('deleted_at')
         ->paginate(6);
@@ -299,11 +309,11 @@ class UserHelper
         return $query;
     }
     public static function getApprovedTutor(){
-        $query = User::select('id','status','type','deleted_at','first_name')->where('type', 2)->where('status','Accepted')->whereNull('deleted_at')->get();
+        $query = User::select('id','status','type','deleted_at','first_name')->where('type', 2)->where('center_tutor', 'no')->where('status','Accepted')->whereNull('deleted_at')->get();
         return $query;
     }
     public static function countTutors() {
-       return User::where('type','2')->where('status', 'Accepted')->whereNull('deleted_at')->count();
+       return User::where('type','2')->where('status', 'Accepted')->where('center_tutor', 'no')->whereNull('deleted_at')->count();
     }
     public static function countParents()
     {

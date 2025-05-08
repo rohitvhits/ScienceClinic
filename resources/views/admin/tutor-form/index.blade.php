@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Tutor Form Master')
+@section('title', 'Allocation Form Master')
 @section('content')
 
 <link rel="stylesheet" href="{{ asset('assets/css/jquery-confirmation/css/jquery-confirm.min.css') }}">
@@ -40,7 +40,7 @@
 
                         <div class="card-title align-items-start flex-column">
 
-                            <h3 class="card-label font-weight-bolder text-dark">Tutor Form List</h3>
+                            <h3 class="card-label font-weight-bolder text-dark">Allocation Form List</h3>
 
                         </div>
 

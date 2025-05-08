@@ -6,6 +6,10 @@ use App\Helpers\TutorFormHelper;
 use App\Http\Controllers\Controller;
 use App\Imports\TutorFormImport;
 use Carbon\Carbon;
+use App\Models\User;
+use App\Models\StudentMaster;
+use App\Models\TutorForm;
+use App\Models\TutorStudent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -35,7 +39,10 @@ class TutorFormController extends Controller
      */
     public function create()
     {
-        return view('admin.tutor-form.create');
+        $data['tutorList'] = User::where('type',2)->whereNull('deleted_at')->orderBy('first_name','asc')->get(['id','first_name','last_name']);
+        $data['studentList'] = StudentMaster::whereNull('deleted_at')->orderBy('student_name', 'asc')->get(['id','student_name']);
+        // $data['studentList'] = TutorForm::whereNull('deleted_at')->groupby('student_name')->orderBy('student_name', 'asc')->get(['student_name']);
+        return view('admin.tutor-form.create',$data);
     }
 
     /**
@@ -60,10 +67,17 @@ class TutorFormController extends Controller
                 ->withErrors($validator, 'useredit')
                 ->withInput();
         } else {
-
+            $tempT=explode('0_0', $request->input('tutor-name'));
+            $tutor_id=$tempT[0];
+            $tutor_name=$tempT[1];
+            $tempS=explode('0_0', $request->student_name);
+            $student_id=$tempS[0];
+            $student_name=$tempS[1];
             $tutorFormArray = array(
-                'tutor_name' => $request->input('tutor-name'),
-                'student_name' => $request->student_name,
+                'tutor_id' => $tutor_id,
+                'tutor_name' => $tutor_name,
+                'student_name' => $student_name,
+                'student_id' => $student_id,
                 'day_of_tution' => $request->tuition_day,
                 'tution_time' => $request->tuition_time,
                 'rate' => $request->rate,
@@ -72,6 +86,21 @@ class TutorFormController extends Controller
             );
             $update = TutorFormHelper::save($tutorFormArray);
             if ($update) {
+                $checkTS=TutorStudent::where([['tutor_id','=',$tutor_id],['student_id','=',$student_id]])->whereNull('deleted_at')->first();
+                if($checkTS)
+                {
+
+                }
+                else
+                {
+                    $auth = Auth()->user();
+                    $userid = $auth['id'];
+                    $addTS= new TutorStudent();
+                    $addTS->tutor_id=$tutor_id;
+                    $addTS->student_id=$student_id;
+                    $addTS->created_by=$userid;
+                    $addTS->save();
+                }
                 Session::flash('success', trans('messages.addedSuccessfully'));
                 return redirect()->route('tutor-form.index');
             } else {
@@ -156,8 +185,11 @@ class TutorFormController extends Controller
      */
     public function edit($id)
     {
-        $this->data['formData'] = TutorFormHelper::getDataById($id);
-        return view('admin.tutor-form.edit', $this->data);
+        $data['formData'] = TutorFormHelper::getDataById($id);
+        $data['tutorList'] = User::where('type',2)->whereNull('deleted_at')->orderBy('first_name','asc')->get(['id','first_name','last_name']);
+        $data['studentList'] = StudentMaster::whereNull('deleted_at')->orderBy('student_name', 'asc')->get(['id','student_name']);
+        // $data['studentList'] = TutorForm::whereNull('deleted_at')->groupby('student_name')->orderBy('student_name', 'asc')->get(['student_name']);
+        return view('admin.tutor-form.edit', $data);
     }
 
     /**
@@ -189,9 +221,19 @@ class TutorFormController extends Controller
             $endTime = $time->addHours($hours)->format('H:i:s');
             $finalEndTime = $endTime;
             $time = $startTime.'-'.$finalEndTime;
+
+            $tempT=explode('0_0', $request->input('tutor-name'));
+            $tutor_id=$tempT[0];
+            $tutor_name=$tempT[1];
+
+            $tempS=explode('0_0', $request->student_name);
+            $student_id=$tempS[0];
+            $student_name=$tempS[1];
             $tutorFormArray = array(
-                'tutor_name' => $request->input('tutor-name'),
-                'student_name' => $request->student_name,
+                'tutor_id' => $tutor_id,
+                'tutor_name' => $tutor_name,
+                'student_name' => $student_name,
+                'student_id' => $student_id,
                 'day_of_tution' => $request->tuition_day,
                 'tution_time' => $time,
                 'rate' => $request->rate,
@@ -200,6 +242,21 @@ class TutorFormController extends Controller
             );
             $update = TutorFormHelper::update($tutorFormArray, array('id' => $id));
             if ($update) {
+                $checkTS=TutorStudent::where([['tutor_id','=',$tutor_id],['student_id','=',$student_id]])->whereNull('deleted_at')->first();
+                if($checkTS)
+                {
+
+                }
+                else
+                {
+                    $auth = Auth()->user();
+                    $userid = $auth['id'];
+                    $addTS= new TutorStudent();
+                    $addTS->tutor_id=$tutor_id;
+                    $addTS->student_id=$student_id;
+                    $addTS->created_by=$userid;
+                    $addTS->save();
+                }
                 Session::flash('success', trans('messages.updatedSuccessfully'));
                 return redirect()->route('tutor-form.index');
             } else {
@@ -253,9 +310,18 @@ class TutorFormController extends Controller
             $endTime = $time->addHours($hours)->format('H:i:s');
             $finalEndTime = $endTime;
             $time = $startTime.'-'.$finalEndTime;
+            $tempT=explode('0_0', $request->input('tutor-name'));
+            $tutor_id=$tempT[0];
+            $tutor_name=$tempT[1];
+
+            $tempS=explode('0_0', $request->student_name);
+            $student_id=$tempS[0];
+            $student_name=$tempS[1];
             $tutorFormArray = array(
-                'tutor_name' => $request->input('tutor-name'),
-                'student_name' => $request->student_name,
+                'tutor_id' => $tutor_id,
+                'tutor_name' => $tutor_name,
+                'student_id' => $student_id,
+                'student_name' => $student_name,
                 'day_of_tution' => $request->tuition_day,
                 'tution_time' => $time,
                 'rate' => $request->rate,
@@ -264,6 +330,21 @@ class TutorFormController extends Controller
             );
             $saveData = TutorFormHelper::save($tutorFormArray);
             if ($saveData) {
+                $checkTS=TutorStudent::where([['tutor_id','=',$tutor_id],['student_id','=',$student_id]])->whereNull('deleted_at')->first();
+                if($checkTS)
+                {
+
+                }
+                else
+                {
+                    $auth = Auth()->user();
+                    $userid = $auth['id'];
+                    $addTS= new TutorStudent();
+                    $addTS->tutor_id=$tutor_id;
+                    $addTS->student_id=$student_id;
+                    $addTS->created_by=$userid;
+                    $addTS->save();
+                }
                 return response()->json(['error_msg' => trans('messages.addedSuccessfully'), 'status' => 1]);
             } else {
                 return response()->json(['error_msg' => trans('messages.error'), 'status' => 0]);

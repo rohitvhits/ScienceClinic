@@ -41,6 +41,32 @@
         </div>
     </div>
 </div>
+
+<div class="col-md-12 section-title-wrapper test papers-before middle-title-cap">
+ <div class="section-title">
+  <br><br><br>     
+
+<h4 class="mb-4" align="center" > Explore Our E-Learning Resources by Key Stage</h4></div></div>
+
+<div class="container" style="text-indent: 150px;">   
+<h4 class="mb-3">Primary</h4><br>
+ <div class="banner-readmore1">
+<a class="button-default inline" href="https://classroom.thenational.academy/subjects-by-key-stage/early-years-foundation-stage">Early Years Foundation Stage</a> 
+<a class="button-default inline" href="https://classroom.thenational.academy/subjects-by-key-stage/key-stage-1">Key Stage 1</a>
+<a class="button-default inline" href="https://classroom.thenational.academy/subjects-by-key-stage/key-stage-2">Key Stage 2</a>
+<a class="button-default inline" href="https://doodlelearning.com/11-plus-exam?utm_source=google&utm_medium=cpc&utm_campaign=974505839&utm_term=11%20plus%20exam%20papers&utm_content=659878522213&gad_source=1&gclid=EAIaIQobChMIiry-xvSihQMV645QBh30vQEtEAAYBCAAEgJhUPD_BwE">11 Plus</a><br><br>
+</div><br><h4 class="mb-3">Secondary </h4><br>
+
+ <div class="banner-readmore1">
+<a class="button-default inline" href="https://classroom.thenational.academy/subjects-by-key-stage/key-stage-3">Key Stage 3</a> 
+<a class="button-default inline" href="https://classroom.thenational.academy/subjects-by-key-stage/key-stage-4">Key Stage 4</a>
+<a class="button-default inline" href="https://studywise.co.uk/a-level-revision/">A-Level</a>
+<a class="button-default inline" href="https://www.iseb.co.uk/shop/">Common Entrance Exams</a>
+<a class="button-default inline" href="https://continuityoak.org.uk/lessons">Others</a></div>
+<br><br><br><br></div>
+
+<!--
+
 <div class="gcse-text chemistry-gcse-text res-pt-30">
     <div class="container">
         <div class="row">
@@ -127,7 +153,7 @@
         </div>
     </div>
 </div>
-
+-->
 @include('frontend.subject_offer.subject_offer')
 @include('frontend.testimonial.testmonial')
 @endsection

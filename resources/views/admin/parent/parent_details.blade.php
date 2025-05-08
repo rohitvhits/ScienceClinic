@@ -87,7 +87,7 @@
 
                                     <strong>Phone:</strong>
 
-                                    <span class="ml-1">{{ $parents->mobile_id }}</span>
+                                    <span class="ml-1">@if(!empty($parents->country_code)) +{{$parents->country_code}} - @endif {{ $parents->mobile_id }}</span>
 
                                 </div>
 

@@ -94,7 +94,8 @@ class User extends Authenticatable
         'user_name',
         'otp',
         'title',
-        'subject_name'
+        'subject_name',
+        'center_tutor'
     ];
 
 

@@ -1,48 +1,35 @@
 <table class="table table-separate table-head-custom">
-
     <thead>
-
         <tr>
-
             <th nowrap="nowrap">ID</th>
             <th style="white-space: nowrap">Name</th>
             <th style="white-space: nowrap">Description</th>
             <th style="white-space: nowrap">Subject Name</th>
-            <th style="white-space: nowrap">Outcome</th>
             <th style="white-space: nowrap">Rating</th>
             <th>Actions</th>
-
         </tr>
-
     </thead>
-
     <tbody>
 
         @php
-
         $i = $page * 10 - 9;
-
         @endphp
-
-        @if (count($query) > 0)
-
-        @foreach ($query as $val)
-        <span id="desc{{$val->mainId}}" style="display:none">{{ $val->descriptions}}</span>
+        @if (count($query2) > 0)
+        @foreach ($query2 as $val)
+        <span id="desc{{$val->id}}" style="display:none">{{ $val->message}}</span>
         <tr>
 
             <td>{{ $i++ }}</td>
-            <td>{{ $val->userDetails->first_name }} {{ $val->userDetails->last_name }}</td>
-            <td>{{ Str::limit($val->descriptions, 50) }}</td>
-            <td>{{ $val->subjectDetails->main_title }}</td>
-            <td>{{ $val->outcome }}</td>
+            <td>{{ $val->parent_first_name }} {{ $val->parent_last_name }}</td>
+            <td>{{ Str::limit($val->message, 50) }}</td>
+            <td>{{ $val->subject_name }}</td>
             <td>
                 <div class="review-score">
-                    <div class="stars stars2" style="--rating: {{$val->rating}};" aria-label="Rating of this product is 2.3 out of 5."></div>
+                    <div class="stars stars2" style="--rating: {{$val->star}};" aria-label="Rating of this product is {{$val->star}} out of 5."></div>
                 </div>
             </td>
-
             <td>
-                <a href="javascript:void(0)" onclick="viewDetail('{{$val->mainId}}')" class="edit-details" data-id="{{$val->id}}}"><i class="fa fa-eye"></i></a>
+                <a href="javascript:void(0)" onclick="viewDetail('{{$val->id}}')" class="edit-details" data-id="{{$val->id}}}"><i class="fa fa-eye"></i></a>
             </td>
 
         </tr>
@@ -51,7 +38,7 @@
 
         @endif
 
-        @if (count($query) == 0)
+        @if (count($query2) == 0)
 
         <tr>
 
@@ -65,4 +52,4 @@
 
 </table>
 
-{!! $query->withQueryString()->links('pagination::bootstrap-5') !!}
+{!! $query2->withQueryString()->links('pagination::bootstrap-5') !!}

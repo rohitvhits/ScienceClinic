@@ -1,9 +1,9 @@
 @extends('layouts.master')
-@section('title', 'Add Tutor Form')
+@section('title', 'Add Allocation Form')
 @section('content')
 
 <style>
-    .card-header {
+    .card-header {Tutor Name *
         border-bottom: 0 !important;
     }
 
@@ -38,7 +38,7 @@
 
                         <div class="card-title align-items-start flex-column">
 
-                            <h3 class="card-label font-weight-bolder text-dark">Add Tutor Form</h3>
+                            <h3 class="card-label font-weight-bolder text-dark">Add Allocation Form</h3>
 
                         </div>
 
@@ -60,10 +60,22 @@
 
                                     <div class="form-group">
 
-                                        <label>Tutor Name <span class="text-danger">*</span></label>
-
-                                        <input class="form-control validate_field" placeholder="Enter Tutor Name" autocomplete="off" id="tutor-name" type="text" data-msg="Tutor Name" name="tutor-name" maxlength="100">
-
+                                        <label>Tutor Name <span class="text-danger">*</span></label>                                        
+                                        <select class="form-control selectpicker validate_field" id="tutor-name" data-msg="Tutor Name" name="tutor-name" aria-label="select" data-live-search="true">
+                                            <option value="">Select Tutor</option>
+                                            @foreach($tutorList as $key2 => $sval)
+                                            <?php
+                                            $tnam=$sval->first_name;
+                                            if(!empty($sval->last_name))
+                                            {
+                                                $tnam.=' '.$sval->last_name;
+                                            }
+                                            $tnam=trim($tnam);
+                                            ?>
+                                            <option value="{{$sval->id.'0_0'.$tnam}}">{{$tnam}}</option>
+                                            @endforeach
+                                        </select>
+	                                <!-- <input class="form-control validate_field" placeholder="Enter Tutor Name" autocomplete="off" id="tutor-name" type="text" data-msg="Tutor Name" name="tutor-name" maxlength="100"> -->
                                         <span class="form-text error tutor_name_error">{{ $errors->useredit->first('tutor-name')}}</span>
 
                                     </div>
@@ -136,8 +148,16 @@
                                     <div class="form-group">
 
                                         <label>Student Name <span class="text-danger">*</span></label>
-
-                                        <input class="form-control validate_field" placeholder="Enter Student Name" autocomplete="off" id="student_name" type="text" data-msg="Student Name" name="student_name">
+                                        <select class="form-control selectpicker validate_field" id="student_name" name="student_name" data-msg="Student Name" aria-label="select" data-live-search="true">
+                                            <option value="">Select Student</option>
+                                            @foreach($studentList as $key2 => $sval)
+                                            <?php
+                                            $snam=trim($sval->student_name);
+                                            ?>
+                                            <option value="{{$sval->id.'0_0'.$snam}}">{{$snam}}</option>
+                                            @endforeach
+                                        </select>
+                                        <!-- <input class="form-control validate_field" placeholder="Enter Student Name" autocomplete="off" id="student_name" type="text" data-msg="Student Name" name="student_name"> -->
 
                                         <span class="form-text error student_name_error">{{ $errors->useredit->first('student_name')}}</span>
 
@@ -361,6 +381,7 @@
                         $('#tuition_time').val("");
                         $('#rate').val("");
                         $('#commission').val("");
+                        $(".selectpicker").selectpicker("refresh");
                         toastr.success(res.error_msg);
                     } else {
                         toastr.error(res.error_msg);

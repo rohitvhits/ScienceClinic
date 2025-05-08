@@ -5,7 +5,12 @@ namespace App\Http\Controllers\Frontend\Tutor;
 use App\Helpers\ParentDetailHelper;
 use App\Helpers\SubjectHelper;
 use App\Helpers\TutorAvailabilityHelper;
+use App\Helpers\TutorFormHelper;
 use App\Helpers\TutorLevelHelper;
+use App\Models\TutorForm;
+use App\Models\ParentDetail;
+use App\Models\TutorStudent;
+use App\Models\StudentMaster;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -62,6 +67,27 @@ class TutorAvailabilityController extends Controller
     public function deleteSlot(Request $request){
         $id = $request->id;
         $update = TutorAvailabilityHelper::SoftDelete(array(),array('id'=>$id));
+        if ($update) {
+            return response()->json(['success_message' => trans('messages.deletedSuccessfully'), 'status' => 1 ]);
+        }
+        else {
+            return response()->json(['error_message' =>  trans('messages.error'), 'status' => 0 ]);
+        }
+    }
+    public function deleteBookingSlot(Request $request){
+        $id = $request->id;
+        $typ = $request->typ;
+        if(!empty($id) && !empty($typ))
+        {
+            if($typ=='offline')
+            {
+                $update = ParentDetailHelper::SoftDelete(array(), array('id' => $id));
+            }
+            elseif($typ=='online')
+            {
+                $update = TutorFormHelper::SoftDelete(array(),array('id'=>$id));
+            }
+        }
         if ($update) {
             return response()->json(['success_message' => trans('messages.deletedSuccessfully'), 'status' => 1 ]);
         }
@@ -182,8 +208,25 @@ class TutorAvailabilityController extends Controller
     }
     public function getTutorBookingsDetails(Request $request)
     {
-        $userId = Auth::user()->id;
-        $data = ParentDetailHelper::getBooklessondataTutor($userId);
+        // $userId = Auth::user()->id;        
+        $auth = Auth::guard('web')->user();
+        $userId = $auth['id'];
+        $userName = $auth['first_name'];
+        if(!empty($auth['last_name']))
+        {
+            $userName .= ' '.$auth['last_name'];
+            $userName=trim($userName);
+        }
+        // $data = ParentDetailHelper::getBooklessondataTutor($userId);
+        $online = TutorForm::where([['tutor_name','=',$userName]])->get();
+        $offline =  ParentDetail::with(['tutorDetails', 'subjectDetails', 'levelDetails'])->select('id', 'tuition_day', 'tutor_id', 'subject_id', 'attend_class', 'tutor_reject_reason', 'teaching_start_time', 'booking_date', 'user_name as userName', 'level_id', 'email as userEmail', 'created_by as createdBy','main_id')
+            ->whereHas('subjectDetails', function ($subjectQuery) {
+                $subjectQuery->whereNull('deleted_at');
+            })
+            ->whereHas('tutorDetails', function ($queryVal) {
+                $queryVal->where('status', 'Accepted');
+            })->where('inquiry_type', '2')->where('tutor_id', $userId)->whereNotNull('user_name')->whereNull('deleted_at')->get();
+        $data=array('online'=>$online,'offline'=>$offline);
         return response()->json($data);
     }
     public function paginate($items, $perPage = 10, $page = null)
@@ -235,6 +278,9 @@ class TutorAvailabilityController extends Controller
     {
         $this->data['subject'] = SubjectHelper::getAllSubjectList();
         $this->data['level'] = TutorLevelHelper::getAllTutorList();
+        $auth = auth()->user();
+        $userId = $auth['id'];
+        $this->data['parentslist'] = StudentMaster::orderBy('sc_student_master.student_name', 'asc')->select(['id','student_name'])->get();
         return view('frontend.tutor.tutor-offline-booking', $this->data);
     }
     public function getDatesFromRange($start, $end, $format = 'Y-m-d')
@@ -279,13 +325,15 @@ class TutorAvailabilityController extends Controller
                 ->withErrors($validator, 'booking')
                 ->withInput();
         } else {
+            $ts=explode('_',$request->sname);
+            $sid=$ts[0];
+            $sname=$ts[1];
             $bookDate = array();
             $hours = 1;
             $finalEndTime = "";
             $time = Carbon::parse($request->idel_time);
             $endTime = $time->addHours($hours);
             $finalEndTime = $endTime;
-
             $currdate = date("Y-m-d");
             $monday = strtotime("last monday");
             $monday = date('w', $monday) == date('w') ? $monday + 7 * 86400 : $monday;
@@ -333,7 +381,7 @@ class TutorAvailabilityController extends Controller
                         'teaching_end_time' => $finalEndTime,
                         'inquiry_type' => 2,
                         'email' => $email,
-                        'user_name' => $request->sname,
+                        'user_name' => $sname,
                         'payment_status' => "Success",
                         'created_by' => $tutorId,
                         'no_of_lessons' => $request->no_of_lessons
@@ -354,7 +402,7 @@ class TutorAvailabilityController extends Controller
                         'teaching_end_time' => $finalEndTime,
                         'inquiry_type' => 2,
                         'email' => $email,
-                        'user_name' => $request->sname,
+                        'user_name' => $sname,
                         'payment_status' => "Success",
                         'created_by' => $tutorId,
                         'no_of_lessons' => $request->no_of_lessons,
@@ -364,6 +412,20 @@ class TutorAvailabilityController extends Controller
                 }
             }
             if ($saveData) {
+                $checkS=TutorStudent::where([['tutor_id','=',$tutorId],['student_id','=',$sid]])->first();
+                if($checkS)
+                {
+
+                }
+                else
+                {
+                    $ads=new TutorStudent();
+                    $ads->tutor_id=$tutorId;
+                    $ads->student_id=$sid;
+                    $ads->created_by=$tutorId;
+                    $ads->created_at=date('Y-m-d H:i:s');
+                    $ads->save();
+                }
                 Session::flash('success', trans('messages.addedSuccessfully'));
                 return redirect('tutor-offline-booking');
             } else {
@@ -677,7 +739,36 @@ class TutorAvailabilityController extends Controller
         }
         $tutorId = Auth::user()->id;
         $idelTime = date("H:i:s", strtotime($request->ideltime));
-       $counter = ParentDetailHelper::checkUniqueEntry($request->subjectname,$request->level,$bookDate, $idelTime,$tutorId,$request->id);
+        $counter = ParentDetailHelper::checkUniqueEntry($request->subjectname,$request->level,$bookDate, $idelTime,$tutorId,$request->id);
+
+
+        $auth = Auth::guard('web')->user();
+        $userId = $auth['id'];
+        if($userId==454)
+        {
+            $userName = $auth['first_name'];
+            if(!empty($auth['last_name']))
+            {
+                $userName .= ' '.$auth['last_name'];
+                $userName=trim($userName);
+            }
+            $checkOldBooking = TutorForm::where([['tutor_name','=',$userName],['day_of_tution','=',$request->day]])->whereNull('deleted_at')->get();
+            foreach($checkOldBooking as $key => $cbVal)
+            {
+                $startTime=date("H:i:s", strtotime($request->ideltime));
+                $tse=explode('-', $cbVal->tution_time);
+                $tse2=explode(' ', $finalEndTime);
+                if($startTime>=$tse[0] && $startTime<=$tse[1])
+                {
+                    $counter=1;
+                }
+                elseif($tse2[1]>=$tse[0] && $tse2[1]<=$tse[1])
+                {
+                    $counter=1;
+                }
+            }
+        }
+
        if($counter == '0'){
             return response()->json(['status' => 0]);
        }else{

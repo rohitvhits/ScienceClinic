@@ -1,4 +1,20 @@
 <table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Valid DBS</th>
+            <th>DBS Application No</th>
+            <th>DBS File</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@if($tutor->valid_dbs==1) Yes @else No @endif</td>
+            <td>@if($tutor->dbs_application_no!='') {{$tutor->dbs_application_no}} @else N/A @endif</td>
+            <td>@if($tutor->dbs_file!='') <a href="https://www.scienceclinic.co.uk/uploads/dbs/{{$tutor->dbs_file}}" download><i class="far fa-file-pdf"></i></a> @else N/A @endif</td>
+        </tr>
+    </tbody>
+</table>
+<table class="table table-bordered">
 
     <thead>
 

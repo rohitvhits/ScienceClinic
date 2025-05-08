@@ -9,6 +9,7 @@ use App\Helpers\TutorAvailabilityHelper;
 use App\Helpers\TutorLevelHelper;
 use App\Helpers\UserHelper;
 use Illuminate\Http\Request;
+use App\Models\StudentMaster;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -25,6 +26,7 @@ class OfflineBookingController extends Controller
         $this->data['subject'] = SubjectHelper::getAllSubjectList();
         $this->data['level'] = TutorLevelHelper::getAllTutorList();
         $this->data['tutorData'] = UserHelper::getApprovedTutor();
+        $this->data['studentList'] = StudentMaster::whereNull('deleted_at')->orderBy('student_name', 'asc')->get(['id','student_name']);
         return view('admin.offline_bookings.index', $this->data);
     }
     public function ajaxList(Request $request)

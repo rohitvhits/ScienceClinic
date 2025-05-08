@@ -32,6 +32,7 @@ use App\Helpers\TutorUniversityDetailHelper;
 use App\Helpers\TutorSubjectDetailHelper;
 
 use App\Helpers\TutorLevelDetailHelper;
+use App\Models\Country;
 use Illuminate\Support\Facades\Hash;
 
 use function GuzzleHttp\Promise\all;
@@ -69,9 +70,8 @@ class BecomeTutorController extends Controller
     {
 
         $data['subject_list'] = SubjectHelper::getAllSubjectList();
-
         $data['tutor_level_list'] = TutorLevelHelper::getAllTutorList();
-
+        $data['country_list'] = Country::orderBy('iso','ASC')->get();
         return view('frontend.become_tutor.create', $data);
     }
 
@@ -116,6 +116,7 @@ class BecomeTutorController extends Controller
 
             'email' => 'required | email',
 
+            'country' => 'required',
             'mobile' => 'required | numeric',
 
             'address1' => 'required | max:255',
@@ -178,13 +179,21 @@ class BecomeTutorController extends Controller
 
             //     $image = $this->uploadImageWithCompress($request->file('profile_image'), 'uploads/user');
             // }
-
+            
+            $getCC=Country::where('id',$request->country)->first();
+            $cc='';
+            if($getCC && isset($getCC->phonecode))
+            {
+                $cc=$getCC->phonecode;
+            }
             $data_array = array(
 
                 'first_name' => $request->name,
 
                 'email' => $request->email,
 
+                'country_id' => $request->country,
+                'country_code' => $cc,
                 'mobile_id' => $request->mobile,
 
                 'address1' => $request->address1,
@@ -207,7 +216,8 @@ class BecomeTutorController extends Controller
                 'type' => 2,
                 'user_name' => $request->user_name,
                 'status' => 'Pending',
-                'password' => Hash::make($request->password)
+                'password' => Hash::make($request->password),
+                'center_tutor' => 'no'
 
             );
             $data = UserHelper::save($data_array);

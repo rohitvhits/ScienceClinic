@@ -14,11 +14,11 @@
 
             <th style="white-space:nowrap">Level</th>
 
-            <th style="white-space:nowrap">Day</th>
+            <!--th style="white-space:nowrap">Day</th>
 
             <th style="white-space:nowrap">Time </th>
 
-            <th style="white-space:nowrap">Hours </th>
+            <th style="white-space:nowrap">Hours </th-->
 
         </tr>
 
@@ -39,17 +39,17 @@
 
                 <td style="white-space:nowrap">{{ $i++ }}</td>
 
-                <td style="white-space:nowrap">{{ $val->userDetails->first_name ?: ''  }} {{ $val->userDetails->last_name ?: ''  }}</td>
+                <td style="white-space:nowrap">{{ $val->student_name }}</td>
 
-                <td style="white-space:nowrap">{{ $val->subjectDetails->main_title ?: ''  }}</td>
+                <td style="white-space:nowrap">{{ $val->main_title }}</td>
 
-                <td style="white-space:nowrap">{{ $val->levelDetails->title ?: ''  }}</td>
+                <td style="white-space:nowrap">{{ $val->level }}</td>
 
-                <td style="white-space:nowrap; text-transform: capitalize;">{{ $val->tuition_day ?: ''  }}</td>
+                <!--td style="white-space:nowrap; text-transform: capitalize;">{{ $val->tuition_day ?: ''  }}</td>
 
                 <td>{{ $val->tuition_time }}</td>
 
-                <td>{{ $val->teaching_hours }}</td>
+                <td>{{ $val->teaching_hours }}</td-->
             </tr>
         @endforeach
 

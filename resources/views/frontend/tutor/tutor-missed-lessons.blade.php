@@ -36,7 +36,7 @@
                                 <a class="nav-link active" id="missed-lesson-tab" data-toggle="pill" href="javascript:void(0)" role="tab" aria-controls="pills-home" aria-selected="true">Missed Lessons</a>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link" id="payment-tab" data-toggle="pill" href="javascript:void(0)" onclick="window.location.href='tutor-offline-booking'" role="tab" aria-controls="pills-home" aria-selected="true">Offline Booking</a>
+                                <a class="nav-link" id="payment-tab" data-toggle="pill" href="javascript:void(0)" onclick="window.location.href='tutor-offline-booking'" role="tab" aria-controls="pills-home" aria-selected="true">New Booking</a>
                             </li>
                             <input type="hidden" value="{{Auth::user()->id}}" id="tutor_id">
                         </ul>

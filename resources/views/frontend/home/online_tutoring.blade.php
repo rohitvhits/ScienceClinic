@@ -66,11 +66,20 @@
                                 <a class="button-default inline" target="_blank" href="{{route('tutors')}}">Book A lesson
                                     with a Tutor</a>
                             </div>
+ 
                         </div>
+
                     </div>
+
                 </div>
-            </div>
+
+            </div>		
+
+<center><video src="{{asset('front/video/new/Scienceclinictuturos.mp4')}}"  width="400" height="500" controlsList="nodownload" controls>
+      </video></center>
         </div>
+
+
         <!--End of About Area-->
         @include('frontend.subject_offer.subject_offer')
         @include('frontend.testimonial.testmonial')

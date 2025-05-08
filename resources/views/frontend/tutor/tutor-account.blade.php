@@ -104,7 +104,19 @@
                                                     <span id="error_email" style="color:red;"></span>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6 mb-3">
+                                            <div class="col-md-2 mb-3">
+                                                <div class="form-control-spacing">
+                                                    <label for="example-text-input" class="form-label">Country</label> <span style="color:red" class="required-error">*</span>
+                                                    <select class="selectpicker " data-id="country" name="country" id="country" aria-label="Default select example" data-live-search="true">
+                                                        <option value="">Select country</option>
+                                                        @foreach ($country_list as $val)
+                                                        <option value="{{ $val->id }}" @if($val->id==Auth::guard('web')->user()->country_id) selected @endif>+{{ $val->phonecode.' ('.$val->iso.')' }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <span id="error_country" style="color:red;"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
                                                 <div class="form-control-spacing">
                                                     <label for="example-text-input" class="form-label">Telephone</label> <span style="color:red" class="required-error">*</span>
                                                     <input class="form-control placeholder2 numberCls" id="mobile" name="mobile" type="text" placeholder="Telephone" maxlength="12" autocomplete="off" value="{{Auth::guard('web')->user()->mobile_id}}">
@@ -665,6 +677,7 @@
         $('#submitBtn').attr('disabled', true);
         var name = $("#name").val();
         var email = $("#email").val();
+        var country = $("#country").val();
         var mobile = $("#mobile").val();
         var address1 = $("#address1").val();
         var address2 = $("#address2").val();
@@ -677,6 +690,7 @@
         var temp = 0;
         $("#error_name").html('');
         $("#error_email").html('');
+        $("#error_country").html('');
         $("#error_mobile").html('');
         $("#error_address1").html('');
         $("#error_address2").html('');
@@ -738,6 +752,13 @@
 
 
 
+        if (country.trim() == '') {
+
+            $('#error_country').html('Please select Country');
+
+            temp++;
+
+        }
         if (mobile.trim() == '') {
 
             $('#error_mobile').html('Please enter Telephone');
@@ -954,6 +975,12 @@
                         $('#error_email').text(jqXHR.responseJSON.message.email);
                     } else {
                         $('#error_email').text('');
+                    }
+                    if (jqXHR.responseJSON.message.country) {
+                        tempVal++;
+                        $('#error_country').text(jqXHR.responseJSON.message.country);
+                    } else {
+                        $('#error_country').text('');
                     }
                     if (jqXHR.responseJSON.message.mobile) {
                         tempVal++;

@@ -33,7 +33,7 @@
 
             <td>{{$val->first_name}} {{$val->last_name}}</td>
             <td>{{$val->email}}</td>
-            <td>{{$val->mobile_id}}</td>
+            <td>@if(!empty($val->country_code)) +{{$val->country_code}} - @endif {{$val->mobile_id}}</td>
             <td class="parent-address">{{$val->address1}}</td>
             <td>
                 @if ($val->created_at != '')

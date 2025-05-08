@@ -95,7 +95,7 @@
                                 <div class="d-flex mb-4">
 
                                     <strong>Phone : </strong>
-                                    <span class="ml-1">{{$parentData->mobile_id}}</span>
+                                    <span class="ml-1">@if(!empty($parentData->country_code)) +{{$parentData->country_code}} - @endif {{$parentData->mobile_id}}</span>
 
                                 </div>
 

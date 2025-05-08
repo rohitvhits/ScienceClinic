@@ -92,74 +92,68 @@
 
                 @endphp
 
-                <li class="menu-item menu-item-submenu @if ($subjectFlag == 1) menu-item-open @endif" aria-haspopup="true" data-menu-toggle="hover">
-
-                    <a href="javascript:;" class="menu-link menu-toggle">
-
+                <li class="menu-item {{ Request::segment(1) == 'subject-master' ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                    <a href="{{ route('subject-master.index') }}" class="menu-link">
                         <span class="svg-icon menu-icon svg-icon-primary svg-icon-2x">
-                            <!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo2/dist/../src/media/svg/icons/Home/Book-open.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                     <rect x="0" y="0" width="24" height="24" />
                                     <path d="M13.6855025,18.7082217 C15.9113859,17.8189707 18.682885,17.2495635 22,17 C22,16.9325178 22,13.1012863 22,5.50630526 L21.9999762,5.50630526 C21.9999762,5.23017604 21.7761292,5.00632908 21.5,5.00632908 C21.4957817,5.00632908 21.4915635,5.00638247 21.4873465,5.00648922 C18.658231,5.07811173 15.8291155,5.74261533 13,7 C13,7.04449645 13,10.79246 13,18.2438906 L12.9999854,18.2438906 C12.9999854,18.520041 13.2238496,18.7439052 13.5,18.7439052 C13.5635398,18.7439052 13.6264972,18.7317946 13.6855025,18.7082217 Z" fill="#000000" />
                                     <path d="M10.3144829,18.7082217 C8.08859955,17.8189707 5.31710038,17.2495635 1.99998542,17 C1.99998542,16.9325178 1.99998542,13.1012863 1.99998542,5.50630526 L2.00000925,5.50630526 C2.00000925,5.23017604 2.22385621,5.00632908 2.49998542,5.00632908 C2.50420375,5.00632908 2.5084219,5.00638247 2.51263888,5.00648922 C5.34175439,5.07811173 8.17086991,5.74261533 10.9999854,7 C10.9999854,7.04449645 10.9999854,10.79246 10.9999854,18.2438906 L11,18.2438906 C11,18.520041 10.7761358,18.7439052 10.4999854,18.7439052 C10.4364457,18.7439052 10.3734882,18.7317946 10.3144829,18.7082217 Z" fill="#000000" opacity="0.3" />
                                 </g>
                             </svg>
-                            <!--end::Svg Icon-->
                         </span>
-
-
                         <span class="menu-text">Subject Master</span>
-
+                    </a>
+                </li>
+                <!--li class="menu-item menu-item-submenu @if ($subjectFlag == 1) menu-item-open @endif" aria-haspopup="true" data-menu-toggle="hover">
+                    <a href="{{ route('subject-master.index') }}" class="menu-link menu-toggle">
+                        <span class="svg-icon menu-icon svg-icon-primary svg-icon-2x">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                    <rect x="0" y="0" width="24" height="24" />
+                                    <path d="M13.6855025,18.7082217 C15.9113859,17.8189707 18.682885,17.2495635 22,17 C22,16.9325178 22,13.1012863 22,5.50630526 L21.9999762,5.50630526 C21.9999762,5.23017604 21.7761292,5.00632908 21.5,5.00632908 C21.4957817,5.00632908 21.4915635,5.00638247 21.4873465,5.00648922 C18.658231,5.07811173 15.8291155,5.74261533 13,7 C13,7.04449645 13,10.79246 13,18.2438906 L12.9999854,18.2438906 C12.9999854,18.520041 13.2238496,18.7439052 13.5,18.7439052 C13.5635398,18.7439052 13.6264972,18.7317946 13.6855025,18.7082217 Z" fill="#000000" />
+                                    <path d="M10.3144829,18.7082217 C8.08859955,17.8189707 5.31710038,17.2495635 1.99998542,17 C1.99998542,16.9325178 1.99998542,13.1012863 1.99998542,5.50630526 L2.00000925,5.50630526 C2.00000925,5.23017604 2.22385621,5.00632908 2.49998542,5.00632908 C2.50420375,5.00632908 2.5084219,5.00638247 2.51263888,5.00648922 C5.34175439,5.07811173 8.17086991,5.74261533 10.9999854,7 C10.9999854,7.04449645 10.9999854,10.79246 10.9999854,18.2438906 L11,18.2438906 C11,18.520041 10.7761358,18.7439052 10.4999854,18.7439052 C10.4364457,18.7439052 10.3734882,18.7317946 10.3144829,18.7082217 Z" fill="#000000" opacity="0.3" />
+                                </g>
+                            </svg>
+                        </span>
+                        <span class="menu-text">Subject Master</span>
                         <i class="menu-arrow"></i>
-
                     </a>
                     <div class="menu-submenu" kt-hidden-height="80">
                         <i class="menu-arrow"></i>
-
                         <ul class="menu-subnav">
-
-
-
                             <li class="menu-item {{ Request::segment(1) == 'subject-master' ? 'menu-item-active' : '' }}" aria-haspopup="true">
-
                                 <a href="{{ route('subject-master.index') }}" class="menu-link">
-
                                     <i class="menu-bullet menu-bullet-dot">
-
                                         <span></span>
-
                                     </i>
-
                                     <span class="menu-text">Subject Master</span>
-
                                 </a>
-
                             </li>
-
                             <li class="menu-item {{ Request::segment(1) == 'sub-subject-master' ? 'menu-item-active' : '' }}" aria-haspopup="true">
-
                                 <a href="{{ route('sub-subject-master.index') }}" class="menu-link">
-
                                     <i class="menu-bullet menu-bullet-dot">
-
                                         <span></span>
-
                                     </i>
-
                                     <span class="menu-text">Sub Subject Master</span>
-
                                 </a>
-
                             </li>
-
-
-
                         </ul>
-
                     </div>
+                </li-->
+
+
+                <li class="menu-item {{ Request::segment(1) == 'pay-claim-form-list' ? 'menu-item-active' : '' }}" aria-haspopup="true">
+
+                    <a href="{{ route('pay-claim-form-list') }}" class="menu-link">
+                        <img src="{{asset('front/img/pound-sign.png')}}" style="width: 24px; margin-right: 10px;">
+                        <span class="menu-text">Pay Claim Form</span>
+
+                    </a>
 
                 </li>
-
+                
                 @php
 
                 $tutorFlag = 0;
@@ -212,7 +206,7 @@
                             <!--end::Svg Icon-->
                         </span>
 
-                        <span class="menu-text">Tutor List</span>
+                        <span class="menu-text">Tutor Register</span>
 
                     </a>
 
@@ -237,6 +231,31 @@
                     </a>
 
                 </li>
+                <li class="menu-item {{ Request::segment(1) == 'student-list' || Request::segment(1) == 'student-add' || Request::segment(1) == 'student-edit' ? 'menu-item-active' : '' }}" aria-haspopup="true">
+
+                    <a href="{{ route('student-list') }}" class="menu-link">
+                        <span class="svg-icon menu-icon svg-icon-primary svg-icon-2x">
+                            <svg height="24px" width="24px" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-51.2 -51.2 614.40 614.40" xml:space="preserve" fill="#3699FF"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <style type="text/css"> .st0{fill:#3699FF;} </style> <g> <path class="st0" d="M473.61,63.16L276.16,2.927C269.788,0.986,263.004,0,256.001,0c-7.005,0-13.789,0.986-20.161,2.927 L38.386,63.16c-3.457,1.064-5.689,3.509-5.689,6.25c0,2.74,2.232,5.186,5.691,6.25l91.401,27.88v77.228 c0.023,39.93,13.598,78.284,38.224,107.981c11.834,14.254,25.454,25.574,40.483,33.633c15.941,8.564,32.469,12.904,49.124,12.904 c16.646,0,33.176-4.34,49.126-12.904c22.597-12.143,42.04-31.646,56.226-56.39c14.699-25.683,22.471-55.155,22.478-85.224v-78.214 l45.244-13.804v64.192c-6.2,0.784-11.007,6.095-11.007,12.5c0,5.574,3.649,10.404,8.872,12.011l-9.596,63.315 c-0.235,1.576,0.223,3.168,1.262,4.386c1.042,1.204,2.554,1.902,4.148,1.902h36.273c1.592,0,3.104-0.699,4.148-1.91 c1.036-1.203,1.496-2.803,1.262-4.386l-9.596-63.307c5.223-1.607,8.872-6.436,8.872-12.011c0-6.405-4.81-11.716-11.011-12.5V81.544 l19.292-5.885c3.457-1.064,5.691-3.517,5.691-6.25C479.303,66.677,477.069,64.223,473.61,63.16z M257.62,297.871 c-10.413,0-20.994-2.842-31.448-8.455c-16.194-8.649-30.908-23.564-41.438-42.011c-4.854-8.478-8.796-17.702-11.729-27.445 c60.877-10.776,98.51-49.379,119.739-80.97c10.242,20.776,27.661,46.754,54.227,58.648c-3.121,24.984-13.228,48.812-28.532,67.212 c-8.616,10.404-18.773,18.898-29.375,24.573C278.606,295.029,268.025,297.871,257.62,297.871z"></path> <path class="st0" d="M373.786,314.23l-1.004-0.629l-110.533,97.274L151.714,313.6l-1.004,0.629 c-36.853,23.036-76.02,85.652-76.02,156.326v0.955l0.846,0.45C76.291,472.365,152.428,512,262.249,512 c109.819,0,185.958-39.635,186.712-40.038l0.846-0.45v-0.955C449.808,399.881,410.639,337.265,373.786,314.23z"></path> </g> </g></svg>
+                        </span>
+                        <span class="menu-text">Student Register</span>
+                    </a>
+                </li>
+                <li class="menu-item {{ Request::segment(1) == 'tutor-reviews' || Request::segment(1) == 'tutor-reviews-add' || Request::segment(1) == 'tutor-reviews-edit' ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                    <a href="{{ route('tutor-reviews') }}" class="menu-link">
+                        <span class="svg-icon menu-icon">
+                            <span class="svg-icon svg-icon-primary svg-icon-2x">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <polygon points="0 0 24 0 24 24 0 24" />
+                                        <path d="M12,4.25932872 C12.1488635,4.25921584 12.3000368,4.29247316 12.4425657,4.36281539 C12.6397783,4.46014562 12.7994058,4.61977315 12.8967361,4.81698575 L14.9389263,8.95491503 L19.5054023,9.61846284 C20.0519472,9.69788046 20.4306287,10.2053233 20.351211,10.7518682 C20.3195865,10.9695052 20.2170993,11.1706476 20.0596157,11.3241562 L16.7552826,14.545085 L17.5353298,19.0931094 C17.6286908,19.6374458 17.263103,20.1544017 16.7187666,20.2477627 C16.5020089,20.2849396 16.2790408,20.2496249 16.0843804,20.1472858 L12,18 L12,4.25932872 Z" fill="#000000" opacity="0.3" />
+                                        <path d="M12,4.25932872 L12,18 L7.91561963,20.1472858 C7.42677504,20.4042866 6.82214789,20.2163401 6.56514708,19.7274955 C6.46280801,19.5328351 6.42749334,19.309867 6.46467018,19.0931094 L7.24471742,14.545085 L3.94038429,11.3241562 C3.54490071,10.938655 3.5368084,10.3055417 3.92230962,9.91005817 C4.07581822,9.75257453 4.27696063,9.65008735 4.49459766,9.61846284 L9.06107374,8.95491503 L11.1032639,4.81698575 C11.277344,4.464261 11.6315987,4.25960807 12,4.25932872 Z" fill="#000000" />
+                                    </g>
+                                </svg>
+                            </span>
+                        </span>
+                        <span class="menu-text">Tutor Reviews</span>
+                    </a>
+                </li>
                 <li class="menu-item {{ Request::segment(1) == 'offline-bookings' ? 'menu-item-active' : '' }}" aria-haspopup="true">
 
                     <a href="{{ route('offline-bookings') }}" class="menu-link">
@@ -251,7 +270,7 @@
                             </svg>
                             <!--end::Svg Icon-->
                         </span>
-                        <span class="menu-text">Offline Bookings</span>
+                        <span class="menu-text">New Bookings</span>
 
                     </a>
 
@@ -608,7 +627,7 @@
                             <!--end::Svg Icon-->
                         </span>
 
-                        <span class="menu-text">Tutor Form</span>
+                        <span class="menu-text">Allocation Form</span>
 
                     </a>
 
@@ -691,6 +710,14 @@
 
                         <span class="menu-text">Tutor Bank Details</span>
 
+                    </a>
+
+                </li>
+                <li class="menu-item {{ Request::segment(1) == 'center-timetable' ? 'menu-item-active' : '' }}" aria-haspopup="true">
+
+                    <a href="{{ route('center-timetable') }}" class="menu-link">
+                        <img src="{{asset('front/img/calendar.png')}}" style="width: auto; height:20px; margin-right: 10px;">
+                        <span class="menu-text">Centre Timetable</span>
                     </a>
 
                 </li>
