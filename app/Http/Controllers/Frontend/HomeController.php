@@ -4,6 +4,8 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Helpers\BlogMasterHelper;
+use App\Helpers\OurFeaturedHelper;
 use App\Helpers\PastPapersDetailHelper;
 use App\Helpers\PastPapersHelper;
 use App\Helpers\TextBooksHelper;
@@ -39,6 +41,8 @@ class HomeController extends Controller
         $data['allTutors'] = UserHelper::getAllTutors();
         $data['allLevelData'] = TutorLevelHelper::getAllTutorList();
         $data['country_list'] = Country::orderBy('iso','ASC')->get();
+        $data['ourFeatured'] = OurFeaturedHelper::getOurFeaturedList();
+        $data['blogList'] = BlogMasterHelper::getBlogListNew();
         return view('frontend.home.home_test',$data);
     }
     public function index_test(){
@@ -92,7 +96,7 @@ class HomeController extends Controller
         $data['getElearning'] = TutorResourcesHelper::getListwithPaginateAdminAll();
         return view('frontend.home.e_learning',$data);
     }
-    
+
     public function getPastPaperData(Request $request){
 
         $dataGetcategory = PastPapersHelper::getAllcategory();
@@ -119,10 +123,10 @@ class HomeController extends Controller
                 if(count($paperDetail) > 0){
                     $mainArray[] = $key;
                 }
-                
+
             }
         }
-        
+
         $data['paperData'] = $mainArray;
         return view('frontend.home.pas_papaer_resource',$data);
     }
@@ -142,7 +146,7 @@ class HomeController extends Controller
                 $mainArray[] = $key;
             }
         }
-        
+
         $data['pastPaperdetail']  = $mainArray;
         return view('frontend.home.pas_papaer_resource_detail',$data);
     }

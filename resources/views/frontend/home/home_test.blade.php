@@ -663,30 +663,21 @@
             </div>
             <div class="col-md-12">
                 <div class="row">
+                    @if(isset($blogList) && count($blogList) > 0)
+                    @foreach ($blogList as $blog)
+
                     <div class="col-md-3">
+                        <a href="{{route('blog-detail',($blog->id))}}">
                         <div class="img-box">
-                            <img src="{{asset('front/img/newimages/blog1.jpg')}}" alt="">
+                            <img src="{{$blog->image}}" alt="">
                         </div>
-                        <div class="tag">Blog Titles</div>
+                        <div class="tag">{{$blog->title ?? ""}}</div>
+                        </a>
                     </div>
-                    <div class="col-md-3">
-                        <div class="img-box">
-                            <img src="{{asset('front/img/newimages/blog2.jpg')}}" alt="">
-                        </div>
-                        <div class="tag">Blog Titles</div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="img-box">
-                            <img src="{{asset('front/img/newimages/blog3.jpg')}}" alt="">
-                        </div>
-                        <div class="tag">Blog Titles</div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="img-box">
-                            <img src="{{asset('front/img/newimages/blog5.jpg')}}" alt="">
-                        </div>
-                        <div class="tag">Blog Titles</div>
-                    </div>
+
+                    @endforeach
+
+                    @endif
                 </div>
             </div>
         </div>
@@ -874,166 +865,21 @@
             <div class="m-scroll">
                 <div class="m-scroll__title">
                     <div class="mainScroll">
+                        @if(isset($ourFeatured) && count($ourFeatured)>0)
+                        @foreach ($ourFeatured as $val)
                         <div class="ourFeatureBox">
-                            <img class="mainimg" src="{{asset('front/img/newimages/ourFeatureImg1.jpg')}}" alt="">
-                            <p>Learning of Language</p>
+                            <img class="mainimg" src="{{$val->image}}" alt="">
+                            <p>{{$val->title}}</p>
+                            <a href="{{$val->link}}" target="_blank">
                             <div class="bottom">
                                 <button class="learmore">Learn More</button>
                                 <img src="{{asset('front/img/newimages/logos_youtube-icon.png')}}" alt="">
                             </div>
+                            </a>
                         </div>
-                        <div class="ourFeatureBox">
-                            <img class="mainimg" src="{{asset('front/img/newimages/ourFeatureImg2.jpg')}}" alt="">
-                            <p>Mathematic Logical Solutions</p>
-                            <div class="bottom">
-                                <button class="learmore">Learn More</button>
-                                <img src="{{asset('front/img/newimages/logos_youtube-icon.png')}}" alt="">
-                            </div>
-                        </div>
-                        <div class="ourFeatureBox">
-                            <img class="mainimg" src="{{asset('front/img/newimages/ourFeatureImg3.jpg')}}" alt="">
-                            <p>Science Lab Tutorial</p>
-                            <div class="bottom">
-                                <button class="learmore">Learn More</button>
-                                <img src="{{asset('front/img/newimages/logos_youtube-icon.png')}}" alt="">
-                            </div>
-                        </div>
-                        <div class="ourFeatureBox">
-                            <img class="mainimg" src="{{asset('front/img/newimages/ourFeatureImg4.jpg')}}" alt="">
-                            <p>Economic Classes </p>
-                            <div class="bottom">
-                                <button class="learmore">Learn More</button>
-                                <img src="{{asset('front/img/newimages/logos_youtube-icon.png')}}" alt="">
-                            </div>
-                        </div>
-                        <div class="ourFeatureBox">
-                            <img class="mainimg" src="{{asset('front/img/newimages/ourFeatureImg1.jpg')}}" alt="">
-                            <p>Learning of Language</p>
-                            <div class="bottom">
-                                <button class="learmore">Learn More</button>
-                                <img src="{{asset('front/img/newimages/logos_youtube-icon.png')}}" alt="">
-                            </div>
-                        </div>
-                        <div class="ourFeatureBox">
-                            <img class="mainimg" src="{{asset('front/img/newimages/ourFeatureImg2.jpg')}}" alt="">
-                            <p>Mathematic Logical Solutions</p>
-                            <div class="bottom">
-                                <button class="learmore">Learn More</button>
-                                <img src="{{asset('front/img/newimages/logos_youtube-icon.png')}}" alt="">
-                            </div>
-                        </div>
-                        <div class="ourFeatureBox">
-                            <img class="mainimg" src="{{asset('front/img/newimages/ourFeatureImg3.jpg')}}" alt="">
-                            <p>Science Lab Tutorial</p>
-                            <div class="bottom">
-                                <button class="learmore">Learn More</button>
-                                <img src="{{asset('front/img/newimages/logos_youtube-icon.png')}}" alt="">
-                            </div>
-                        </div>
-                        <div class="ourFeatureBox">
-                            <img class="mainimg" src="{{asset('front/img/newimages/ourFeatureImg4.jpg')}}" alt="">
-                            <p>Economic Classes </p>
-                            <div class="bottom">
-                                <button class="learmore">Learn More</button>
-                                <img src="{{asset('front/img/newimages/logos_youtube-icon.png')}}" alt="">
-                            </div>
-                        </div>
-                        <div class="ourFeatureBox">
-                            <img class="mainimg" src="{{asset('front/img/newimages/ourFeatureImg1.jpg')}}" alt="">
-                            <p>Learning of Language</p>
-                            <div class="bottom">
-                                <button class="learmore">Learn More</button>
-                                <img src="{{asset('front/img/newimages/logos_youtube-icon.png')}}" alt="">
-                            </div>
-                        </div>
-                        <div class="ourFeatureBox">
-                            <img class="mainimg" src="{{asset('front/img/newimages/ourFeatureImg2.jpg')}}" alt="">
-                            <p>Mathematic Logical Solutions</p>
-                            <div class="bottom">
-                                <button class="learmore">Learn More</button>
-                                <img src="{{asset('front/img/newimages/logos_youtube-icon.png')}}" alt="">
-                            </div>
-                        </div>
-                        <div class="ourFeatureBox">
-                            <img class="mainimg" src="{{asset('front/img/newimages/ourFeatureImg3.jpg')}}" alt="">
-                            <p>Science Lab Tutorial</p>
-                            <div class="bottom">
-                                <button class="learmore">Learn More</button>
-                                <img src="{{asset('front/img/newimages/logos_youtube-icon.png')}}" alt="">
-                            </div>
-                        </div>
-                        <div class="ourFeatureBox">
-                            <img class="mainimg" src="{{asset('front/img/newimages/ourFeatureImg4.jpg')}}" alt="">
-                            <p>Economic Classes </p>
-                            <div class="bottom">
-                                <button class="learmore">Learn More</button>
-                                <img src="{{asset('front/img/newimages/logos_youtube-icon.png')}}" alt="">
-                            </div>
-                        </div>
-                        <div class="ourFeatureBox">
-                            <img class="mainimg" src="{{asset('front/img/newimages/ourFeatureImg1.jpg')}}" alt="">
-                            <p>Learning of Language</p>
-                            <div class="bottom">
-                                <button class="learmore">Learn More</button>
-                                <img src="{{asset('front/img/newimages/logos_youtube-icon.png')}}" alt="">
-                            </div>
-                        </div>
-                        <div class="ourFeatureBox">
-                            <img class="mainimg" src="{{asset('front/img/newimages/ourFeatureImg2.jpg')}}" alt="">
-                            <p>Mathematic Logical Solutions</p>
-                            <div class="bottom">
-                                <button class="learmore">Learn More</button>
-                                <img src="{{asset('front/img/newimages/logos_youtube-icon.png')}}" alt="">
-                            </div>
-                        </div>
-                        <div class="ourFeatureBox">
-                            <img class="mainimg" src="{{asset('front/img/newimages/ourFeatureImg3.jpg')}}" alt="">
-                            <p>Science Lab Tutorial</p>
-                            <div class="bottom">
-                                <button class="learmore">Learn More</button>
-                                <img src="{{asset('front/img/newimages/logos_youtube-icon.png')}}" alt="">
-                            </div>
-                        </div>
-                        <div class="ourFeatureBox">
-                            <img class="mainimg" src="{{asset('front/img/newimages/ourFeatureImg4.jpg')}}" alt="">
-                            <p>Economic Classes </p>
-                            <div class="bottom">
-                                <button class="learmore">Learn More</button>
-                                <img src="{{asset('front/img/newimages/logos_youtube-icon.png')}}" alt="">
-                            </div>
-                        </div>
-                        <div class="ourFeatureBox">
-                            <img class="mainimg" src="{{asset('front/img/newimages/ourFeatureImg1.jpg')}}" alt="">
-                            <p>Learning of Language</p>
-                            <div class="bottom">
-                                <button class="learmore">Learn More</button>
-                                <img src="{{asset('front/img/newimages/logos_youtube-icon.png')}}" alt="">
-                            </div>
-                        </div>
-                        <div class="ourFeatureBox">
-                            <img class="mainimg" src="{{asset('front/img/newimages/ourFeatureImg2.jpg')}}" alt="">
-                            <p>Mathematic Logical Solutions</p>
-                            <div class="bottom">
-                                <button class="learmore">Learn More</button>
-                                <img src="{{asset('front/img/newimages/logos_youtube-icon.png')}}" alt="">
-                            </div>
-                        </div>
-                        <div class="ourFeatureBox">
-                            <img class="mainimg" src="{{asset('front/img/newimages/ourFeatureImg3.jpg')}}" alt="">
-                            <p>Science Lab Tutorial</p>
-                            <div class="bottom">
-                                <button class="learmore">Learn More</button>
-                                <img src="{{asset('front/img/newimages/logos_youtube-icon.png')}}" alt="">
-                            </div>
-                        </div>
-                        <div class="ourFeatureBox">
-                            <img class="mainimg" src="{{asset('front/img/newimages/ourFeatureImg4.jpg')}}" alt="">
-                            <p>Economic Classes </p>
-                            <div class="bottom">
-                                <button class="learmore">Learn More</button>
-                                <img src="{{asset('front/img/newimages/logos_youtube-icon.png')}}" alt="">
-                            </div>
-                        </div>
+                        @endforeach
+                        @endif
+
                     </div>
                 </div>
             </div>
@@ -2359,7 +2205,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="event-area custom-topbottompd gray gray-bgs res-pt-0">
         <div class="container">
             <div class="row">
@@ -2491,7 +2337,7 @@
             </div>
         </div>
     </div>
-   
+
     <div class="description-data event-pd home-event-pd">
         <div class="container">
             <div class="row">
