@@ -10,7 +10,21 @@ app/storage/
 # Laravel 5 & Lumen specific
 public/storage
 public/hot
-
+public/*.mov
+public/*.mp4
+public/*.avi
+public/*.mkv
+public/*.flv
+public/*.wmv
+public/*.mpg
+public/*.mpeg
+public/*.3gp
+public/*.webm 
+public/*.m4v
+public/*.avi
+public/*.mp3
+public/*.wav
+public/*.aac
 # Laravel 5 & Lumen specific with changed public path
 public_html/storage
 public_html/hot
