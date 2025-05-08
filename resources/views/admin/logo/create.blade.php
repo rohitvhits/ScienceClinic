@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Edit Our Featured')
+@section('title', 'Add Blog')
 @section('content')
 <style>
     .remove-btn1 {
@@ -21,36 +21,32 @@
 
                     <div class="card-header py-3">
                         <div class="card-title align-items-start flex-column">
-                            <h3 class="card-label font-weight-bolder text-dark">Edit Our Featured</h3>
+                            <h3 class="card-label font-weight-bolder text-dark">Add Blog Master</h3>
                         </div>
                     </div>
 
-                    <form class="form" id="submitid" method="post" action="{{ route('our-featured-update', $query->id) }}" enctype="multipart/form-data">
-                        @csrf
-                        @method('PUT')
+                    <form class="form" id="submitid" method="post" action="{{ route('logo-master.store') }}" enctype="multipart/form-data">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Title <span class="text-danger">*</span></label>
-                                        <input placeholder="Title" class="form-control txtOnly" autocomplete="off" id="title" type="text" data-msg="Title" value="{{ old('title', $query->title)}}" name="title" maxlength=255>
-                                        <span class="form-text error title_error" id="title_error">{{ $errors->first('title')}}</span>
+                                        <label>Type <span class="text-danger">*</span></label>
+                                        <select class="form-control validate_field" id="type" name="type" data-msg="Type">
+                                            <option value="">Select Type</option>
+                                            <option value="1" {{ old('type') == 1 ? 'selected' : '' }}>First</option>
+                                            <option value="2" {{ old('type') == 2 ? 'selected' : '' }}>Second</option>
+                                        </select>
+                                        <span class="form-text error type_error" id="type_error">{{ $errors->first('type')}}</span>
                                     </div>
                                 </div>
+
                                 <div class="col-md-6">
-                                    <div class="row">
-                                        <div class="col-md-10">
-                                            <div class="form-group">
-                                                <label>Image </label>
-                                                <div>
-                                                    <input type="file" name="image" data-msg="Image" id="image" accept=".png, .jpg, .jpeg">
-                                                    <span class="form-text error image_error" id="image_error"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <input type="hidden" id="oldmg" value="{{ $query->image }}" />
-                                        <div class="col-md-2">
-                                            <img src="{{ $query->image }}" style="width:60px;height:60px;">
+                                    <div class="form-group">
+                                        <label>Image <span class="text-danger">*</span></label>
+                                        <div>
+                                            <input type="file" name="image" class="form-control validate_field" data-msg="Image" id="image" accept=".png, .jpg, .jpeg">
+                                            <span class="form-text error image_error" id="image_error"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -59,17 +55,19 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Link <span class="text-danger">*</span></label>
-                                        <input type="url" name="link" class="form-control validate_field" id="link" placeholder="https://example.com" value="{{ old('link', $query->link) }}">
+                                        <input type="url" name="link" class="form-control validate_field" id="link" placeholder="https://example.com" value="{{ old('link') }}">
                                         <span class="form-text error link_error" id="link_error"></span>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                         <div class="card-footer">
-                            <button type="submit" id="add_our_featured" class="btn btn-primary mr-2" style="background-color:#3498db !important">Submit</button>
-                            <a class="btn btn-secondary" href="{{ url('our-featured') }}">Cancel</a>
+                            <button type="submit" id="add_logo" class="btn btn-primary mr-2" style="background-color:#3498db !important">Submit</button>
+                            <a class="btn btn-secondary" href="{{ url('blog-master') }}">Cancel</a>
+
                         </div>
+                        <!--end::Body-->
+
                     </form>
                 </div>
             </div>
@@ -80,7 +78,6 @@
 </div>
 <!--end::Container-->
 @endsection
-
 @section('page-js')
 <script>
     $(".charCls").keypress(function(event) {
@@ -97,43 +94,33 @@
             e.preventDefault();
         }
     });
-    $('#add_our_featured').click(function(e) {
+    $('#add_logo').click(function(e) {
 
-        var title = $('#title').val();
+        var type = $('#type').val();
         var image = $('#image').prop('files');
         var link = $('#link').val();
 
         var temp = 0;
 
-        if (title.trim() == '') {
-            $('#title_error').html("Title is required");
+        if (type == '') {
+            $('#type_error').html("Type is required");
             temp++;
         } else {
-            $('#title_error').html("");
+            $('#type_error').html("");
         }
 
-        if (image.length == 0 && !@json($query->image)) {
+        if (image.length == 0) {
             $('#image_error').html("Image is required");
             temp++;
         }
 
-        var image = $('input[name="image"]').prop('files');
-        if (image.length != 0) {
-            $('.image_error').html("");
-            var FileUploadPath = image[0].name;
-            var Extension = FileUploadPath.substring(FileUploadPath.lastIndexOf('.') + 1).toLowerCase();
-            if (Extension == 'jpg' || Extension == 'png' || Extension == 'gif' || Extension == 'jpeg') {} else {
-                $('.image_error').html("Image only allows image types of PNG, JPG, JPEG");
-                temp++;
-            }
-        }
-
-        if (link.trim() == '') {
+        if (link == '') {
             $('#link_error').html("Link is required");
             temp++;
         } else {
             $('#link_error').html("");
         }
+
         var urlPattern = /^(https?:\/\/)?([\w\-]+\.)+[\w\-]{2,}(\/\S*)?$/;
 
         if (link === '') {
@@ -145,11 +132,15 @@
         } else {
             $('#link_error').html("");
         }
+
+
         if (temp == 0) {
+
             return true;
         } else {
             return false;
         }
     })
 </script>
+
 @endsection

@@ -1289,78 +1289,15 @@
             <div class="m-scroll">
                 <div class="m-scroll__title">
                     <div class="logosSlider">
+                        @if(isset($logos) && count($logos) > 0)
+                        @foreach ($logos as $logo)
+                        @if($logo->type == "1")
                         <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/AQA_V2-01.jpg')}}" alt="">
+                            <a href="{{$logo->link}}"><img src="{{$logo->image}}" alt=""></a>
                         </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/Cambridge Assessment_V1-01.jpg')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/CEA V2-01.jpg')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/Edexcel_V1-01.jpg')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/EDUQAS V1-01.jpg')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/OCR_V1-01.jpg')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/SQA SCOTTISH HIGHER-01.jpg')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/WJEC_V2-01.jpg')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/AQA_V2-01.jpg')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/Cambridge Assessment_V1-01.jpg')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/CEA V2-01.jpg')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/Edexcel_V1-01.jpg')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/EDUQAS V1-01.jpg')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/OCR_V1-01.jpg')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/SQA SCOTTISH HIGHER-01.jpg')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/WJEC_V2-01.jpg')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/AQA_V2-01.jpg')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/Cambridge Assessment_V1-01.jpg')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/CEA V2-01.jpg')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/Edexcel_V1-01.jpg')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/EDUQAS V1-01.jpg')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/OCR_V1-01.jpg')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/SQA SCOTTISH HIGHER-01.jpg')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/WJEC_V2-01.jpg')}}" alt="">
-                        </div>
+                        @endif
+                        @endforeach
+                        @endif
                     </div>
                 </div>
             </div>
@@ -2055,68 +1992,16 @@
             <div class="m-scroll">
                 <div class="m-scroll__title">
                     <div class="logosSlider">
+                        @if(isset($logos) && count($logos) > 0)
+                        @foreach ($logos as $logo)
+                        @if($logo->type == "2")
                         <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/associationslogo1.png')}}" alt="">
+                            <a href="{{$logo->link}}"><img src="{{$logo->image}}" alt=""></a>
                         </div>
-                        <div class="imgbox">
-                            <a href="https://www.mymaths.co.uk/" target="_blank">
-                                <img src="{{asset('front/img/newimages/associationslogo2.png')}}" alt="">
-                            </a>
-                        </div>
-                        <div class="imgbox">
-                            <a href="https://www.risingstars-uk.com/" target="_blank">
-                                <img src="{{asset('front/img/newimages/associationslogo3.png')}}" alt="">
-                            </a>
-                        </div>
-                        <div class="imgbox">
-                            <a href="https://global.oup.com/education/secondary/kerboodle/?region=uk" target="_blank">
-                                <img src="{{asset('front/img/newimages/associationslogo4.png')}}" alt="">
-                            </a>
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/associationslogo5.png')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <a href="https://connect.collins.co.uk/school/portal.aspx" target="_blank">
-                                <img src="{{asset('front/img/newimages/associationslogo6.png')}}" alt="">
-                            </a>
-                        </div>
-                        <div class="imgbox">
-                            <a href="https://www.hoddereducation.co.uk/alevelmaths" target="_blank">
-                                <img src="{{asset('front/img/newimages/associationslogo7.png')}}" alt="">
-                            </a>
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/associationslogo1.png')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <a href="https://www.mymaths.co.uk/" target="_blank">
-                                <img src="{{asset('front/img/newimages/associationslogo2.png')}}" alt="">
-                            </a>
-                        </div>
-                        <div class="imgbox">
-                            <a href="https://www.risingstars-uk.com/" target="_blank">
-                                <img src="{{asset('front/img/newimages/associationslogo3.png')}}" alt="">
-                            </a>
-                        </div>
-                        <div class="imgbox">
-                            <a href="https://global.oup.com/education/secondary/kerboodle/?region=uk" target="_blank">
-                                <img src="{{asset('front/img/newimages/associationslogo4.png')}}" alt="">
-                            </a>
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/associationslogo5.png')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <a href="https://connect.collins.co.uk/school/portal.aspx" target="_blank">
-                                <img src="{{asset('front/img/newimages/associationslogo6.png')}}" alt="">
-                            </a>
-                        </div>
-                        <div class="imgbox">
-                            <a href="https://www.hoddereducation.co.uk/alevelmaths" target="_blank">
-                                <img src="{{asset('front/img/newimages/associationslogo7.png')}}" alt="">
-                            </a>
-                        </div>
+                        @endif
+                        @endforeach
+                        @endif
+
                     </div>
                 </div>
             </div>

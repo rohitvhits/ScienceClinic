@@ -5,6 +5,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Helpers\BlogMasterHelper;
+use App\Helpers\LogoMasterHelper;
 use App\Helpers\OurFeaturedHelper;
 use App\Helpers\PastPapersDetailHelper;
 use App\Helpers\PastPapersHelper;
@@ -43,6 +44,7 @@ class HomeController extends Controller
         $data['country_list'] = Country::orderBy('iso','ASC')->get();
         $data['ourFeatured'] = OurFeaturedHelper::getOurFeaturedList();
         $data['blogList'] = BlogMasterHelper::getBlogListNew();
+        $data['logos'] = LogoMasterHelper::getLogoList();
         return view('frontend.home.home_test',$data);
     }
     public function index_test(){

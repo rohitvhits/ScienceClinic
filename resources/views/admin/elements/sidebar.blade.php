@@ -731,6 +731,15 @@
 
                 </li>
 
+                <li class="menu-item {{ Request::segment(1) == 'logo-master' ? 'menu-item-active' : '' }}" aria-haspopup="true">
+
+                    <a href="{{ route('logo-master.index') }}" class="menu-link">
+                        <img src="{{asset('front/img/calendar.png')}}" style="width: auto; height:20px; margin-right: 10px;">
+                        <span class="menu-text">Logo Master</span>
+                    </a>
+
+                </li>
+
             </ul>
 
             <!--end::Menu Nav-->

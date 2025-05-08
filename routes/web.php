@@ -194,6 +194,9 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin'], function ($admins) {
         $backendVerified->delete('our-featured/{id}', "OurFeaturedController@destroy")->name('our-featured-destroy');
         $backendVerified->put('our-featured-update/{id}', "OurFeaturedController@update")->name('our-featured-update');
 
+        $backendVerified->resource('logo-master', "LogoController");
+        $backendVerified->get('logo-master-ajax', "LogoController@ajaxList")->name('logo-master-ajax');
+
     });
 });
 

@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Edit Our Featured')
+@section('title', 'Edit logo')
 @section('content')
 <style>
     .remove-btn1 {
@@ -13,28 +13,31 @@
 <div class="d-flex flex-column-fluid">
     <!--begin::Container-->
     <div class="container-fluid">
-
         <div class="d-flex flex-row">
-
             <div class="flex-row-fluid">
                 <div class="card card-custom card-stretch">
 
                     <div class="card-header py-3">
                         <div class="card-title align-items-start flex-column">
-                            <h3 class="card-label font-weight-bolder text-dark">Edit Our Featured</h3>
+                            <h3 class="card-label font-weight-bolder text-dark">Edit logo Master</h3>
                         </div>
                     </div>
 
-                    <form class="form" id="submitid" method="post" action="{{ route('our-featured-update', $query->id) }}" enctype="multipart/form-data">
+                    <form class="form" id="submitid" method="POST" action="{{ route('logo-master.update', $logo->id) }}" enctype="multipart/form-data">
                         @csrf
-                        @method('PUT')
+                        @method('put')
+                        <input type="hidden" name="id" value="{{ $logo->id }}">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Title <span class="text-danger">*</span></label>
-                                        <input placeholder="Title" class="form-control txtOnly" autocomplete="off" id="title" type="text" data-msg="Title" value="{{ old('title', $query->title)}}" name="title" maxlength=255>
-                                        <span class="form-text error title_error" id="title_error">{{ $errors->first('title')}}</span>
+                                        <label>Type <span class="text-danger">*</span></label>
+                                        <select class="form-control validate_field" id="type" name="type" data-msg="Type">
+                                            <option value="">Select Type</option>
+                                            <option value="1" {{ $logo->type == 1 ? 'selected' : '' }}>First</option>
+                                            <option value="2" {{ $logo->type == 2 ? 'selected' : '' }}>Second</option>
+                                        </select>
+                                        <span class="form-text error type_error" id="type_error">{{ $errors->first('type')}}</span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -48,9 +51,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <input type="hidden" id="oldmg" value="{{ $query->image }}" />
+                                        <input type="hidden" id="oldmg" value="{{ $logo->image }}" />
                                         <div class="col-md-2">
-                                            <img src="{{ $query->image }}" style="width:60px;height:60px;">
+                                            <img src="{{ $logo->image }}" style="width:60px;height:60px;">
                                         </div>
                                     </div>
                                 </div>
@@ -59,17 +62,19 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Link <span class="text-danger">*</span></label>
-                                        <input type="url" name="link" class="form-control validate_field" id="link" placeholder="https://example.com" value="{{ old('link', $query->link) }}">
+                                        <input type="url" name="link" class="form-control validate_field" id="link" placeholder="https://example.com" value="{{ $logo->link }}">
                                         <span class="form-text error link_error" id="link_error"></span>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                         <div class="card-footer">
-                            <button type="submit" id="add_our_featured" class="btn btn-primary mr-2" style="background-color:#3498db !important">Submit</button>
-                            <a class="btn btn-secondary" href="{{ url('our-featured') }}">Cancel</a>
+                            <button type="submit" class="btn btn-primary waves-effect waves-light mr-1" title="Submit" id="edit_logo">Update</button>
+                            {{-- <button type="update" id="edit_logo" class="btn btn-primary mr-2"
+                                    style="background-color:#3498db !important">Update</button> --}}
+                            <button type="reset" class="btn btn-secondary" onclick="window.location.href='{{ url('logo-master') }}'">Cancel</button>
                         </div>
+                        <!--end::Body-->
                     </form>
                 </div>
             </div>
@@ -80,9 +85,14 @@
 </div>
 <!--end::Container-->
 @endsection
-
 @section('page-js')
 <script>
+    $(".txtOnly").keypress(function(e) {
+        var key = e.keyCode;
+        if (key >= 48 && key <= 57) {
+            e.preventDefault();
+        }
+    });
     $(".charCls").keypress(function(event) {
         var regex = new RegExp("^[a-zA-Z ]+$");
         var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
@@ -91,49 +101,34 @@
             return false;
         }
     });
-    $(".txtOnly").keypress(function(e) {
-        var key = e.keyCode;
-        if (key >= 48 && key <= 57) {
-            e.preventDefault();
-        }
-    });
-    $('#add_our_featured').click(function(e) {
 
-        var title = $('#title').val();
+    $('#edit_logo').click(function(e) {
+
+        var type = $('#type').val();
         var image = $('#image').prop('files');
         var link = $('#link').val();
 
         var temp = 0;
 
-        if (title.trim() == '') {
-            $('#title_error').html("Title is required");
+        if (type == '') {
+            $('#type_error').html("Type is required");
             temp++;
         } else {
-            $('#title_error').html("");
+            $('#type_error').html("");
         }
 
-        if (image.length == 0 && !@json($query->image)) {
+        if (image.length == 0 && !@json($logo->image)) {
             $('#image_error').html("Image is required");
             temp++;
         }
 
-        var image = $('input[name="image"]').prop('files');
-        if (image.length != 0) {
-            $('.image_error').html("");
-            var FileUploadPath = image[0].name;
-            var Extension = FileUploadPath.substring(FileUploadPath.lastIndexOf('.') + 1).toLowerCase();
-            if (Extension == 'jpg' || Extension == 'png' || Extension == 'gif' || Extension == 'jpeg') {} else {
-                $('.image_error').html("Image only allows image types of PNG, JPG, JPEG");
-                temp++;
-            }
-        }
-
-        if (link.trim() == '') {
+        if (link == '') {
             $('#link_error').html("Link is required");
             temp++;
         } else {
             $('#link_error').html("");
         }
+
         var urlPattern = /^(https?:\/\/)?([\w\-]+\.)+[\w\-]{2,}(\/\S*)?$/;
 
         if (link === '') {
@@ -145,7 +140,10 @@
         } else {
             $('#link_error').html("");
         }
+
+
         if (temp == 0) {
+
             return true;
         } else {
             return false;
