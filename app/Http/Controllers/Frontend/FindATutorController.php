@@ -35,7 +35,7 @@ class FindATutorController extends Controller
     public function index(Request $request)
 
     {
-        
+
 		$data['title'] = 'Tutor List';
         $data['allSubjectsData'] = SubjectHelper::getAllSubjectList();
         $data['allLevelData'] = TutorLevelHelper::getAllTutorList();
@@ -54,11 +54,14 @@ class FindATutorController extends Controller
 
     public function getTutors(Request $request)
     {
+
         $final_array = array();
+
         if($request->page == 1){
             TutorSearchInquiryHelper::save(array('subject' => $request->input('sibject'), 'subject' => $request->input('subject'), 'level' => $request->input('level'), 'pincode' => $request->input('pincode')));
         }
         $subjectUserList = TutorLevelDetailHelper::getSearchUserId($request->subject, $request->level, $request->pincode);
+
         foreach ($subjectUserList as $val) {
 
             if (in_array($val->tutor_id, $final_array)) {

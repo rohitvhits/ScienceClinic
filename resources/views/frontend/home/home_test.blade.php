@@ -30,6 +30,11 @@
     animation: scrollText 50s infinite linear;
 }
 
+.testimonialstars img.empty {
+    background-color: white;  /* White background for empty stars */
+    filter: grayscale(100%);  /* Optional: to make the empty stars look more subtle */
+}
+
 .m-scroll__title>div:hover {
     animation-play-state: paused;
 }
@@ -1602,178 +1607,34 @@
         <h2>WHAT OUR CUSTOMERS ARE SAYING ABOUT US</h2>
         <div class="cards">
             <div class="owl-carousel owl-theme testimonial_carousel">
-                <div class="item">
-                    <div class="testimonialcard">
-                        <div class="profile">
-                            <img src="{{asset('front/img/newimages/user1.png')}}" alt="">
-                        </div>
-                        <div class="content">
-                            <div class="testimonialstars">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
+                @if(isset($tutorReview) && count($tutorReview) > 0)
+                    @foreach ($tutorReview as $review)
+                        <div class="item">
+                            <div class="testimonialcard">
+                                <div class="profile">
+                                    <img src="{{ asset('front/img/newimages/user1.png') }}" alt="">
+                                </div>
+                                <div class="content">
+                                    <div class="testimonialstars">
+                                        @for($i = 1; $i <= 5; $i++)
+                                            <img src="{{ asset('front/img/newimages/star.png') }}" alt=""
+                                                @if($i <= $review->star)
+                                                    class="filled"
+                                                @else
+                                                    class="empty"
+                                                @endif>
+                                        @endfor
+                                    </div>
+                                    <h3>{{ $review->parent_first_name ?? "" }}</h3>
+                                    <p>{{ $review->message ?? "" }}</p>
+                                    </p>
+                                    <span class="date">{{ \Carbon\Carbon::parse($review->created_at)->format('d/m/Y') }}</span>
+                                </div>
                             </div>
-                            <h3>Amaka Bosah</h3>
-                            <p>Maths - Ms MEHRIN Mazhar<br>English - Ms Sue SCHULKINS
-                                <br>Science - Mr MEHTAB Ali
-                                <br>Thank you all so much for you input and tuition.
-                                <br>My son passed all his papers I’m grateful
-                            </p>
-                            <span class="date">12/01/2023</span>
                         </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="testimonialcard">
-                        <div class="profile">
-                            <img src="{{asset('front/img/newimages/user2.png')}}" alt="">
-                        </div>
-                        <div class="content">
-                            <div class="testimonialstars">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                            </div>
-                            <h3>Amina Begum</h3>
-                            <p>My son had his tuition classes from mehtaab for science. He benefitted a lot and it also
-                                helped to pick up his grades. His results are not due until august. I am enrolling my
-                                daughter as i found him very helpful. Highly recommended</p>
-                            <span class="date">12/01/2023</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="testimonialcard">
-                        <div class="profile">
-                            <img src="{{asset('front/img/newimages/user3.jpg')}}" alt="">
-                        </div>
-                        <div class="content">
-                            <div class="testimonialstars">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                            </div>
-                            <h3>Sarah Axcell</h3>
-                            <p>Hayley tutored my son in Maths to help prior to his GCSEs. She really helped him to build
-                                his confidence along with his knowledge and hopefully that will be reflected in his
-                                results in August! I would definitely recommend her to anyone who needs Maths
-                                assistance.</p>
-                            <span class="date">12/01/2023</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="testimonialcard">
-                        <div class="profile">
-                            <img src="{{asset('front/img/newimages/user4.jpg')}}" alt="">
-                        </div>
-                        <div class="content">
-                            <div class="testimonialstars">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                            </div>
-                            <h3>Juliana</h3>
-                            <p>Maths Tutoring Dajana is a wonderful Math teacher and helped my daughter through her GCSE
-                                . I would definitely recommend Dajana</p>
-                            <span class="date">12/01/2023</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="testimonialcard">
-                        <div class="profile">
-                            <img src="{{asset('front/img/newimages/user1.png')}}" alt="">
-                        </div>
-                        <div class="content">
-                            <div class="testimonialstars">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                            </div>
-                            <h3>Amaka Bosah</h3>
-                            <p>Maths - Ms MEHRIN Mazhar<br>English - Ms Sue SCHULKINS
-                                <br>Science - Mr MEHTAB Ali
-                                <br>Thank you all so much for you input and tuition.
-                                <br>My son passed all his papers I’m grateful
-                            </p>
-                            <span class="date">12/01/2023</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="testimonialcard">
-                        <div class="profile">
-                            <img src="{{asset('front/img/newimages/user2.png')}}" alt="">
-                        </div>
-                        <div class="content">
-                            <div class="testimonialstars">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                            </div>
-                            <h3>Amina Begum</h3>
-                            <p>My son had his tuition classes from mehtaab for science. He benefitted a lot and it also
-                                helped to pick up his grades. His results are not due until august. I am enrolling my
-                                daughter as i found him very helpful. Highly recommended</p>
-                            <span class="date">12/01/2023</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="testimonialcard">
-                        <div class="profile">
-                            <img src="{{asset('front/img/newimages/user3.jpg')}}" alt="">
-                        </div>
-                        <div class="content">
-                            <div class="testimonialstars">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                            </div>
-                            <h3>Sarah Axcell</h3>
-                            <p>Hayley tutored my son in Maths to help prior to his GCSEs. She really helped him to build
-                                his confidence along with his knowledge and hopefully that will be reflected in his
-                                results in August! I would definitely recommend her to anyone who needs Maths
-                                assistance.</p>
-                            <span class="date">12/01/2023</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="testimonialcard">
-                        <div class="profile">
-                            <img src="{{asset('front/img/newimages/user4.jpg')}}" alt="">
-                        </div>
-                        <div class="content">
-                            <div class="testimonialstars">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                            </div>
-                            <h3>Juliana</h3>
-                            <p>Maths Tutoring Dajana is a wonderful Math teacher and helped my daughter through her GCSE
-                                . I would definitely recommend Dajana</p>
-                            <span class="date">12/01/2023</span>
-                        </div>
-                    </div>
-                </div>
+                    @endforeach
+                @endif
+
             </div>
         </div>
     </section>

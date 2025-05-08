@@ -25,7 +25,7 @@ use App\Models\PastPapersCategory;
 use App\Models\User;
 use App\Models\Country;
 use App\Models\Enquiry;
-
+use App\Models\TutorReview;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
@@ -45,6 +45,11 @@ class HomeController extends Controller
         $data['ourFeatured'] = OurFeaturedHelper::getOurFeaturedList();
         $data['blogList'] = BlogMasterHelper::getBlogListNew();
         $data['logos'] = LogoMasterHelper::getLogoList();
+        $data['tutorReview'] = TutorReview::whereNull('deleted_at')
+                                   ->orderBy('created_at', 'desc')
+                                   ->take(8)
+                                   ->get();
+                                   
         return view('frontend.home.home_test',$data);
     }
     public function index_test(){

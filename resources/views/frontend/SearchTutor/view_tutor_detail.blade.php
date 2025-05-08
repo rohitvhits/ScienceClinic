@@ -100,7 +100,7 @@
                                                 <div class="">
                                                     <h5 class=" dbs mr-2">Qualifications on file</h5>
                                                     @if(!empty($data->video))
-                                                    <video style="max-height: 250px; height:auto; width:100%;" controls controlslist="nodownload"> 
+                                                    <video style="max-height: 250px; height:auto; width:100%;" controls controlslist="nodownload">
                                                         <source src="{{$data->video}}" type="video/mp4">
                                                         Your browser does not support the video tag.
                                                     </video>
@@ -667,7 +667,7 @@
                                 var tsdY2 = pad(plusD.getFullYear());
                                 var tsdM2 = pad(plusD.getMonth()+1);
                                 var tsdD2 = pad(plusD.getDate());
-                                var tsd2=tsdY2+'-'+tsdM2+'-'+tsdD2;                                
+                                var tsd2=tsdY2+'-'+tsdM2+'-'+tsdD2;
                                 var oldDate = new Date(r.booking_date+' '+r.teaching_start_time);
                                 var hour = oldDate.getHours();
                                 var newDate = oldDate.setHours(hour + 1);
@@ -676,7 +676,7 @@
                                 var etM = pad(newDate.getMinutes());
                                 var etS = pad(newDate.getSeconds());
                                 var et=etH+':'+etM+':'+etS;
-                                
+
                                 var eventTitle = 'Booked';
                                 var cusCheck=r.tuition_day+'_'+r.teaching_start_time;
                                 if(jQuery.inArray(cusCheck, bookedlist) !== -1)
