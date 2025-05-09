@@ -4,84 +4,62 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Helpers\BlogMasterHelper;
+use App\Helpers\LogoMasterHelper;
 use App\Http\Traits\ImageUploadTrait;
 use Validator;
 use Session;
 
-class BlogMasterController extends Controller
+class LogoController extends Controller
 {
     use ImageUploadTrait;
     public $successStatus =200;
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
 
-      return view('admin.blog.blog');
+      return view('admin.logo.index');
     }
     public function ajaxList(Request $request){
         $data['page'] = $request->page;
-        $title = $request->title;
+        $title = "";
         $created_date = $request->created_date;
-        $data['query'] = BlogMasterHelper::getListwithPaginate($title,$created_date);
-        return view('admin.blog.blog_ajax',$data);
+        $data['query'] = LogoMasterHelper::getListwithPaginate($title,$created_date);
+        return view('admin.logo.logo_ajax',$data);
      }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-
-
-
-    //    /**
-    //  * Show the form for creating a new resource.
-    //  *
-    //  * @return \Illuminate\Http\Response
-    //  */
     public function create()
     {
         $auth = auth()->user();
         if(empty($auth)){
             return redirect('/login');
         }
-        return view('admin.blog.add_blog');
+        return view('admin.logo.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|max:255',
+            'type' => 'required',
             'image' => 'required|mimes:jpg,jpeg,png,bmp,tiff',
-            'description' => 'required'
+            'link' => 'required'
          ]);
 
          $image = '';
             if ($request->file('image') != '') {
-                $image = $this->uploadImageWithCompress($request->file('image'), 'uploads/blog');
+                $image = $this->uploadImageWithCompress($request->file('image'), 'uploads/logos');
             }
 
         $data_array = array(
-          'title' => $request->title,
-          'description' => $request->description,
+          'type' => $request->type,
+          'link' => $request->link,
           'image'=>$image
 
        );
-        $update = BlogMasterHelper::save($data_array);
+        $update = LogoMasterHelper::save($data_array);
         if ($update) {
             Session::flash('success', trans('messages.addedSuccessfully'));
-            return redirect()->route('blog-master.index');
+            return redirect()->route('logo-master.index');
         }
         else {
             Session::flash('error', trans('messages.error'));
@@ -91,7 +69,7 @@ class BlogMasterController extends Controller
     }
     public function show($id)
     {
-        $data['blog']=BlogMasterHelper::getDetailsById ($id);
+        $data['blog']=LogoMasterHelper::getDetailsById ($id);
         if(isset($data['blog']->id)){
             return view('admin.blog.view_blog',$data);
         }else{
@@ -105,33 +83,33 @@ class BlogMasterController extends Controller
         if(empty($auth)){
             return redirect('/login');
         }
-        $data['blog']=BlogMasterHelper::getDetailsById($id);
-        return view('admin.blog.edit_blog', $data);
+        $data['logo']=LogoMasterHelper::getDetailsById($id);
+        return view('admin.logo.edit', $data);
     }
     public function update(Request $request, $id)
     {
         $request->validate([
-            'title' => 'required',
-            'description' => 'required'
+            'type' => 'required',
+            'link' => 'required'
         ]);
 
         $image = '';
         if ($request->file('image') != '') {
-            $image = $this->uploadImageWithCompress($request->file('image'), 'uploads/blog');
+            $image = $this->uploadImageWithCompress($request->file('image'), 'uploads/logos');
         }
 
         $data_array = array(
-        'title' => $request->title,
-        'description' => $request->description
+        'type' => $request->type,
+        'link' => $request->link
         );
         if ($image != '') {
             $data_array['image'] = $image;
         }
 
-        $update = BlogMasterHelper::update($data_array,array('id'=>$request->id));
+        $update = LogoMasterHelper::update($data_array,array('id'=>$request->id));
         if ($update) {
             Session::flash('success',trans('messages.updatedSuccessfully'));
-            return redirect()->route('blog-master.index');
+            return redirect()->route('logo-master.index');
         }
         else {
             Session::flash('error', trans('messages.error'));
@@ -140,7 +118,7 @@ class BlogMasterController extends Controller
     }
     public function destroy($id)
     {
-        $update = BlogMasterHelper::SoftDelete(array(),array('id'=>$id));
+        $update = LogoMasterHelper::SoftDelete(array(),array('id'=>$id));
         if ($update) {
             return response()->json([
                 'message' => trans('messages.deletedSuccessfully')

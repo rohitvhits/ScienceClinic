@@ -30,6 +30,11 @@
     animation: scrollText 50s infinite linear;
 }
 
+.testimonialstars img.empty {
+    background-color: white;  /* White background for empty stars */
+    filter: grayscale(100%);  /* Optional: to make the empty stars look more subtle */
+}
+
 .m-scroll__title>div:hover {
     animation-play-state: paused;
 }
@@ -663,30 +668,21 @@
             </div>
             <div class="col-md-12">
                 <div class="row">
+                    @if(isset($blogList) && count($blogList) > 0)
+                    @foreach ($blogList as $blog)
+
                     <div class="col-md-3">
+                        <a href="{{route('blog-detail',($blog->id))}}" target="_blank">
                         <div class="img-box">
-                            <img src="{{asset('front/img/newimages/blog1.jpg')}}" alt="">
+                            <img src="{{$blog->image}}" alt="">
                         </div>
-                        <div class="tag">Blog Titles</div>
+                        <div class="tag">{{$blog->title ?? ""}}</div>
+                        </a>
                     </div>
-                    <div class="col-md-3">
-                        <div class="img-box">
-                            <img src="{{asset('front/img/newimages/blog2.jpg')}}" alt="">
-                        </div>
-                        <div class="tag">Blog Titles</div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="img-box">
-                            <img src="{{asset('front/img/newimages/blog3.jpg')}}" alt="">
-                        </div>
-                        <div class="tag">Blog Titles</div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="img-box">
-                            <img src="{{asset('front/img/newimages/blog5.jpg')}}" alt="">
-                        </div>
-                        <div class="tag">Blog Titles</div>
-                    </div>
+
+                    @endforeach
+
+                    @endif
                 </div>
             </div>
         </div>
@@ -874,166 +870,21 @@
             <div class="m-scroll">
                 <div class="m-scroll__title">
                     <div class="mainScroll">
+                        @if(isset($ourFeatured) && count($ourFeatured)>0)
+                        @foreach ($ourFeatured as $val)
                         <div class="ourFeatureBox">
-                            <img class="mainimg" src="{{asset('front/img/newimages/ourFeatureImg1.jpg')}}" alt="">
-                            <p>Learning of Language</p>
+                            <img class="mainimg" src="{{$val->image}}" alt="">
+                            <p>{{$val->title}}</p>
+                            <a href="{{$val->link}}" target="_blank">
                             <div class="bottom">
                                 <button class="learmore">Learn More</button>
                                 <img src="{{asset('front/img/newimages/logos_youtube-icon.png')}}" alt="">
                             </div>
+                            </a>
                         </div>
-                        <div class="ourFeatureBox">
-                            <img class="mainimg" src="{{asset('front/img/newimages/ourFeatureImg2.jpg')}}" alt="">
-                            <p>Mathematic Logical Solutions</p>
-                            <div class="bottom">
-                                <button class="learmore">Learn More</button>
-                                <img src="{{asset('front/img/newimages/logos_youtube-icon.png')}}" alt="">
-                            </div>
-                        </div>
-                        <div class="ourFeatureBox">
-                            <img class="mainimg" src="{{asset('front/img/newimages/ourFeatureImg3.jpg')}}" alt="">
-                            <p>Science Lab Tutorial</p>
-                            <div class="bottom">
-                                <button class="learmore">Learn More</button>
-                                <img src="{{asset('front/img/newimages/logos_youtube-icon.png')}}" alt="">
-                            </div>
-                        </div>
-                        <div class="ourFeatureBox">
-                            <img class="mainimg" src="{{asset('front/img/newimages/ourFeatureImg4.jpg')}}" alt="">
-                            <p>Economic Classes </p>
-                            <div class="bottom">
-                                <button class="learmore">Learn More</button>
-                                <img src="{{asset('front/img/newimages/logos_youtube-icon.png')}}" alt="">
-                            </div>
-                        </div>
-                        <div class="ourFeatureBox">
-                            <img class="mainimg" src="{{asset('front/img/newimages/ourFeatureImg1.jpg')}}" alt="">
-                            <p>Learning of Language</p>
-                            <div class="bottom">
-                                <button class="learmore">Learn More</button>
-                                <img src="{{asset('front/img/newimages/logos_youtube-icon.png')}}" alt="">
-                            </div>
-                        </div>
-                        <div class="ourFeatureBox">
-                            <img class="mainimg" src="{{asset('front/img/newimages/ourFeatureImg2.jpg')}}" alt="">
-                            <p>Mathematic Logical Solutions</p>
-                            <div class="bottom">
-                                <button class="learmore">Learn More</button>
-                                <img src="{{asset('front/img/newimages/logos_youtube-icon.png')}}" alt="">
-                            </div>
-                        </div>
-                        <div class="ourFeatureBox">
-                            <img class="mainimg" src="{{asset('front/img/newimages/ourFeatureImg3.jpg')}}" alt="">
-                            <p>Science Lab Tutorial</p>
-                            <div class="bottom">
-                                <button class="learmore">Learn More</button>
-                                <img src="{{asset('front/img/newimages/logos_youtube-icon.png')}}" alt="">
-                            </div>
-                        </div>
-                        <div class="ourFeatureBox">
-                            <img class="mainimg" src="{{asset('front/img/newimages/ourFeatureImg4.jpg')}}" alt="">
-                            <p>Economic Classes </p>
-                            <div class="bottom">
-                                <button class="learmore">Learn More</button>
-                                <img src="{{asset('front/img/newimages/logos_youtube-icon.png')}}" alt="">
-                            </div>
-                        </div>
-                        <div class="ourFeatureBox">
-                            <img class="mainimg" src="{{asset('front/img/newimages/ourFeatureImg1.jpg')}}" alt="">
-                            <p>Learning of Language</p>
-                            <div class="bottom">
-                                <button class="learmore">Learn More</button>
-                                <img src="{{asset('front/img/newimages/logos_youtube-icon.png')}}" alt="">
-                            </div>
-                        </div>
-                        <div class="ourFeatureBox">
-                            <img class="mainimg" src="{{asset('front/img/newimages/ourFeatureImg2.jpg')}}" alt="">
-                            <p>Mathematic Logical Solutions</p>
-                            <div class="bottom">
-                                <button class="learmore">Learn More</button>
-                                <img src="{{asset('front/img/newimages/logos_youtube-icon.png')}}" alt="">
-                            </div>
-                        </div>
-                        <div class="ourFeatureBox">
-                            <img class="mainimg" src="{{asset('front/img/newimages/ourFeatureImg3.jpg')}}" alt="">
-                            <p>Science Lab Tutorial</p>
-                            <div class="bottom">
-                                <button class="learmore">Learn More</button>
-                                <img src="{{asset('front/img/newimages/logos_youtube-icon.png')}}" alt="">
-                            </div>
-                        </div>
-                        <div class="ourFeatureBox">
-                            <img class="mainimg" src="{{asset('front/img/newimages/ourFeatureImg4.jpg')}}" alt="">
-                            <p>Economic Classes </p>
-                            <div class="bottom">
-                                <button class="learmore">Learn More</button>
-                                <img src="{{asset('front/img/newimages/logos_youtube-icon.png')}}" alt="">
-                            </div>
-                        </div>
-                        <div class="ourFeatureBox">
-                            <img class="mainimg" src="{{asset('front/img/newimages/ourFeatureImg1.jpg')}}" alt="">
-                            <p>Learning of Language</p>
-                            <div class="bottom">
-                                <button class="learmore">Learn More</button>
-                                <img src="{{asset('front/img/newimages/logos_youtube-icon.png')}}" alt="">
-                            </div>
-                        </div>
-                        <div class="ourFeatureBox">
-                            <img class="mainimg" src="{{asset('front/img/newimages/ourFeatureImg2.jpg')}}" alt="">
-                            <p>Mathematic Logical Solutions</p>
-                            <div class="bottom">
-                                <button class="learmore">Learn More</button>
-                                <img src="{{asset('front/img/newimages/logos_youtube-icon.png')}}" alt="">
-                            </div>
-                        </div>
-                        <div class="ourFeatureBox">
-                            <img class="mainimg" src="{{asset('front/img/newimages/ourFeatureImg3.jpg')}}" alt="">
-                            <p>Science Lab Tutorial</p>
-                            <div class="bottom">
-                                <button class="learmore">Learn More</button>
-                                <img src="{{asset('front/img/newimages/logos_youtube-icon.png')}}" alt="">
-                            </div>
-                        </div>
-                        <div class="ourFeatureBox">
-                            <img class="mainimg" src="{{asset('front/img/newimages/ourFeatureImg4.jpg')}}" alt="">
-                            <p>Economic Classes </p>
-                            <div class="bottom">
-                                <button class="learmore">Learn More</button>
-                                <img src="{{asset('front/img/newimages/logos_youtube-icon.png')}}" alt="">
-                            </div>
-                        </div>
-                        <div class="ourFeatureBox">
-                            <img class="mainimg" src="{{asset('front/img/newimages/ourFeatureImg1.jpg')}}" alt="">
-                            <p>Learning of Language</p>
-                            <div class="bottom">
-                                <button class="learmore">Learn More</button>
-                                <img src="{{asset('front/img/newimages/logos_youtube-icon.png')}}" alt="">
-                            </div>
-                        </div>
-                        <div class="ourFeatureBox">
-                            <img class="mainimg" src="{{asset('front/img/newimages/ourFeatureImg2.jpg')}}" alt="">
-                            <p>Mathematic Logical Solutions</p>
-                            <div class="bottom">
-                                <button class="learmore">Learn More</button>
-                                <img src="{{asset('front/img/newimages/logos_youtube-icon.png')}}" alt="">
-                            </div>
-                        </div>
-                        <div class="ourFeatureBox">
-                            <img class="mainimg" src="{{asset('front/img/newimages/ourFeatureImg3.jpg')}}" alt="">
-                            <p>Science Lab Tutorial</p>
-                            <div class="bottom">
-                                <button class="learmore">Learn More</button>
-                                <img src="{{asset('front/img/newimages/logos_youtube-icon.png')}}" alt="">
-                            </div>
-                        </div>
-                        <div class="ourFeatureBox">
-                            <img class="mainimg" src="{{asset('front/img/newimages/ourFeatureImg4.jpg')}}" alt="">
-                            <p>Economic Classes </p>
-                            <div class="bottom">
-                                <button class="learmore">Learn More</button>
-                                <img src="{{asset('front/img/newimages/logos_youtube-icon.png')}}" alt="">
-                            </div>
-                        </div>
+                        @endforeach
+                        @endif
+
                     </div>
                 </div>
             </div>
@@ -1443,78 +1294,15 @@
             <div class="m-scroll">
                 <div class="m-scroll__title">
                     <div class="logosSlider">
+                        @if(isset($logos) && count($logos) > 0)
+                        @foreach ($logos as $logo)
+                        @if($logo->type == "1")
                         <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/AQA_V2-01.jpg')}}" alt="">
+                            <a href="{{$logo->link}}" target="_blank"><img src="{{$logo->image}}" alt=""></a>
                         </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/Cambridge Assessment_V1-01.jpg')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/CEA V2-01.jpg')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/Edexcel_V1-01.jpg')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/EDUQAS V1-01.jpg')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/OCR_V1-01.jpg')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/SQA SCOTTISH HIGHER-01.jpg')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/WJEC_V2-01.jpg')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/AQA_V2-01.jpg')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/Cambridge Assessment_V1-01.jpg')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/CEA V2-01.jpg')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/Edexcel_V1-01.jpg')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/EDUQAS V1-01.jpg')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/OCR_V1-01.jpg')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/SQA SCOTTISH HIGHER-01.jpg')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/WJEC_V2-01.jpg')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/AQA_V2-01.jpg')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/Cambridge Assessment_V1-01.jpg')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/CEA V2-01.jpg')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/Edexcel_V1-01.jpg')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/EDUQAS V1-01.jpg')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/OCR_V1-01.jpg')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/SQA SCOTTISH HIGHER-01.jpg')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/WJEC_V2-01.jpg')}}" alt="">
-                        </div>
+                        @endif
+                        @endforeach
+                        @endif
                     </div>
                 </div>
             </div>
@@ -1819,178 +1607,34 @@
         <h2>WHAT OUR CUSTOMERS ARE SAYING ABOUT US</h2>
         <div class="cards">
             <div class="owl-carousel owl-theme testimonial_carousel">
-                <div class="item">
-                    <div class="testimonialcard">
-                        <div class="profile">
-                            <img src="{{asset('front/img/newimages/user1.png')}}" alt="">
-                        </div>
-                        <div class="content">
-                            <div class="testimonialstars">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
+                @if(isset($tutorReview) && count($tutorReview) > 0)
+                    @foreach ($tutorReview as $review)
+                        <div class="item">
+                            <div class="testimonialcard">
+                                <div class="profile">
+                                    <img src="{{ asset('front/img/newimages/user1.png') }}" alt="">
+                                </div>
+                                <div class="content">
+                                    <div class="testimonialstars">
+                                        @for($i = 1; $i <= 5; $i++)
+                                            <img src="{{ asset('front/img/newimages/star.png') }}" alt=""
+                                                @if($i <= $review->star)
+                                                    class="filled"
+                                                @else
+                                                    class="empty"
+                                                @endif>
+                                        @endfor
+                                    </div>
+                                    <h3>{{ $review->parent_first_name ?? "" }}</h3>
+                                    <p>{{ $review->message ?? "" }}</p>
+                                    </p>
+                                    <span class="date">{{ \Carbon\Carbon::parse($review->created_at)->format('d/m/Y') }}</span>
+                                </div>
                             </div>
-                            <h3>Amaka Bosah</h3>
-                            <p>Maths - Ms MEHRIN Mazhar<br>English - Ms Sue SCHULKINS
-                                <br>Science - Mr MEHTAB Ali
-                                <br>Thank you all so much for you input and tuition.
-                                <br>My son passed all his papers I’m grateful
-                            </p>
-                            <span class="date">12/01/2023</span>
                         </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="testimonialcard">
-                        <div class="profile">
-                            <img src="{{asset('front/img/newimages/user2.png')}}" alt="">
-                        </div>
-                        <div class="content">
-                            <div class="testimonialstars">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                            </div>
-                            <h3>Amina Begum</h3>
-                            <p>My son had his tuition classes from mehtaab for science. He benefitted a lot and it also
-                                helped to pick up his grades. His results are not due until august. I am enrolling my
-                                daughter as i found him very helpful. Highly recommended</p>
-                            <span class="date">12/01/2023</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="testimonialcard">
-                        <div class="profile">
-                            <img src="{{asset('front/img/newimages/user3.jpg')}}" alt="">
-                        </div>
-                        <div class="content">
-                            <div class="testimonialstars">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                            </div>
-                            <h3>Sarah Axcell</h3>
-                            <p>Hayley tutored my son in Maths to help prior to his GCSEs. She really helped him to build
-                                his confidence along with his knowledge and hopefully that will be reflected in his
-                                results in August! I would definitely recommend her to anyone who needs Maths
-                                assistance.</p>
-                            <span class="date">12/01/2023</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="testimonialcard">
-                        <div class="profile">
-                            <img src="{{asset('front/img/newimages/user4.jpg')}}" alt="">
-                        </div>
-                        <div class="content">
-                            <div class="testimonialstars">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                            </div>
-                            <h3>Juliana</h3>
-                            <p>Maths Tutoring Dajana is a wonderful Math teacher and helped my daughter through her GCSE
-                                . I would definitely recommend Dajana</p>
-                            <span class="date">12/01/2023</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="testimonialcard">
-                        <div class="profile">
-                            <img src="{{asset('front/img/newimages/user1.png')}}" alt="">
-                        </div>
-                        <div class="content">
-                            <div class="testimonialstars">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                            </div>
-                            <h3>Amaka Bosah</h3>
-                            <p>Maths - Ms MEHRIN Mazhar<br>English - Ms Sue SCHULKINS
-                                <br>Science - Mr MEHTAB Ali
-                                <br>Thank you all so much for you input and tuition.
-                                <br>My son passed all his papers I’m grateful
-                            </p>
-                            <span class="date">12/01/2023</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="testimonialcard">
-                        <div class="profile">
-                            <img src="{{asset('front/img/newimages/user2.png')}}" alt="">
-                        </div>
-                        <div class="content">
-                            <div class="testimonialstars">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                            </div>
-                            <h3>Amina Begum</h3>
-                            <p>My son had his tuition classes from mehtaab for science. He benefitted a lot and it also
-                                helped to pick up his grades. His results are not due until august. I am enrolling my
-                                daughter as i found him very helpful. Highly recommended</p>
-                            <span class="date">12/01/2023</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="testimonialcard">
-                        <div class="profile">
-                            <img src="{{asset('front/img/newimages/user3.jpg')}}" alt="">
-                        </div>
-                        <div class="content">
-                            <div class="testimonialstars">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                            </div>
-                            <h3>Sarah Axcell</h3>
-                            <p>Hayley tutored my son in Maths to help prior to his GCSEs. She really helped him to build
-                                his confidence along with his knowledge and hopefully that will be reflected in his
-                                results in August! I would definitely recommend her to anyone who needs Maths
-                                assistance.</p>
-                            <span class="date">12/01/2023</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="testimonialcard">
-                        <div class="profile">
-                            <img src="{{asset('front/img/newimages/user4.jpg')}}" alt="">
-                        </div>
-                        <div class="content">
-                            <div class="testimonialstars">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                                <img src="{{asset('front/img/newimages/star.png')}}" alt="">
-                            </div>
-                            <h3>Juliana</h3>
-                            <p>Maths Tutoring Dajana is a wonderful Math teacher and helped my daughter through her GCSE
-                                . I would definitely recommend Dajana</p>
-                            <span class="date">12/01/2023</span>
-                        </div>
-                    </div>
-                </div>
+                    @endforeach
+                @endif
+
             </div>
         </div>
     </section>
@@ -2212,65 +1856,16 @@
                         <div class="imgbox">
                             <img src="{{asset('front/img/newimages/associationslogo1.png')}}" alt="">
                         </div>
+                        @if(isset($logos) && count($logos) > 0)
+                        @foreach ($logos as $logo)
+                        @if($logo->type == "2")
                         <div class="imgbox">
-                            <a href="https://www.mymaths.co.uk/" target="_blank">
-                                <img src="{{asset('front/img/newimages/associationslogo2.png')}}" alt="">
-                            </a>
+                            <a href="{{$logo->link}}" target="_blank"><img src="{{$logo->image}}" alt=""></a>
                         </div>
-                        <div class="imgbox">
-                            <a href="https://www.risingstars-uk.com/" target="_blank">
-                                <img src="{{asset('front/img/newimages/associationslogo3.png')}}" alt="">
-                            </a>
-                        </div>
-                        <div class="imgbox">
-                            <a href="https://global.oup.com/education/secondary/kerboodle/?region=uk" target="_blank">
-                                <img src="{{asset('front/img/newimages/associationslogo4.png')}}" alt="">
-                            </a>
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/associationslogo5.png')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <a href="https://connect.collins.co.uk/school/portal.aspx" target="_blank">
-                                <img src="{{asset('front/img/newimages/associationslogo6.png')}}" alt="">
-                            </a>
-                        </div>
-                        <div class="imgbox">
-                            <a href="https://www.hoddereducation.co.uk/alevelmaths" target="_blank">
-                                <img src="{{asset('front/img/newimages/associationslogo7.png')}}" alt="">
-                            </a>
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/associationslogo1.png')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <a href="https://www.mymaths.co.uk/" target="_blank">
-                                <img src="{{asset('front/img/newimages/associationslogo2.png')}}" alt="">
-                            </a>
-                        </div>
-                        <div class="imgbox">
-                            <a href="https://www.risingstars-uk.com/" target="_blank">
-                                <img src="{{asset('front/img/newimages/associationslogo3.png')}}" alt="">
-                            </a>
-                        </div>
-                        <div class="imgbox">
-                            <a href="https://global.oup.com/education/secondary/kerboodle/?region=uk" target="_blank">
-                                <img src="{{asset('front/img/newimages/associationslogo4.png')}}" alt="">
-                            </a>
-                        </div>
-                        <div class="imgbox">
-                            <img src="{{asset('front/img/newimages/associationslogo5.png')}}" alt="">
-                        </div>
-                        <div class="imgbox">
-                            <a href="https://connect.collins.co.uk/school/portal.aspx" target="_blank">
-                                <img src="{{asset('front/img/newimages/associationslogo6.png')}}" alt="">
-                            </a>
-                        </div>
-                        <div class="imgbox">
-                            <a href="https://www.hoddereducation.co.uk/alevelmaths" target="_blank">
-                                <img src="{{asset('front/img/newimages/associationslogo7.png')}}" alt="">
-                            </a>
-                        </div>
+                        @endif
+                        @endforeach
+                        @endif
+
                     </div>
                 </div>
             </div>
@@ -2359,7 +1954,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="event-area custom-topbottompd gray gray-bgs res-pt-0">
         <div class="container">
             <div class="row">
@@ -2491,7 +2086,7 @@
             </div>
         </div>
     </div>
-   
+
     <div class="description-data event-pd home-event-pd">
         <div class="container">
             <div class="row">

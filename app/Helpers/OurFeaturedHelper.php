@@ -3,9 +3,9 @@
 namespace App\Helpers;
 
 use URL;
-use App\Models\BlogMaster;
+use App\Models\OurFeatured;
 
-class BlogMasterHelper
+class OurFeaturedHelper
 {
     public static function save($data)
     {
@@ -14,7 +14,7 @@ class BlogMasterHelper
         if ($userId) {
             $data['created_by'] = $userId['id'];
         }
-        $insert = new BlogMaster($data);
+        $insert = new OurFeatured($data);
         $insert->save();
         $insertId = $insert->id;
         return $insertId;
@@ -27,7 +27,7 @@ class BlogMasterHelper
         if ($userId) {
             $data['updated_by'] = $userId['id'];
         }
-        $update = BlogMaster::where($where)->update($data);
+        $update = OurFeatured::where($where)->update($data);
         return $update;
     }
     public static function SoftDelete($data, $where)
@@ -35,11 +35,11 @@ class BlogMasterHelper
         $userId = Auth()->user();
         $data['deleted_at'] = date('Y-m-d H:i:s');
         $data['deleted_by'] = $userId['id'];
-        $update = BlogMaster::where($where)->update($data);
+        $update = OurFeatured::where($where)->update($data);
         return $update;
     }
     public static function getListwithPaginate($title,$created_date){
-        $query = BlogMaster::orderBy('id','desc');
+        $query = OurFeatured::orderBy('id','desc');
         if($title !=''){
             $query->where('title','LIKE','%'.$title.'%');
         }
@@ -52,22 +52,16 @@ class BlogMasterHelper
         return $query;
     }
     public static function getList(){
-        $query = BlogMaster::where('id')->get();
+        $query = OurFeatured::where('id')->get();
         return $query;
     }
     public static function getDetailsById($id){
-        $query = BlogMaster::where('id',$id)->first();
+        $query = OurFeatured::where('id',$id)->first();
         return $query;
     }
 
-    public static function getBlogList(){
-        $query = BlogMaster::orderBy('id','desc')->get();
+    public static function getOurFeaturedList(){
+        $query = OurFeatured::orderBy('id','desc')->get();
         return $query;
     }
-
-    public static function getBlogListNew(){
-        $query = BlogMaster::orderBy('id', 'desc')->take(4)->get();
-        return $query;
-    }
-
 }

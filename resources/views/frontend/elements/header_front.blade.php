@@ -87,6 +87,34 @@
                                             </a>
                                             <div class="megamenu">
                                                 <ul class="sub-menu mobile-section border-bottom-ul">
+                                                    @if(isset($subject_list_new))
+                                                    @foreach($subject_list_new->slice(0, 14) as $subject)
+                                                        <li>
+                                                            <a href="{{ $subject->url }}">{{ \Illuminate\Support\Str::lower($subject->main_title) }}</a>
+                                                        </li>
+                                                    @endforeach
+                                                    @endif
+                                                </ul>
+                                                <ul class="sub-menu mobile-section border-bottom-ul">
+
+                                                    @if(isset($subject_list_new))
+                                                    @foreach($subject_list_new->slice(15, 29) as $subject)
+                                                        <li>
+                                                            <a href="{{ $subject->url }}">{{ \Illuminate\Support\Str::lower($subject->main_title) }}</a>
+                                                        </li>
+                                                    @endforeach
+                                                    @endif
+                                                </ul>
+                                                <ul class="sub-menu mobile-section border-bottom-ul">
+                                                    @if(isset($subject_list_new))
+                                                    @foreach($subject_list_new->slice(30, 45) as $subject)
+                                                        <li>
+                                                            <a href="{{ $subject->url }}">{{ \Illuminate\Support\Str::lower($subject->main_title) }}</a>
+                                                        </li>
+                                                    @endforeach
+                                                    @endif
+                                                </ul>
+                                                {{-- <ul class="sub-menu mobile-section border-bottom-ul">
                                                     <li>
                                                         <a href="">GCSE Tutors</a>
                                                     </li>
@@ -176,7 +204,7 @@
                                                     </li>
                                                     <li><a href="{{ route('spanish-tuition') }}">Spanish Tutors</a>
                                                     </li>
-                                                </ul>
+                                                </ul> --}}
                                             </div>
                                             <!-- <div class="megamenu">
                                                 {{-- First Column --}}

@@ -35,6 +35,7 @@ class FindATutorController extends Controller
     public function index(Request $request)
 
     {
+
 		$data['title'] = 'Tutor List';
         $data['allSubjectsData'] = SubjectHelper::getAllSubjectList();
         $data['allLevelData'] = TutorLevelHelper::getAllTutorList();
@@ -48,16 +49,22 @@ class FindATutorController extends Controller
         {
             $data['levelName']=base64_decode(strtr($request->levelName, '-_', '+/'));
         }
-       	return view('frontend.SearchTutor.index', $data);	
+        //latest code file
+       	return view('frontend.SearchTutor.index', $data);
+        //old code file
+        // return view('frontend.SearchTutorold.index', $data);
     }
-	
+
     public function getTutors(Request $request)
     {
+
         $final_array = array();
+
         if($request->page == 1){
             TutorSearchInquiryHelper::save(array('subject' => $request->input('sibject'), 'subject' => $request->input('subject'), 'level' => $request->input('level'), 'pincode' => $request->input('pincode')));
         }
         $subjectUserList = TutorLevelDetailHelper::getSearchUserId($request->subject, $request->level, $request->pincode);
+
         foreach ($subjectUserList as $val) {
 
             if (in_array($val->tutor_id, $final_array)) {
@@ -155,9 +162,9 @@ class FindATutorController extends Controller
 
         $data['tutorSubjectLevelDetails'] = $tutorSubjectLevelDetails;
         $data['tutorDetails'] = TutorDetailHelper::getTutorDetails($id);
-        
+
         $data['tutorUniversityDetails'] = TutorUniversityDetailHelper::getTutorUniversityDetails($id);
-        
+
         $data['subject_list'] = SubjectHelper::getAllSubjectList();
         $data['tutor_level_list'] = TutorLevelHelper::getAllTutorList();
         $data['tutor_comments'] = TutorReview::leftjoin('sc_subject_master','sc_subject_master.id','=','sc_tutor_reviews.subject_id')->where([['sc_tutor_reviews.tutor_id','=',$uid],['sc_tutor_reviews.status','=','active']])->get(['sc_tutor_reviews.*','sc_subject_master.main_title as subject_name']);
@@ -496,7 +503,7 @@ class FindATutorController extends Controller
             $add->star = $request->star;
             $add->message = $request->message;
             $feedData = $add->save();
-            if ($feedData) {   
+            if ($feedData) {
                 return response()->json(['error_msg' => "Successfully instered", 'data' => $add], 200);
             } else {
                 return response()->json(['error_msg' => "Something went wrong", 'data' => ''], 500);

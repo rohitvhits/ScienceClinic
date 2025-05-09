@@ -26,8 +26,9 @@ class FileUploadHelper {
 
 			$name = time().uniqid().'.'.$image->getClientOriginalExtension();
 
-			// $destinationPath = public_path('/'.$path);
-			$destinationPath = $_SERVER['DOCUMENT_ROOT'].'/'.$path;
+			$destinationPath = public_path('/'.$path);
+			//$destinationPath = $_SERVER['DOCUMENT_ROOT'].'/'.$path;
+
 
 			$img = Image::make($image->getRealPath());
 
@@ -44,6 +45,7 @@ class FileUploadHelper {
 			})->save($destinationPath.'/'.$name);
 
 			$destinationPath = $_SERVER['DOCUMENT_ROOT'].'/'.$path.'/original';
+
 			// $destinationPath = public_path('/'.$path.'/original');
 
 			$image->move($destinationPath, $name);

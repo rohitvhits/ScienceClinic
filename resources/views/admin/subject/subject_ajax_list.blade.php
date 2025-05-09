@@ -11,6 +11,7 @@
 
 
             <th style="white-space: nowrap">Created Date</th>
+            <th style="white-space: nowrap">Header Show</th>
 
             <th>Actions</th>
 
@@ -50,6 +51,7 @@
 
 
 
+
             <td>
 
                 @if($live_in->created_at !='')
@@ -59,11 +61,14 @@
                 @endif
 
             </td>
+            <td>
+                <input type="checkbox" class="header_show" id="header_show{{$live_in->id}}" data-id="{{$live_in->id}}" @if($live_in->show == 1) checked @endif>
+            </td>
 
             <td>
 
                 <a href="javascript:void(0)" onclick="editDetail({{$live_in->id}})"><i class="fa fa-edit" title="Edit"></i></a>
-                <a href="javascript:void(0)" class="delete-category" data-id="{{ $live_in->id}}"><i class="fa fa-trash"></i></a> 
+                <a href="javascript:void(0)" class="delete-category" data-id="{{ $live_in->id}}"><i class="fa fa-trash"></i></a>
 
             </td>
 

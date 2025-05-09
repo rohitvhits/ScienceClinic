@@ -4,6 +4,9 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Helpers\BlogMasterHelper;
+use App\Helpers\LogoMasterHelper;
+use App\Helpers\OurFeaturedHelper;
 use App\Helpers\PastPapersDetailHelper;
 use App\Helpers\PastPapersHelper;
 use App\Helpers\TextBooksHelper;
@@ -22,7 +25,7 @@ use App\Models\PastPapersCategory;
 use App\Models\User;
 use App\Models\Country;
 use App\Models\Enquiry;
-
+use App\Models\TutorReview;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
@@ -39,6 +42,13 @@ class HomeController extends Controller
         $data['allTutors'] = UserHelper::getAllTutors();
         $data['allLevelData'] = TutorLevelHelper::getAllTutorList();
         $data['country_list'] = Country::orderBy('iso','ASC')->get();
+        $data['ourFeatured'] = OurFeaturedHelper::getOurFeaturedList();
+        $data['blogList'] = BlogMasterHelper::getBlogListNew();
+        $data['logos'] = LogoMasterHelper::getLogoList();
+        $data['tutorReview'] = TutorReview::whereNull('deleted_at')
+                                   ->orderBy('created_at', 'desc')
+                                   ->take(8)
+                                   ->get();
         return view('frontend.home.home_test',$data);
     }
     public function index_test(){
@@ -92,7 +102,7 @@ class HomeController extends Controller
         $data['getElearning'] = TutorResourcesHelper::getListwithPaginateAdminAll();
         return view('frontend.home.e_learning',$data);
     }
-    
+
     public function getPastPaperData(Request $request){
 
         $dataGetcategory = PastPapersHelper::getAllcategory();
@@ -119,10 +129,10 @@ class HomeController extends Controller
                 if(count($paperDetail) > 0){
                     $mainArray[] = $key;
                 }
-                
+
             }
         }
-        
+
         $data['paperData'] = $mainArray;
         return view('frontend.home.pas_papaer_resource',$data);
     }
@@ -142,7 +152,7 @@ class HomeController extends Controller
                 $mainArray[] = $key;
             }
         }
-        
+
         $data['pastPaperdetail']  = $mainArray;
         return view('frontend.home.pas_papaer_resource_detail',$data);
     }

@@ -153,7 +153,7 @@
                     </a>
 
                 </li>
-                
+
                 @php
 
                 $tutorFlag = 0;
@@ -718,6 +718,24 @@
                     <a href="{{ route('center-timetable') }}" class="menu-link">
                         <img src="{{asset('front/img/calendar.png')}}" style="width: auto; height:20px; margin-right: 10px;">
                         <span class="menu-text">Centre Timetable</span>
+                    </a>
+
+                </li>
+
+                <li class="menu-item {{ Request::segment(1) == 'our-featured' ? 'menu-item-active' : '' }}" aria-haspopup="true">
+
+                    <a href="{{ route('our-featured') }}" class="menu-link">
+                        <img src="{{asset('front/img/calendar.png')}}" style="width: auto; height:20px; margin-right: 10px;">
+                        <span class="menu-text">Our Featured</span>
+                    </a>
+
+                </li>
+
+                <li class="menu-item {{ Request::segment(1) == 'logo-master' ? 'menu-item-active' : '' }}" aria-haspopup="true">
+
+                    <a href="{{ route('logo-master.index') }}" class="menu-link">
+                        <img src="{{asset('front/img/calendar.png')}}" style="width: auto; height:20px; margin-right: 10px;">
+                        <span class="menu-text">Logo Master</span>
                     </a>
 
                 </li>

@@ -12,6 +12,7 @@ use App\Helpers\SubjectHelper;
 use App\Models\OnlineTutoring;
 use App\Models\PayClaimFormDetails;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\View;
 use DB;
 
 class AppServiceProvider extends ServiceProvider
@@ -80,9 +81,9 @@ class AppServiceProvider extends ServiceProvider
 
         });
 
-        
 
-       
+
+
 
     }
 
@@ -98,13 +99,17 @@ class AppServiceProvider extends ServiceProvider
 
      */
 
-    public function boot()
+     public function boot()
+        {
+            View::composer('*', function ($view) {
+                $subject_list_new = SubjectHelper::getAllSubjectListNew();
 
-    {
-
-        //
-
-    }
+                foreach ($subject_list_new as $val) {
+                    $val->url = URL::to('/') . '/find-tutor/' . rtrim(strtr(base64_encode($val->id), '+/', '-_'), '=');
+                }
+                $view->with('subject_list_new', $subject_list_new);
+            });
+        }
 
 }
 

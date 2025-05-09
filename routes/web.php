@@ -62,6 +62,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin'], function ($admins) {
         $backendVerified->post('change-password-update', "ProfileController@PasswordUpdate")->name('change-password-update');
         $backendVerified->resource('subject-master', "SubjectController");
         $backendVerified->get('subject-master-ajax-list', "SubjectController@ajaxList");
+        $backendVerified->post('update-header-show', "SubjectController@updateHeaderShow")->name('update-header-show');
         $backendVerified->get('subject-unique', "SubjectController@subjectUnique")->name('subject-unique');
         $backendVerified->get('edit-subject-unique', "SubjectController@editSubjectUnique")->name('edit-subject-unique');
         $backendVerified->resource('sub-subject-master', "SubSubjectController");
@@ -117,7 +118,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin'], function ($admins) {
         $backendVerified->get('parent-list/{id}', "ParentMasterController@parentDetails")->name('parent.details');
 
         // $backendVerified->get('old-student', 'ParentMasterController@oldStudentList')->name('old-student');
-        
+
         $backendVerified->get('student-list', 'ParentMasterController@studentList')->name('student-list');
         $backendVerified->get('student-list-ajax', 'ParentMasterController@studentAjaxList')->name('student-list-ajax');
         $backendVerified->get('student-add', 'ParentMasterController@addStudent')->name('student-add');
@@ -134,7 +135,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin'], function ($admins) {
         $backendVerified->post('active-tutor-reviews/{id}', 'ParentMasterController@activeTutorReview')->name('active-tutor-reviews');
         $backendVerified->post('pending-tutor-reviews/{id}', 'ParentMasterController@pendingTutorReview')->name('pending-tutor-reviews');
 
-        
+
         $backendVerified->get('tutor-Inquiry', "ParentMasterController@getInquiryDetails")->name('tutor.inquiry');
         $backendVerified->get('get-hourly-rate', "ParentMasterController@getHourlyRate")->name('get-hourly-rate');
         $backendVerified->get('calander-booking', "ParentMasterController@getCalanderBooking")->name('calander-booking');
@@ -149,7 +150,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin'], function ($admins) {
         $backendVerified->post('add-subject-hourly-rate', "ParentMasterController@addHourlyRate")->name('add-subject-hourly-rate');
         $backendVerified->resource('parent-payment-history', "ParentPaymentController");
         $backendVerified->get('parent-payment-list-ajax', "ParentPaymentController@ajaxList")->name('parent-payment-list-ajax');
-        
+
         $backendVerified->resource('tutor-payment-history', "TutorPaymentController");
         $backendVerified->get('tutor-payment-history-report', "TutorPaymentController@getPaymentHistory")->name('tutor-payment-history-report');
         $backendVerified->get('filter-tutor-payment-history-report/{search?}', "TutorPaymentController@filterPaymentHistory")->name('filter-tutor-payment-history-report');
@@ -184,11 +185,24 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin'], function ($admins) {
         $backendVerified->get('view-pay-claim-form/{id}', "PayClaimFormController@viewDetails")->name('view-pay-claim-form');
         $backendVerified->post('update-pay-claim-form', "PayClaimFormController@update");
         $backendVerified->post('confirm-pay-claim-form/{id}', "PayClaimFormController@confirmPay");
+
+        $backendVerified->get('our-featured', "OurFeaturedController@index")->name('our-featured');
+        $backendVerified->get('our-featuredour-featured-ajax', "OurFeaturedController@ajaxList")->name('our-featured-ajax');
+        $backendVerified->get('our-featured-create', "OurFeaturedController@create")->name('our-featured-create');
+        $backendVerified->post('our-featured-store', "OurFeaturedController@store")->name('our-featured-store');
+        $backendVerified->get('our-featured/{id}', "OurFeaturedController@show")->name('our-featured-show');
+        $backendVerified->get('our-featured/{id}/edit', "OurFeaturedController@edit")->name('our-featured-edit');
+        $backendVerified->delete('our-featured/{id}', "OurFeaturedController@destroy")->name('our-featured-destroy');
+        $backendVerified->put('our-featured-update/{id}', "OurFeaturedController@update")->name('our-featured-update');
+
+        $backendVerified->resource('logo-master', "LogoController");
+        $backendVerified->get('logo-master-ajax', "LogoController@ajaxList")->name('logo-master-ajax');
+
     });
 });
 
 Route::group(['namespace' => 'App\Http\Controllers\Frontend'], function ($frontend) {
-  
+
     $frontend->get('/', 'HomeController@index');
     $frontend->get('test_home', 'HomeController@index_test');
     $frontend->post('saveInquiry', 'HomeController@saveInquiry')->name('saveInquiry');
@@ -309,7 +323,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Frontend\Tutor'], function ($
         $backendVerified->get('tutor-resource-ajax', "TutorResourceController@resourceAjaxList")->name('tutor-resource-ajax');
         $backendVerified->resource('tutor-text-books', "TutorTextBooksController");
         $backendVerified->get('tutor-text-books-ajax-list', "TutorTextBooksController@ajaxList")->name('tutor-text-books-ajax-list');
-        
+
         $backendVerified->get('testFun', "TutorPayClaimFormController@testFun")->name('testFun');
         $backendVerified->get('tutor-pay-claim-form', "TutorPayClaimFormController@create")->name('tutor-pay-claim-form');
         $backendVerified->post('tutor-pay-claim-form-store', "TutorPayClaimFormController@store")->name('tutor-pay-claim-form-store');
@@ -318,7 +332,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Frontend\Tutor'], function ($
         $backendVerified->post('tutor-pay-claim-form-update', "TutorPayClaimFormController@update");
         $backendVerified->get('tutor-pay-claim-form-ajax-list', "TutorPayClaimFormController@ajaxList")->name('tutor-pay-claim-form-ajax-list');
         $backendVerified->delete('tutor-pay-claim-form/{id}', "TutorPayClaimFormController@destroy");
-        
+
         $backendVerified->get('tutor-parent-list', 'ParentListController@index')->name('tutor-parent-list');
         $backendVerified->get('send-payment-mail-tutor', 'ParentListController@sendPaymentMailTutor')->name('send-payment-mail-tutor');
         $backendVerified->get('send-booking-notification-admin', 'ParentListController@sendBookingNotificationAdmin')->name('send-booking-notification-admin');
@@ -394,5 +408,5 @@ Route::group(['namespace' => 'App\Http\Controllers\Frontend\Parent'], function (
         $parentVerified->get('parent-e-learning-ajax-list', "ParentELearningController@ajaxList")->name('parent-e-learning-ajax-list');
         $parentVerified->get('parent-e-learning', "ParentELearningController@index")->name('parent-e-learning');
     });
-  
+
 });
