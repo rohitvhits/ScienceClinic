@@ -672,7 +672,7 @@
                     @foreach ($blogList as $blog)
 
                     <div class="col-md-3">
-                        <a href="{{route('blog-detail',($blog->id))}}">
+                        <a href="{{route('blog-detail',($blog->id))}}" target="_blank">
                         <div class="img-box">
                             <img src="{{$blog->image}}" alt="">
                         </div>
@@ -1298,7 +1298,7 @@
                         @foreach ($logos as $logo)
                         @if($logo->type == "1")
                         <div class="imgbox">
-                            <a href="{{$logo->link}}"><img src="{{$logo->image}}" alt=""></a>
+                            <a href="{{$logo->link}}" target="_blank"><img src="{{$logo->image}}" alt=""></a>
                         </div>
                         @endif
                         @endforeach
@@ -1853,11 +1853,14 @@
             <div class="m-scroll">
                 <div class="m-scroll__title">
                     <div class="logosSlider">
+                        <div class="imgbox">
+                            <img src="{{asset('front/img/newimages/associationslogo1.png')}}" alt="">
+                        </div>
                         @if(isset($logos) && count($logos) > 0)
                         @foreach ($logos as $logo)
                         @if($logo->type == "2")
                         <div class="imgbox">
-                            <a href="{{$logo->link}}"><img src="{{$logo->image}}" alt=""></a>
+                            <a href="{{$logo->link}}" target="_blank"><img src="{{$logo->image}}" alt=""></a>
                         </div>
                         @endif
                         @endforeach
