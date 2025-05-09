@@ -76,7 +76,7 @@ class SubjectHelper
 
         $update = SubjectMaster::where($where)->update($data);
 
-        
+
 
         return $update;
 
@@ -132,7 +132,7 @@ class SubjectHelper
 
                 })->whereNotNull('sc_subject_master.parent_id')->paginate(10);
 
-        
+
 
         return $query;
 
@@ -171,6 +171,14 @@ class SubjectHelper
     public static function getAllSubjectList(){
 
         $query = SubjectMaster::whereNull('deleted_at')->orderBy('main_title','asc')->get();
+
+        return $query;
+
+    }
+
+    public static function getAllSubjectListNew(){
+
+        $query = SubjectMaster::where('show',1)->whereNull('deleted_at')->orderBy('main_title','asc')->get();
 
         return $query;
 

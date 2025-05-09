@@ -49,7 +49,6 @@ class HomeController extends Controller
                                    ->orderBy('created_at', 'desc')
                                    ->take(8)
                                    ->get();
-                                   
         return view('frontend.home.home_test',$data);
     }
     public function index_test(){

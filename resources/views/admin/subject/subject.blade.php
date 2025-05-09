@@ -313,6 +313,8 @@
 
     var _SUBJECT_URL = '{{url("subject-master")}}';
 
+    var _UPDATE_HEADER_SHOW_URL = '{{route("update-header-show")}}';
+
     var _CSRF_TOKEN = '{{ csrf_token() }}';
 
     $(function() {
@@ -351,7 +353,7 @@
         });
 
     });
-    
+
     function editDetail(id) {
         if (id != "") {
             $.ajax({

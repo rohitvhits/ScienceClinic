@@ -33,6 +33,19 @@ class SubjectController extends Controller
         $data['query'] = SubjectHelper::getListwithPaginate($title, $created_date);
         return view('admin.subject.subject_ajax_list', $data);
     }
+
+    public function updateHeaderShow(Request $request)
+    {
+        $subject = SubjectHelper::getDetailsByid($request->id);
+        if ($subject) {
+            $subject->show = $request->show;
+            $subject->save();
+            return response()->json(['message' => 'Status updated successfully']);
+        } else {
+            return response()->json(['message' => 'Record not found'], 404);
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *
