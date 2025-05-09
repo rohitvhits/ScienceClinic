@@ -49,7 +49,10 @@ class FindATutorController extends Controller
         {
             $data['levelName']=base64_decode(strtr($request->levelName, '-_', '+/'));
         }
+        //latest code file
        	return view('frontend.SearchTutor.index', $data);
+        //old code file
+        // return view('frontend.SearchTutorold.index', $data);
     }
 
     public function getTutors(Request $request)
