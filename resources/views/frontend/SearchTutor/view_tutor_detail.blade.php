@@ -165,7 +165,8 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <a href="/tutors-feedback/{{$feedbackId}}" class="button-default inline">Give Feedback</a>
+                                        {{-- <a href="/tutors-feedback/{{$feedbackId}}" class="button-default inline">Give Feedback</a> --}}
+                                        <a href="{{ route('tutors-feedback', $feedbackId) }}" class="button-default inline">Give Feedback</a>
                                     </div>
                                 </div>
                             </div>
